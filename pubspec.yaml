@@ -22,6 +22,6 @@ flutter:
   assets:
     - assets/images/
   fonts:
-    - family: MonumentExtended
+    - family: MabryPro
       fonts:
-        - asset: assets/fonts/MonumentExtended-Regular.otf
+        - asset: assets/fonts/MabryPro.otf

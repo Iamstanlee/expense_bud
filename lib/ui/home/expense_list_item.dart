@@ -5,7 +5,6 @@ class ExpenseListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return SizedBox(
       height: 64,
       child: Row(
@@ -24,17 +23,14 @@ class ExpenseListItem extends StatelessWidget {
               Gap.md,
               Text(
                 'Food & Drinks',
-                style: textTheme.bodyText2!.copyWith(
-                  fontSize: FontSizes.s12,
-                ),
-              )
+                style: context.textTheme.bodyText1!,
+              ),
             ],
           ),
           const Spacer(),
           Text(
             '\$3,400',
-            style: textTheme.bodyText2!.copyWith(
-              fontSize: FontSizes.s14,
+            style: context.textTheme.bodyText2!.copyWith(
               color: const Color(0xFFE58D67),
             ),
           )

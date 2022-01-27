@@ -1,5 +1,4 @@
 import 'package:expense_tracker/exports.dart';
-import 'package:expense_tracker/providers/main_provider.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({Key? key}) : super(key: key);

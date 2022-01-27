@@ -37,7 +37,7 @@ class AppTheme {
 }
 
 class Fonts {
-  static const kPrimary = "MonumentExtended";
+  static const kPrimary = "MabryPro";
 }
 
 class Insets {

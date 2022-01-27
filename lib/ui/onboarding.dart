@@ -14,15 +14,13 @@ class OnboardingPage extends StatelessWidget {
             const Gap(Insets.lg),
             Text(
               '\$',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline2!
-                  .copyWith(color: AppColors.kDark),
+              style:
+                  context.textTheme.headline2!.copyWith(color: AppColors.kDark),
             ),
             const Gap(64),
             const Info(
               'Add entries',
-              'Keep track of your income, expenses',
+              'Keep track of your income and expenses',
               PhosphorIcons.tray,
             ),
             const Gap(Insets.lg),
@@ -57,7 +55,6 @@ class Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Row(
       children: [
         Icon(
@@ -71,12 +68,13 @@ class Info extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: textTheme.bodyText1,
+                style: context.textTheme.subtitle1,
               ),
               Gap.sm,
               Text(
                 subtitle,
-                style: textTheme.subtitle2!.copyWith(color: AppColors.kGrey),
+                style: context.textTheme.subtitle1!
+                    .copyWith(color: AppColors.kGrey),
               ),
             ],
           ),

@@ -14,7 +14,8 @@ extension ContextExtension on BuildContext {
   double get height => getHeight();
   double get width => getWidth();
 
-  
+  TextTheme get textTheme => Theme.of(this).textTheme;
+
   Future<T?> push<T>(Widget page) =>
       Navigator.push<T>(this, PageRouter.fadeThrough(() => page));
 

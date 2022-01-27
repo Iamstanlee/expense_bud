@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -25,29 +24,7 @@ class HomePage extends StatelessWidget {
                 ),
               )
             ],
-            flexibleSpace: FlexibleSpaceBar(
-              title: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Spent this week',
-                    style: textTheme.overline!.copyWith(
-                      color: Colors.white60,
-                      fontSize: FontSizes.s8,
-                    ),
-                  ),
-                  Text(
-                    '\$2,445,100',
-                    style: textTheme.headline5!.copyWith(color: Colors.white),
-                  ),
-                ],
-              ),
-              titlePadding: const EdgeInsets.only(
-                left: Insets.lg,
-                bottom: Insets.lg,
-              ),
-            ),
+            flexibleSpace: const _FlexibleSpaceBar(),
           ),
           SliverList(
               delegate: SliverChildListDelegate(
@@ -75,7 +52,7 @@ class HomePage extends StatelessWidget {
                           ),
                           child: Center(
                               child: Text('Today',
-                                  style: textTheme.bodyText1!.copyWith(
+                                  style: context.textTheme.bodyText1!.copyWith(
                                     color: Colors.white,
                                   ))),
                         ),
@@ -91,7 +68,7 @@ class HomePage extends StatelessWidget {
                           child: Center(
                             child: Text(
                               'Month',
-                              style: textTheme.bodyText1!.copyWith(
+                              style: context.textTheme.bodyText1!.copyWith(
                                   // color: Colors.white,
                                   ),
                             ),
@@ -104,7 +81,8 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
-                child: Text('25th Jan 2022', style: textTheme.bodyText1!),
+                child:
+                    Text('25th Jan 2022', style: context.textTheme.bodyText1!),
               ),
               const SizedBox(height: Insets.sm),
               for (int i = 0; i < 27; i++)
@@ -115,6 +93,39 @@ class HomePage extends StatelessWidget {
             ],
           )),
         ],
+      ),
+    );
+  }
+}
+
+class _FlexibleSpaceBar extends StatelessWidget {
+  const _FlexibleSpaceBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlexibleSpaceBar(
+      title: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Spent this week',
+            style: context.textTheme.overline!.copyWith(
+              color: Colors.white60,
+              fontSize: FontSizes.s8,
+            ),
+          ),
+          const Gap(2),
+          Text(
+            '\$2,445,100',
+            style: context.textTheme.headline4!.copyWith(color: Colors.white),
+          ),
+        ],
+      ),
+      titlePadding: const EdgeInsets.only(
+        left: Insets.lg,
+        right: Insets.lg,
+        bottom: Insets.lg,
       ),
     );
   }
