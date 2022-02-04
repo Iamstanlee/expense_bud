@@ -1,4 +1,10 @@
-import 'package:expense_tracker/exports.dart';
+import 'package:expense_tracker/core/utils/router.dart';
+import 'package:flutter/material.dart';
+
+extension StringExtension on String {
+  int toInt() => int.parse(this);
+  double toFloat() => double.parse(this);
+}
 
 extension ContextExtension on BuildContext {
   double getHeight({double factor = 1}) {
@@ -19,8 +25,7 @@ extension ContextExtension on BuildContext {
   Future<T?> push<T>(Widget page) =>
       Navigator.push<T>(this, PageRouter.fadeThrough(() => page));
 
-  Future<bool> pop<T>(Widget page, T? result) =>
-      Navigator.maybePop(this, result);
+  Future<bool> pop<T>([T? result]) => Navigator.maybePop(this, result);
 }
 
 extension ClickableExtension on Widget {

@@ -17,7 +17,7 @@ class AppImages {
 }
 
 class AppColors {
-  static Color get kScaffold => const Color(0xFFFCFEFF);
+  static Color get kScaffold => const Color(0xFFFFFFFF);
   static Color get kPrimary => const Color(0xFF5ECE9A);
   static Color get kPrimary500 => const Color(0xFF059E53);
   static Color get kDark => const Color(0xFF111418);

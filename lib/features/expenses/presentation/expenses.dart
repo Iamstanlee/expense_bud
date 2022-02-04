@@ -1,10 +1,16 @@
-import 'package:expense_tracker/exports.dart';
-import 'package:expense_tracker/ui/home/expense_list_item.dart';
+import 'package:expense_tracker/config/constants.dart';
+import 'package:expense_tracker/config/theme.dart';
+import 'package:expense_tracker/core/utils/extensions.dart';
+import 'package:expense_tracker/core/widgets/gap.dart';
+import 'package:expense_tracker/features/expenses/presentation/add_entry.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 enum Tabs { today, month }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ExpensesPage extends StatelessWidget {
+  const ExpensesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,12 @@ class HomePage extends StatelessWidget {
             expandedHeight: 220,
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (BuildContext context) => const AddEntryPage(),
+                  );
+                },
                 icon: const Icon(
                   PhosphorIcons.plusFill,
                   color: Colors.white,
@@ -51,10 +62,13 @@ class HomePage extends StatelessWidget {
                             borderRadius: Corners.lgBorder,
                           ),
                           child: Center(
-                              child: Text('Today',
-                                  style: context.textTheme.bodyText1!.copyWith(
-                                    color: Colors.white,
-                                  ))),
+                            child: Text(
+                              'Today',
+                              style: context.textTheme.bodyText1!.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       Expanded(
@@ -85,11 +99,11 @@ class HomePage extends StatelessWidget {
                     Text('25th Jan 2022', style: context.textTheme.bodyText1!),
               ),
               const SizedBox(height: Insets.sm),
-              for (int i = 0; i < 27; i++)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Insets.lg),
-                  child: ExpenseListItem(),
-                )
+              // for (int i = 0; i < 27; i++)
+              //   const Padding(
+              //     padding: EdgeInsets.symmetric(horizontal: Insets.lg),
+              //     child: ExpenseListItem(),
+              //   )
             ],
           )),
         ],

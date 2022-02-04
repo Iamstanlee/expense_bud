@@ -1,4 +1,4 @@
-import 'package:expense_tracker/constants.dart';
+import 'package:expense_tracker/config/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class AppTheme {
 }
 
 class Fonts {
-  static const kPrimary = "MabryPro";
+  static const kPrimary = "SpaceGrotesk";
 }
 
 class Insets {

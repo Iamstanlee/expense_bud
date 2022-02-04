@@ -1,4 +1,7 @@
-import 'exports.dart';
+import 'package:expense_tracker/config/constants.dart';
+import 'package:expense_tracker/config/theme.dart';
+import 'package:expense_tracker/core/onboarding.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const ExpenseTracker());
@@ -9,13 +12,11 @@ class ExpenseTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.defaultTheme,
-        title: AppStrings.kTitle,
-        home: const OnboardingPage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.defaultTheme,
+      title: AppStrings.kTitle,
+      home: const OnboardingPage(),
     );
   }
 }

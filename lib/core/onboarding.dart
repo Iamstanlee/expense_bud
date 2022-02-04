@@ -1,5 +1,11 @@
-import 'package:expense_tracker/exports.dart';
-import 'package:expense_tracker/ui/main.dart';
+import 'package:expense_tracker/config/constants.dart';
+import 'package:expense_tracker/config/theme.dart';
+import 'package:expense_tracker/core/app.dart';
+import 'package:expense_tracker/core/utils/extensions.dart';
+import 'package:expense_tracker/core/widgets/button.dart';
+import 'package:expense_tracker/core/widgets/gap.dart';
+import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -11,12 +17,6 @@ class OnboardingPage extends StatelessWidget {
         padding: const EdgeInsets.all(Insets.lg),
         child: Column(
           children: [
-            const Gap(Insets.lg),
-            Text(
-              '\$',
-              style:
-                  context.textTheme.headline2!.copyWith(color: AppColors.kDark),
-            ),
             const Gap(64),
             const Info(
               'Add entries',
@@ -38,7 +38,7 @@ class OnboardingPage extends StatelessWidget {
             const Spacer(),
             Button(
               "GET STARTED",
-              onTap: () => context.push(const MainPage()),
+              onTap: () => context.push(const AppPage()),
             ),
           ],
         ),
