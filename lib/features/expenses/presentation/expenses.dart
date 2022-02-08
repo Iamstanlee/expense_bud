@@ -1,16 +1,28 @@
-import 'package:expense_tracker/config/constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expense_tracker/config/theme.dart';
 import 'package:expense_tracker/core/utils/extensions.dart';
 import 'package:expense_tracker/core/widgets/gap.dart';
 import 'package:expense_tracker/features/expenses/presentation/add_entry.dart';
+import 'package:expense_tracker/features/expenses/presentation/expense_tab.dart';
+import 'package:expense_tracker/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
-enum Tabs { today, month }
-
-class ExpensesPage extends StatelessWidget {
+class ExpensesPage extends StatefulWidget {
   const ExpensesPage({Key? key}) : super(key: key);
+
+  @override
+  State<ExpensesPage> createState() => _ExpensesPageState();
+}
+
+class _ExpensesPageState extends State<ExpensesPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,70 +52,7 @@ class ExpensesPage extends StatelessWidget {
           SliverList(
               delegate: SliverChildListDelegate(
             [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Insets.lg,
-                  vertical: Insets.md,
-                ),
-                child: Container(
-                  height: 40,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    color: AppColors.kLightGrey,
-                    borderRadius: Corners.lgBorder,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.kDark,
-                            borderRadius: Corners.lgBorder,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Today',
-                              style: context.textTheme.bodyText1!.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            // color: AppColors.kDark,
-                            color: AppColors.kLightGrey,
-
-                            borderRadius: Corners.lgBorder,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Month',
-                              style: context.textTheme.bodyText1!.copyWith(
-                                  // color: Colors.white,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
-                child:
-                    Text('25th Jan 2022', style: context.textTheme.bodyText1!),
-              ),
-              const SizedBox(height: Insets.sm),
-              // for (int i = 0; i < 27; i++)
-              //   const Padding(
-              //     padding: EdgeInsets.symmetric(horizontal: Insets.lg),
-              //     child: ExpenseListItem(),
-              //   )
+              const ExpenseTab(),
             ],
           )),
         ],
@@ -114,9 +63,12 @@ class ExpensesPage extends StatelessWidget {
 
 class _FlexibleSpaceBar extends StatelessWidget {
   const _FlexibleSpaceBar({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final expenseProvider = context.watch<ExpenseProvider>();
+    final moneyFormatter = expenseProvider.moneyFormatter;
+    final currentDayEntriesTotal = expenseProvider.currentDayEntriesTotal;
+
     return FlexibleSpaceBar(
       title: Column(
         mainAxisSize: MainAxisSize.min,
@@ -130,9 +82,11 @@ class _FlexibleSpaceBar extends StatelessWidget {
             ),
           ),
           const Gap(2),
-          Text(
-            '\$2,445,100',
-            style: context.textTheme.headline4!.copyWith(color: Colors.white),
+          AutoSizeText(
+            moneyFormatter.stringToMoney(currentDayEntriesTotal.toString()),
+            style: context.textTheme.headline4!
+                .copyWith(color: Colors.white, fontSize: FontSizes.s28),
+            maxLines: 1,
           ),
         ],
       ),

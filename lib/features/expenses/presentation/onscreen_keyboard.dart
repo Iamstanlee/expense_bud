@@ -69,7 +69,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
             children: _quickKeys
                 .map((e) => SizedBox(
                       height: 40,
-                      width: context.getWidth(factor: 0.33),
+                      width: context.getWidth(0.33),
                       child: Keypad(
                         e,
                         color: AppColors.kLightGrey,
@@ -116,7 +116,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                           ),
                           SizedBox(
                             height: _kPadHeight,
-                            width: context.getWidth(factor: 0.224),
+                            width: context.getWidth(0.224),
                             child: Keypad(
                               _Key("."),
                               onTap: () => _onChange(_Key(".")),
@@ -128,7 +128,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                   ),
                 ),
                 SizedBox(
-                  width: context.getWidth(factor: 0.33),
+                  width: context.getWidth(0.33),
                   child: Column(
                     children: [
                       SizedBox(

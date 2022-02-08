@@ -2,15 +2,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expense_tracker/config/constants.dart';
 import 'package:expense_tracker/config/theme.dart';
 import 'package:expense_tracker/core/expense_category.dart';
-import 'package:expense_tracker/core/utils/money_converter.dart';
+import 'package:expense_tracker/core/utils/money_formatter.dart';
 import 'package:expense_tracker/core/utils/extensions.dart';
 import 'package:expense_tracker/core/widgets/expense_avatar.dart';
 import 'package:expense_tracker/core/widgets/gap.dart';
+import 'package:expense_tracker/features/expenses/domain/entities/expense.dart';
 import 'package:expense_tracker/features/expenses/presentation/expense_grid_sheet.dart';
 import 'package:expense_tracker/features/expenses/presentation/onscreen_keyboard.dart';
+import 'package:expense_tracker/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AddEntryPage extends StatefulWidget {
   const AddEntryPage({Key? key}) : super(key: key);
@@ -20,20 +23,17 @@ class AddEntryPage extends StatefulWidget {
 }
 
 class _AddEntryPageState extends State<AddEntryPage> {
-  String _amount = "";
-  late ExpenseCategoryItem _categoryItem;
-  final MoneyFormatter _moneyFormatter = MoneyFormatter.instance;
+  final MoneyFormatter _defaultMoneyFormatter = MoneyFormatter.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    _categoryItem = kExpenseCategoryItems.first;
-  }
+  String _amount = "";
+  ExpenseCategoryItem _categoryItem = kExpenseCategoryItems.first;
 
   @override
   Widget build(BuildContext context) {
+    final expenseProvider = context.watch<ExpenseProvider>();
+    final moneyFormatter = expenseProvider.moneyFormatter;
     return SizedBox(
-      height: context.getHeight(factor: 0.9),
+      height: context.getHeight(0.9),
       child: Material(
         borderRadius: const BorderRadius.only(
           topLeft: Corners.lgRadius,
@@ -72,7 +72,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         padding: const EdgeInsets.all(Insets.md),
                         child: Center(
                           child: Text(
-                            'USD',
+                            moneyFormatter.name,
                             style: context.textTheme.headline6!.copyWith(
                               color: Colors.white,
                             ),
@@ -84,7 +84,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         child: AutoSizeText(
                           _amount.isEmpty
                               ? '0.0'
-                              : _moneyFormatter.stringToMoney(_amount),
+                              : _defaultMoneyFormatter.stringToMoney(_amount),
                           style: context.textTheme.headline3!
                               .copyWith(color: AppColors.kDark),
                           maxLines: 1,
@@ -116,7 +116,17 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   _amount = value;
                 });
               },
-              onEnter: (value) {},
+              onEnter: (value) async {
+                final thisInstant = DateTime.now().toIso8601String();
+                final ExpenseEntity entry = ExpenseEntity(
+                  createdAt: thisInstant,
+                  updatedAt: thisInstant,
+                  category: _categoryItem.category,
+                  amount: _amount.toFloat(),
+                );
+                await expenseProvider.createExpenseEntry(entry);
+                context.pop();
+              },
             ),
           ],
         ),

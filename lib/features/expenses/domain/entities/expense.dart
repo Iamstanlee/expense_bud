@@ -22,7 +22,7 @@ class ExpenseEntity {
   final String createdAt;
   final String updatedAt;
   final ExpenseCategory category;
-  final int amount;
+  final double amount;
 
   ExpenseEntity({
     required this.createdAt,

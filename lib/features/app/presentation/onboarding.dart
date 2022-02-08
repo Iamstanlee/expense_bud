@@ -1,11 +1,13 @@
 import 'package:expense_tracker/config/constants.dart';
 import 'package:expense_tracker/config/theme.dart';
-import 'package:expense_tracker/core/app.dart';
 import 'package:expense_tracker/core/utils/extensions.dart';
 import 'package:expense_tracker/core/widgets/button.dart';
 import 'package:expense_tracker/core/widgets/gap.dart';
+import 'package:expense_tracker/features/app/presentation/app.dart';
+import 'package:expense_tracker/features/app/presentation/providers/preference_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -27,18 +29,21 @@ class OnboardingPage extends StatelessWidget {
             const Info(
               'Check insights',
               'Detailed weekly and monthly charts based on your entries',
-              PhosphorIcons.chartLineUp,
+              PhosphorIcons.lightning,
             ),
             const Gap(Insets.lg),
             const Info(
               'Make right decisions',
               'And control your money flow',
-              PhosphorIcons.target,
+              PhosphorIcons.medal,
             ),
             const Spacer(),
             Button(
               "GET STARTED",
-              onTap: () => context.push(const AppPage()),
+              onTap: () {
+                context.read<PreferenceProvider>().completeOnboarding();
+                context.push(const AppPage());
+              },
             ),
           ],
         ),

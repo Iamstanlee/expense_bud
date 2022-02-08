@@ -11,7 +11,7 @@ class ExpenseItemGridSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.getHeight(factor: 0.5),
+      height: context.getHeight(0.5),
       width: double.infinity,
       margin: const EdgeInsets.fromLTRB(Insets.md, 0, Insets.md, Insets.lg),
       decoration: const BoxDecoration(
