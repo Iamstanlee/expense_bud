@@ -1,4 +1,4 @@
-import 'package:expense_tracker/core/utils/extensions.dart';
+import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:intl/intl.dart';
 // import 'dart:math' as math;
 

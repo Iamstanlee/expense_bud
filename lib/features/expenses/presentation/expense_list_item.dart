@@ -1,11 +1,11 @@
-import 'package:expense_tracker/config/theme.dart';
-import 'package:expense_tracker/core/expense_category.dart';
-import 'package:expense_tracker/core/utils/date_formatter.dart';
-import 'package:expense_tracker/core/utils/extensions.dart';
-import 'package:expense_tracker/core/widgets/expense_avatar.dart';
-import 'package:expense_tracker/core/widgets/gap.dart';
-import 'package:expense_tracker/features/expenses/domain/entities/expense.dart';
-import 'package:expense_tracker/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/config/theme.dart';
+import 'package:expense_bud/core/expense_category.dart';
+import 'package:expense_bud/core/utils/date_formatter.dart';
+import 'package:expense_bud/core/utils/extensions.dart';
+import 'package:expense_bud/core/widgets/expense_avatar.dart';
+import 'package:expense_bud/core/widgets/gap.dart';
+import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
+import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

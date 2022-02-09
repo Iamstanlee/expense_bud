@@ -1,4 +1,4 @@
-import 'package:expense_tracker/core/utils/router.dart';
+import 'package:expense_bud/core/utils/router.dart';
 import 'package:flutter/material.dart';
 
 extension StringExtension on String {

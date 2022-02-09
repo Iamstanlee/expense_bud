@@ -1,5 +1,5 @@
-import 'package:expense_tracker/features/expenses/data/models/expense.dart';
-import 'package:expense_tracker/features/expenses/domain/entities/expense.dart';
+import 'package:expense_bud/features/expenses/data/models/expense.dart';
+import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 import 'package:flutter/foundation.dart';
 
 extension ExpenseModelExtension on ExpenseModel {

@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:expense_tracker/config/theme.dart';
-import 'package:expense_tracker/core/utils/extensions.dart';
-import 'package:expense_tracker/core/widgets/gap.dart';
-import 'package:expense_tracker/features/expenses/presentation/add_entry.dart';
-import 'package:expense_tracker/features/expenses/presentation/expense_tab.dart';
-import 'package:expense_tracker/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/config/theme.dart';
+import 'package:expense_bud/core/utils/extensions.dart';
+import 'package:expense_bud/core/widgets/gap.dart';
+import 'package:expense_bud/features/expenses/presentation/add_entry.dart';
+import 'package:expense_bud/features/expenses/presentation/expense_tab.dart';
+import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:expense_tracker/core/failure/failure.dart';
+import 'package:expense_bud/core/failure/failure.dart';
 
 abstract class Usecase<R, P> {
   Future<Either<Failure, R>> call(P arg);

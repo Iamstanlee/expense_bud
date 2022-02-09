@@ -1,4 +1,4 @@
-name: expense_tracker
+name: expense_bud
 description: Expense tracker app.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1

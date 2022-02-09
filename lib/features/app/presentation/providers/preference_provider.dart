@@ -1,4 +1,4 @@
-import 'package:expense_tracker/features/app/data/preference_repository.dart';
+import 'package:expense_bud/features/app/data/preference_repository.dart';
 import 'package:flutter/material.dart';
 
 class PreferenceProvider with ChangeNotifier {

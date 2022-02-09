@@ -1,4 +1,4 @@
-import 'package:expense_tracker/config/constants.dart';
+import 'package:expense_bud/config/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-import 'package:expense_tracker/core/utils/extensions.dart';
+import 'package:expense_bud/core/utils/extensions.dart';
 
 class Currency {
   final String name, symbol, locale;

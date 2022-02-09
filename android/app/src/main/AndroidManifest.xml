@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.expense_tracker">
+    package="com.app.expense_bud">
    <application
-        android:label="Expense Tracker"
+        android:label="Expense Bud"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

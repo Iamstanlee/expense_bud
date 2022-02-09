@@ -1,7 +1,7 @@
-import 'package:expense_tracker/config/constants.dart';
-import 'package:expense_tracker/config/theme.dart';
-import 'package:expense_tracker/core/expense_category.dart';
-import 'package:expense_tracker/features/expenses/domain/entities/expense.dart';
+import 'package:expense_bud/config/constants.dart';
+import 'package:expense_bud/config/theme.dart';
+import 'package:expense_bud/core/expense_category.dart';
+import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseAvatar extends StatelessWidget {

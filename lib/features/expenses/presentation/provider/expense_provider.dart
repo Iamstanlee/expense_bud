@@ -1,12 +1,12 @@
-import 'package:expense_tracker/core/failure/failure.dart';
-import 'package:expense_tracker/core/utils/async_value.dart';
-import 'package:expense_tracker/core/utils/date_formatter.dart';
-import 'package:expense_tracker/core/utils/extensions.dart';
-import 'package:expense_tracker/core/utils/money_formatter.dart';
-import 'package:expense_tracker/features/expenses/domain/entities/expense.dart';
-import 'package:expense_tracker/features/expenses/domain/usecases/create_entry_usecase.dart';
-import 'package:expense_tracker/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
-import 'package:expense_tracker/features/expenses/domain/usecases/get_expenses_usecase.dart';
+import 'package:expense_bud/core/failure/failure.dart';
+import 'package:expense_bud/core/utils/async_value.dart';
+import 'package:expense_bud/core/utils/date_formatter.dart';
+import 'package:expense_bud/core/utils/extensions.dart';
+import 'package:expense_bud/core/utils/money_formatter.dart';
+import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_usecase.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseProvider with ChangeNotifier {
@@ -36,7 +36,8 @@ class ExpenseProvider with ChangeNotifier {
       AsyncValue.loading();
   AsyncValue<Map<String, List<ExpenseEntity>?>> get allEntries => _allEntries;
 
-  String get currentDateString => _dateFormatter.datetimeToString(DateTime.now());
+  String get currentDateString =>
+      _dateFormatter.datetimeToString(DateTime.now());
 
   String getReadableDateString(String key) =>
       _dateFormatter.datetimeToString(key.toDateTime());

@@ -1,6 +1,6 @@
-import 'package:expense_tracker/core/failure/exceptions.dart';
-import 'package:expense_tracker/core/utils/date_formatter.dart';
-import 'package:expense_tracker/features/expenses/data/models/expense.dart';
+import 'package:expense_bud/core/failure/exceptions.dart';
+import 'package:expense_bud/core/utils/date_formatter.dart';
+import 'package:expense_bud/features/expenses/data/models/expense.dart';
 import 'package:hive/hive.dart';
 
 abstract class IExpenseLocalDataSource {

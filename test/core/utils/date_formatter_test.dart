@@ -1,4 +1,4 @@
-import 'package:expense_tracker/core/utils/date_formatter.dart';
+import 'package:expense_bud/core/utils/date_formatter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

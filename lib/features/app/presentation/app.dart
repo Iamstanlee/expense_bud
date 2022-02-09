@@ -1,5 +1,6 @@
-import 'package:expense_tracker/config/config.dart';
-import 'package:expense_tracker/features/expenses/presentation/expenses.dart';
+import 'package:expense_bud/config/config.dart';
+import 'package:expense_bud/features/expenses/presentation/expenses.dart';
+import 'package:expense_bud/features/insights/presentation/insights.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class AppPage extends StatefulWidget {
 class _AppPageState extends State<AppPage> {
   final List<Widget> tabs = const [
     ExpensesPage(),
-    ExpensesPage(),
+    InsightsPage(),
     ExpensesPage()
   ];
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:expense_tracker/features/expenses/domain/entities/expense.dart';
+import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 
 class ExpenseCategoryItem {
   final String title;

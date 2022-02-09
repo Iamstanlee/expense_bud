@@ -1,14 +1,14 @@
-import 'package:expense_tracker/core/utils/device.dart';
-import 'package:expense_tracker/features/app/data/preference_repository.dart';
-import 'package:expense_tracker/features/app/presentation/providers/preference_provider.dart';
-import 'package:expense_tracker/features/expenses/data/datasources/local_datasource.dart';
-import 'package:expense_tracker/features/expenses/data/models/expense.dart';
-import 'package:expense_tracker/features/expenses/data/repositories/expense_repository_impl.dart';
-import 'package:expense_tracker/features/expenses/domain/repositories/expense_repository.dart';
-import 'package:expense_tracker/features/expenses/domain/usecases/create_entry_usecase.dart';
-import 'package:expense_tracker/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
-import 'package:expense_tracker/features/expenses/domain/usecases/get_expenses_usecase.dart';
-import 'package:expense_tracker/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/core/utils/device.dart';
+import 'package:expense_bud/features/app/data/preference_repository.dart';
+import 'package:expense_bud/features/app/presentation/providers/preference_provider.dart';
+import 'package:expense_bud/features/expenses/data/datasources/local_datasource.dart';
+import 'package:expense_bud/features/expenses/data/models/expense.dart';
+import 'package:expense_bud/features/expenses/data/repositories/expense_repository_impl.dart';
+import 'package:expense_bud/features/expenses/domain/repositories/expense_repository.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_usecase.dart';
+import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
@@ -42,7 +42,7 @@ Future<void> initApp() async {
   getIt.registerSingleton<PreferenceProvider>(
     PreferenceProvider(preferenceRepository: getIt()),
   );
-  
+
   getIt.registerSingleton<ExpenseProvider>(
     ExpenseProvider(
       getExpensesUsecase: getIt(),
