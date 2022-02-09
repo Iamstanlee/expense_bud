@@ -1,3 +1,4 @@
+import 'package:expense_bud/config/config.dart';
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
@@ -20,6 +21,12 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             const Gap(64),
+            Text(
+              AppStrings.kTitle,
+              style:
+                  context.textTheme.headline4!.copyWith(color: AppColors.kDark),
+            ),
+            const Gap(Insets.lg),
             const Info(
               'Add entries',
               'Keep track of your income and expenses',

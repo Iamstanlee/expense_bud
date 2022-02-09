@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppStrings {
-  static String get kTitle => 'Expense Tracker';
+  static const kTitle = 'Expense Bud';
 }
 
 class AppIcons {

@@ -1,6 +1,5 @@
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
-import 'package:expense_bud/core/expense_category.dart';
 import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 import 'package:flutter/material.dart';
 
