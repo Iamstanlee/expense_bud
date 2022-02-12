@@ -1,6 +1,7 @@
 import 'package:expense_bud/config/config.dart';
 import 'package:expense_bud/features/expenses/presentation/expenses.dart';
 import 'package:expense_bud/features/insights/presentation/insights.dart';
+import 'package:expense_bud/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ class _AppPageState extends State<AppPage> {
   final List<Widget> tabs = const [
     ExpensesPage(),
     InsightsPage(),
-    ExpensesPage()
+    SettingsPage()
   ];
 
   int _currentIndex = 0;

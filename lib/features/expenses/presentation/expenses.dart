@@ -1,12 +1,13 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:expense_bud/config/theme.dart';
+import 'package:expense_bud/config/config.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expenses/presentation/add_entry.dart';
 import 'package:expense_bud/features/expenses/presentation/expense_tab.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +21,6 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends State<ExpensesPage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
@@ -33,6 +29,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
             automaticallyImplyLeading: false,
             floating: true,
             expandedHeight: 220,
+            backgroundColor: AppColors.kPrimary,
             actions: [
               IconButton(
                 onPressed: () {
@@ -72,7 +69,9 @@ class _FlexibleSpaceBar extends StatelessWidget {
     return FlexibleSpaceBar(
       title: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: Platform.isIOS
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
         children: [
           Text(
             'Spent this week',

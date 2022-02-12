@@ -1,6 +1,4 @@
 import 'package:expense_bud/config/config.dart';
-import 'package:expense_bud/config/constants.dart';
-import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
@@ -49,7 +47,7 @@ class OnboardingPage extends StatelessWidget {
               "GET STARTED",
               onTap: () {
                 context.read<PreferenceProvider>().completeOnboarding();
-                context.push(const AppPage());
+                context.pushOff(const AppPage());
               },
             ),
           ],

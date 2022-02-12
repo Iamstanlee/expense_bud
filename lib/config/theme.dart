@@ -1,36 +1,37 @@
 import 'package:expense_bud/config/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
   AppTheme._();
 
   static ThemeData get _baseTheme => ThemeData(
-      primaryColor: AppColors.kPrimary,
-      scaffoldBackgroundColor: AppColors.kScaffold,
-      fontFamily: Fonts.kPrimary,
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          primary: AppColors.kPrimary,
-          onPrimary: Colors.white,
+        primaryColor: AppColors.kPrimary,
+        scaffoldBackgroundColor: AppColors.kScaffold,
+        fontFamily: Fonts.kPrimary,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            shape:
+                const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+            primary: AppColors.kPrimary,
+            onPrimary: Colors.white,
+          ),
         ),
-      ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        selectedItemColor: AppColors.kScaffold,
-        unselectedItemColor: AppColors.kGrey,
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-      ),
-      iconTheme: IconThemeData(
-        color: AppColors.kGrey,
-      ),
-      appBarTheme: AppBarTheme(
-        elevation: 0,
-        backgroundColor: AppColors.kPrimary,
-      ));
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedItemColor: AppColors.kScaffold,
+          unselectedItemColor: AppColors.kGrey,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.kGrey,
+        ),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
+      );
 
   static ThemeData get defaultTheme =>
       _baseTheme.copyWith(brightness: Brightness.light);

@@ -6,7 +6,6 @@ import 'package:expense_bud/core/widgets/state.dart';
 import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 import 'package:expense_bud/features/expenses/presentation/expense_list_item.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +42,7 @@ class _ExpenseTabState extends State<ExpenseTab> {
               children: Tab.values
                   .map(
                     (e) => Expanded(
-                      child: TabItem((describeEnum(e).titleCaseSingle()),
+                      child: TabItem((e.name.titleCaseSingle()),
                           value: e,
                           groupValue: currentTab,
                           onChanged: (value) =>

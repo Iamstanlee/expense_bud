@@ -4,6 +4,7 @@ import 'package:expense_bud/features/app/presentation/app.dart';
 import 'package:expense_bud/features/app/presentation/onboarding.dart';
 import 'package:expense_bud/features/app/presentation/providers/preference_provider.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:expense_bud/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class ExpenseTracker extends StatelessWidget {
         ChangeNotifierProvider<PreferenceProvider>(
             create: (context) => getIt()),
         ChangeNotifierProvider<ExpenseProvider>(create: (context) => getIt()),
+        ChangeNotifierProvider<SettingsProvider>(create: (context) => getIt()),
       ],
       child: Builder(builder: (context) {
         final onboardingFinished =

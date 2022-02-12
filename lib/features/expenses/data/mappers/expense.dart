@@ -1,14 +1,12 @@
 import 'package:expense_bud/features/expenses/data/models/expense.dart';
 import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
-import 'package:flutter/foundation.dart';
 
 extension ExpenseModelExtension on ExpenseModel {
   ExpenseEntity toEntity() => ExpenseEntity(
         createdAt: createdAt,
         updatedAt: updatedAt,
         amount: amount,
-        category: ExpenseCategory.values
-            .singleWhere((e) => describeEnum(e) == category),
+        category: ExpenseCategory.values.singleWhere((e) => e.name == category),
       );
 }
 
@@ -17,6 +15,6 @@ extension ExpenseEntityExtension on ExpenseEntity {
         createdAt: createdAt,
         updatedAt: updatedAt,
         amount: amount,
-        category: describeEnum(category),
+        category: category.name,
       );
 }

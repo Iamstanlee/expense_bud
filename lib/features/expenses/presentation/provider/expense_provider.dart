@@ -10,11 +10,11 @@ import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_useca
 import 'package:flutter/material.dart';
 
 class ExpenseProvider with ChangeNotifier {
-  ExpenseProvider(
-      {required GetAllExpensesUsecase getAllExpensesUsecase,
-      required GetExpensesUsecase getExpensesUsecase,
-      required CreateExpenseEntryUsecase createExpenseEntryUsecase})
-      : _getAllExpensesUsecase = getAllExpensesUsecase,
+  ExpenseProvider({
+    required GetAllExpensesUsecase getAllExpensesUsecase,
+    required GetExpensesUsecase getExpensesUsecase,
+    required CreateExpenseEntryUsecase createExpenseEntryUsecase,
+  })  : _getAllExpensesUsecase = getAllExpensesUsecase,
         _getExpensesUsecase = getExpensesUsecase,
         _createExpenseEntryUsecase = createExpenseEntryUsecase;
 

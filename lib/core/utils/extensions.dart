@@ -36,6 +36,9 @@ extension ContextExtension on BuildContext {
   Future<T?> push<T>(Widget page) =>
       Navigator.push<T>(this, PageRouter.fadeThrough(() => page));
 
+  Future<T?> pushOff<T>(Widget page) => Navigator.pushAndRemoveUntil<T>(
+      this, PageRouter.fadeThrough(() => page), (_) => false);
+
   Future<bool> pop<T>([T? result]) => Navigator.maybePop(this, result);
   // Future<void> showToast(String msg) =>;
 }
