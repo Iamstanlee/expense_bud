@@ -220,7 +220,8 @@ class TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSelected = value == groupValue;
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       decoration: BoxDecoration(
         color: isSelected ? AppColors.kDark : AppColors.kGrey200,
         borderRadius: Corners.lgBorder,
