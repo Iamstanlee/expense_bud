@@ -6,6 +6,7 @@ import 'package:expense_bud/features/expenses/data/models/expense.dart';
 import 'package:expense_bud/features/expenses/data/repositories/expense_repository_impl.dart';
 import 'package:expense_bud/features/expenses/domain/repositories/expense_repository.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/erase_entries_usecase.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_usecase.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
@@ -49,6 +50,8 @@ Future<void> initApp() async {
       CreateExpenseEntryUsecase(getIt()));
   getIt
       .registerSingleton<GetAllExpensesUsecase>(GetAllExpensesUsecase(getIt()));
+  getIt
+      .registerSingleton<EraseEntriesUsecase>(EraseEntriesUsecase(getIt()));
   getIt.registerSingleton<GetUserPreferenceUsecase>(
       GetUserPreferenceUsecase(getIt()));
   getIt.registerSingleton<UpdateUserPreferenceUsecase>(
@@ -70,6 +73,7 @@ Future<void> initApp() async {
       getExpensesUsecase: getIt(),
       getAllExpensesUsecase: getIt(),
       createExpenseEntryUsecase: getIt(),
+      eraseEntriesUsecase: getIt(),
     ),
   );
 }

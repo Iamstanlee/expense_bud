@@ -49,4 +49,14 @@ class ExpenseRepository implements IExpenseRepository {
       return Left(CacheGetFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> eraseEntries() async {
+    try {
+      await _localDataSource.eraseEntries();
+      return const Right(unit);
+    } catch (e) {
+      return Left(CacheGetFailure());
+    }
+  }
 }

@@ -9,4 +9,5 @@ abstract class IExpenseRepository {
   Future<Either<Failure, ExpenseEntity>> createExpenseEntry(
     ExpenseEntity expense,
   );
+  Future<Either<Failure, Unit>> eraseEntries();
 }

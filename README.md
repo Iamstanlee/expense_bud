@@ -7,14 +7,14 @@ This app was built with clean architecture and MVVM pattern
 **motivation**: To have clear seperation of concerns with loosely coupled components and a undirectional flow of data, This means our app is maintainable, scalable and testable.
 
 <p>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s1.png" width="200px" height="auto" hspace="20"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s2.png" width="200px" height="auto" hspace="20"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s3.png" width="200px" height="auto" hspace="20"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s1.png" width="200px" height="auto"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s2.png" width="200px" height="auto" hspace="10"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s3.png" width="200px" height="auto" hspace="10"/>
 </p>
 
 <p>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s1.png" width="200px" height="auto" hspace="20"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s2.png" width="200px" height="auto" hspace="20"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s4.png" width="200px" height="auto"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s5.png" width="200px" height="auto" hspace="10"/>
 </p>
 
 ### Frameworks/Lib

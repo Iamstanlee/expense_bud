@@ -1,6 +1,8 @@
 import 'package:expense_bud/config/config.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
+import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
+import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:expense_bud/features/settings/domain/entities/user_preference.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +60,17 @@ class SettingsPage extends StatelessWidget {
             ),
             Gap.lg,
             SettingHeader("App", children: [
-              DefaultSettingItem('Erase Data', textColor: AppColors.kError),
+              DefaultSettingItem(
+                'Erase Data',
+                textColor: AppColors.kError,
+                onTap: () => showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) => DeleteBottomSheet(onDelete: () async {
+                    context.read<ExpenseProvider>().eraseEntries();
+                    context.pop();
+                  }),
+                ),
+              ),
               const DefaultSettingItem('Version', trailing: "1.0.0-dev"),
               const DefaultSettingItem(
                 'Built by',
@@ -194,6 +206,40 @@ class SwitchSettingItem extends StatelessWidget {
             activeColor: AppColors.kPrimary,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class DeleteBottomSheet extends StatelessWidget {
+  final VoidCallback? onDelete;
+  const DeleteBottomSheet({this.onDelete, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(Insets.lg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "You're about to delete all entries on this app, this cannot be undone",
+              textAlign: TextAlign.center,
+              style: context.textTheme.caption!,
+            ),
+            Gap.md,
+            Button(
+              "DELETE",
+              color: AppColors.kError,
+              onTap: () => onDelete?.call(),
+            ),
+            Gap.md,
+            const Text('CANCEL').onTap(() => context.pop()),
+            Gap.md,
+          ],
+        ),
       ),
     );
   }

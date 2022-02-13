@@ -5,6 +5,7 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/utils/money_formatter.dart';
 import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/erase_entries_usecase.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_usecase.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,16 @@ class ExpenseProvider with ChangeNotifier {
     required GetAllExpensesUsecase getAllExpensesUsecase,
     required GetExpensesUsecase getExpensesUsecase,
     required CreateExpenseEntryUsecase createExpenseEntryUsecase,
+    required EraseEntriesUsecase eraseEntriesUsecase,
   })  : _getAllExpensesUsecase = getAllExpensesUsecase,
         _getExpensesUsecase = getExpensesUsecase,
-        _createExpenseEntryUsecase = createExpenseEntryUsecase;
+        _createExpenseEntryUsecase = createExpenseEntryUsecase,
+        _eraseEntriesUsecase = eraseEntriesUsecase;
 
   final GetAllExpensesUsecase _getAllExpensesUsecase;
   final GetExpensesUsecase _getExpensesUsecase;
   final CreateExpenseEntryUsecase _createExpenseEntryUsecase;
+  final EraseEntriesUsecase _eraseEntriesUsecase;
 
   final DateFormatter _dateFormatter = DateFormatter.instance;
   final MoneyFormatter _moneyFormatter = MoneyFormatter(
@@ -52,8 +56,8 @@ class ExpenseProvider with ChangeNotifier {
   double get currentDayEntriesTotal => getEntriesTotal(_currentDayEntries.data);
 
   void getCurrentDayEntries() async {
-    final entriesOrFailure = await _getExpensesUsecase();
-    entriesOrFailure.fold(
+    final failureOrEntries = await _getExpensesUsecase();
+    failureOrEntries.fold(
       (failure) =>
           _currentDayEntries = AsyncValue.error(_handleFailure(failure)),
       (data) => _currentDayEntries = AsyncValue.done(data),
@@ -62,8 +66,8 @@ class ExpenseProvider with ChangeNotifier {
   }
 
   void getAllEntries() async {
-    final entriesOrFailure = await _getAllExpensesUsecase();
-    entriesOrFailure.fold(
+    final failureOrEntries = await _getAllExpensesUsecase();
+    failureOrEntries.fold(
       (failure) => _allEntries = AsyncValue.error(_handleFailure(failure)),
       (data) {
         _allEntries = AsyncValue.done(data);
@@ -73,10 +77,19 @@ class ExpenseProvider with ChangeNotifier {
   }
 
   Future<void> createExpenseEntry(ExpenseEntity entry) async {
-    final entryOrFailure = await _createExpenseEntryUsecase(entry);
-    entryOrFailure.fold((failure) => _handleFailure(failure), (entry) {
+    final failureOrEntry = await _createExpenseEntryUsecase(entry);
+    failureOrEntry.fold((failure) => _handleFailure(failure), (entry) {
       _currentDayEntries =
           AsyncValue.done([entry, ..._currentDayEntries.data!]);
+    });
+    notifyListeners();
+  }
+
+  Future<void> eraseEntries() async {
+    final failureOrSuccess = await _eraseEntriesUsecase();
+    failureOrSuccess.fold((failure) => _handleFailure(failure), (_) {
+      _currentDayEntries = AsyncValue.done([]);
+      _allEntries = AsyncValue.done({});
     });
     notifyListeners();
   }

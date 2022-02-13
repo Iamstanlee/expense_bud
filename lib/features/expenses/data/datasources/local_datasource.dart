@@ -5,8 +5,10 @@ import 'package:hive/hive.dart';
 
 abstract class IExpenseLocalDataSource {
   Future<List<ExpenseModel>> getCurrentDayExpenseEntries();
+  // TODO: change to getMonthExpenseEntries to query entries for current month
   Future<Map<String, List<ExpenseModel>>> getAllExpenseEntries();
   Future<ExpenseModel> createExpenseEntry(ExpenseModel expense);
+  Future<void> eraseEntries();
 }
 
 class ExpenseLocalDataSource implements IExpenseLocalDataSource {
@@ -55,6 +57,15 @@ class ExpenseLocalDataSource implements IExpenseLocalDataSource {
       final key = _getKey(today);
       final entries = _box.get(key, defaultValue: [])!.cast<ExpenseModel>();
       return entries;
+    } catch (e) {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<void> eraseEntries() async {
+    try {
+      await _box.clear();
     } catch (e) {
       throw CacheException();
     }
