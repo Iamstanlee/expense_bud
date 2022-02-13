@@ -76,7 +76,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
           Text(
             'Spent this week',
             style: context.textTheme.overline!.copyWith(
-              color: Colors.white60,
+              color: Colors.white.withOpacity(0.8),
               fontSize: FontSizes.s8,
             ),
           ),
