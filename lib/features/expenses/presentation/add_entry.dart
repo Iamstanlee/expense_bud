@@ -21,11 +21,35 @@ class AddEntryPage extends StatefulWidget {
   _AddEntryPageState createState() => _AddEntryPageState();
 }
 
-class _AddEntryPageState extends State<AddEntryPage> {
+class _AddEntryPageState extends State<AddEntryPage>
+    with SingleTickerProviderStateMixin {
   final MoneyFormatter _defaultMoneyFormatter = MoneyFormatter.instance;
 
   String _amount = "";
   ExpenseCategoryItem _categoryItem = kExpenseCategoryItems.first;
+
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  @override
+  void initState() {
+    _controller = AnimationController(
+        vsync: this,
+        duration: const Duration(
+          microseconds: 2000,
+        ));
+    _animation = Tween<double>(begin: 1, end: 1.08).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.bounceIn,
+      ),
+    );
+    _animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,13 +104,16 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       ),
                       Gap.md,
                       Expanded(
-                        child: AutoSizeText(
-                          _amount.isEmpty
-                              ? '0.0'
-                              : _defaultMoneyFormatter.stringToMoney(_amount),
-                          style: context.textTheme.headline3!
-                              .copyWith(color: AppColors.kDark),
-                          maxLines: 1,
+                        child: ScaleTransition(
+                          scale: _animation,
+                          child: AutoSizeText(
+                            _amount.isEmpty
+                                ? '0.0'
+                                : _defaultMoneyFormatter.stringToMoney(_amount),
+                            style: context.textTheme.headline3!
+                                .copyWith(color: AppColors.kDark),
+                            maxLines: 1,
+                          ),
                         ),
                       ),
                     ],
@@ -113,6 +140,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
               onChange: (value) {
                 setState(() {
                   _amount = value;
+                  _controller.forward();
                 });
               },
               onEnter: (value) async {

@@ -34,7 +34,7 @@ class _ExpenseTabState extends State<ExpenseTab> {
             height: 40,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              color: AppColors.kLightGrey,
+              color: AppColors.kGrey200,
               borderRadius: Corners.lgBorder,
             ),
             child: Row(
@@ -170,6 +170,7 @@ class ExpenseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: Insets.sm),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: entries.length,
@@ -221,7 +222,7 @@ class TabItem extends StatelessWidget {
     final isSelected = value == groupValue;
     return Container(
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.kDark : AppColors.kLightGrey,
+        color: isSelected ? AppColors.kDark : AppColors.kGrey200,
         borderRadius: Corners.lgBorder,
       ),
       child: Center(

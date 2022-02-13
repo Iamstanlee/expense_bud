@@ -18,6 +18,7 @@ class AppTheme {
           ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: AppColors.kDark,
           selectedItemColor: AppColors.kScaffold,
           unselectedItemColor: AppColors.kGrey,
           type: BottomNavigationBarType.fixed,

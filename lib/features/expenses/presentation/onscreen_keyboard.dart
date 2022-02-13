@@ -17,45 +17,57 @@ class OnScreenKeyboard extends StatefulWidget {
 
 class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
   final double _kPadHeight = 65;
+  final _kMax = 100000;
   String _editValue = "";
 
   void _onChange(_Key key) {
     String value = key.value;
-    if (_editValue.length >= 7 && value != 'delete') return;
-
     if (value == 'delete') {
       if (_editValue.isNotEmpty) {
         _editValue = _editValue.substring(0, _editValue.length - 1);
-      } else {
-        return;
+        widget.onChange(_editValue);
       }
-    } else if (value == '.') {
-      if (_isEditValueValid(_editValue)) {
-        _editValue += value;
-      } else {
-        return;
-      }
-    } else {
-      if (_editValue.length == 1 && _editValue[0] == '0' && value == '0') {
-        return;
-      }
-      if (key.replaceText) {
-        _editValue = value;
-      } else {
-        _editValue += value;
-      }
+      return;
     }
-    widget.onChange(_editValue);
+
+    if (_canEditText(_editValue, value) &&
+        !_hasReachedMaxAmount(_editValue, key)) {
+      if (key.addAmount) {
+        final _amount = _editValue.isEmpty
+            ? value
+            : (value.toFloat() + _editValue.toFloat()).toString();
+        _editValue = _amount;
+      } else {
+        _editValue += value;
+      }
+
+      return widget.onChange(_editValue);
+    }
   }
 
   void _onEnter() {
-    if (_isEditValueValid(_editValue)) {
+    if ((_editValue.isNotEmpty && _editValue[_editValue.length - 1] != '.')) {
       widget.onEnter(_editValue);
     }
   }
 
-  bool _isEditValueValid(String value) {
-    return !((_editValue.isEmpty) || _editValue[_editValue.length - 1] == '.');
+  bool _canEditText(String text, String value) {
+    final dotChar = value == '.';
+    if (text.isEmpty && !dotChar) return true;
+    if (text.isEmpty && dotChar) return false;
+    if (text[text.length - 1] == '.' && dotChar) return false;
+    if (text.length == 1 && text[0] == '0' && value == '0') return false;
+    if (text.contains(".") && dotChar) return false;
+    return true;
+  }
+
+  bool _hasReachedMaxAmount(String text, _Key key) {
+    String value = key.value;
+    if (text.isEmpty || value == '.') return false;
+    final _amount = key.addAmount
+        ? (text.toFloat() + value.toFloat()).toString()
+        : text += value;
+    return !(_amount.toFloat() < _kMax);
   }
 
   @override
@@ -71,8 +83,8 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                       height: 40,
                       width: context.getWidth(0.33),
                       child: Keypad(
-                        e,
-                        color: AppColors.kLightGrey,
+                        _Key("+${e.value}"),
+                        color: AppColors.kGrey200,
                         onTap: () => _onChange(e),
                       ),
                     ))
@@ -136,7 +148,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                         child: Keypad(
                           _Key("delete"),
                           onTap: () => _onChange(_Key("delete")),
-                          color: AppColors.kLightGrey,
+                          color: AppColors.kGrey200,
                           child: const Icon(
                             PhosphorIcons.backspace,
                             color: Colors.black45,
@@ -197,14 +209,14 @@ class Keypad extends StatelessWidget {
 
 class _Key {
   String value;
-  bool replaceText;
-  _Key(this.value, {this.replaceText = false});
+  bool addAmount;
+  _Key(this.value, {this.addAmount = false});
 }
 
 List<_Key> _quickKeys = [
-  _Key("100", replaceText: true),
-  _Key("250", replaceText: true),
-  _Key("500", replaceText: true)
+  _Key("100", addAmount: true),
+  _Key("250", addAmount: true),
+  _Key("500", addAmount: true)
 ];
 
 List<List<_Key>> _numberKeys = [

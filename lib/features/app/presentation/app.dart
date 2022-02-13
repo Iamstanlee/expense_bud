@@ -1,4 +1,3 @@
-import 'package:expense_bud/config/config.dart';
 import 'package:expense_bud/features/expenses/presentation/expenses.dart';
 import 'package:expense_bud/features/insights/presentation/insights.dart';
 import 'package:expense_bud/features/settings/presentation/settings.dart';
@@ -51,7 +50,6 @@ class _AppPageState extends State<AppPage> {
           iconSize: 27,
           currentIndex: _currentIndex,
           onTap: selectTab,
-          backgroundColor: AppColors.kDark,
           items: _bottomNavigationBarItems
               .map(
                 (item) => BottomNavigationBarItem(
