@@ -4,28 +4,54 @@ import 'package:expense_bud/features/expenses/data/models/expense.dart';
 import 'package:hive/hive.dart';
 
 abstract class IExpenseLocalDataSource {
-  Future<List<ExpenseModel>> getCurrentDayExpenseEntries();
-  // TODO: change to getMonthExpenseEntries to query entries for current month
-  Future<Map<String, List<ExpenseModel>>> getAllExpenseEntries();
+  Future<List<ExpenseModel>> getCurrentDayEntries();
+  Future<Map<String, List<ExpenseModel>>> getCurrentMonthEntries();
   Future<ExpenseModel> createExpenseEntry(ExpenseModel expense);
   Future<void> eraseEntries();
 }
 
+/// Storage Data structure Model
+///```dart
+/// {
+/// "2022-02": {
+/// "2022-02-01" : [ExpenseModel],
+/// "2022-02-02" : [ExpenseModel, ExpenseModel],
+/// "2022-02-03" : [ExpenseModel],
+///},
+/// "2022-03": {
+/// "2022-02-01" : [ExpenseModel, ExpenseModel],
+/// "2022-02-02" : [ExpenseModel],
+/// "2022-02-03" : [ExpenseModel, ExpenseModel],
+///},
+/// }
+/// ```
 class ExpenseLocalDataSource implements IExpenseLocalDataSource {
   final Box _box;
-  final DateFormatter _dateFormatter = DateFormatter(kStorageDateFormat);
+  final DateFormatter _dayFormatter = DateFormatter(kDay);
+  final DateFormatter _monthFormatter = DateFormatter(kMonth);
   ExpenseLocalDataSource(this._box);
 
   @override
   Future<ExpenseModel> createExpenseEntry(ExpenseModel expense) async {
     try {
-      final _key = _getKey(expense.createdAt);
-      if (_has(_key)) {
-        final _itemsInBox = _box.get(_key)!;
-        final _updatedItemsInBox = [expense, ..._itemsInBox];
-        await _box.put(_key, _updatedItemsInBox);
+      final _monthKey = _getMonthKey(expense.createdAt);
+      final _dayKey = _getDayKey(expense.createdAt);
+      if (_has(_monthKey)) {
+        final _month = _box.get(_monthKey)! as Map;
+        if (_month.containsKey(_dayKey)) {
+          final _items = _month[_dayKey];
+          final _updatedItems = [expense, ..._items];
+          await _box.put(_monthKey, {..._month, _dayKey: _updatedItems});
+        } else {
+          await _box.put(_monthKey, {
+            ..._month,
+            _dayKey: [expense]
+          });
+        }
       } else {
-        await _box.put(_key, [expense]);
+        await _box.put(_monthKey, {
+          _dayKey: [expense]
+        });
       }
       return expense;
     } catch (e) {
@@ -34,15 +60,16 @@ class ExpenseLocalDataSource implements IExpenseLocalDataSource {
   }
 
   @override
-  Future<Map<String, List<ExpenseModel>>> getAllExpenseEntries() async {
+  Future<Map<String, List<ExpenseModel>>> getCurrentMonthEntries() async {
     try {
-      // final mapEntry = _box.toMap().map((key, value) =>
-      //     MapEntry(key as String, (value as List).cast<ExpenseModel>()));
+      final today = DateTime.now().toIso8601String();
+      final _key = _getMonthKey(today);
+      final _currentMonth = _box.get(_key, defaultValue: {}) as Map;
       Map<String, List<ExpenseModel>> mapEntry = {};
-      _box.keys.toList().cast<String>()
+      _currentMonth.keys.toList().cast<String>()
         ..sort((a, b) => b.compareTo(a))
         ..forEach((key) {
-          mapEntry[key] = (_box.get(key) as List).cast<ExpenseModel>();
+          mapEntry[key] = (_currentMonth[key] as List).cast<ExpenseModel>();
         });
       return mapEntry;
     } catch (e) {
@@ -51,11 +78,17 @@ class ExpenseLocalDataSource implements IExpenseLocalDataSource {
   }
 
   @override
-  Future<List<ExpenseModel>> getCurrentDayExpenseEntries() async {
+  Future<List<ExpenseModel>> getCurrentDayEntries() async {
     try {
       final today = DateTime.now().toIso8601String();
-      final key = _getKey(today);
-      final entries = _box.get(key, defaultValue: [])!.cast<ExpenseModel>();
+      final _monthKey = _getMonthKey(today);
+      final _dayKey = _getDayKey(today);
+      final _currentMonth = _box.get(_monthKey, defaultValue: {}) as Map;
+      List<ExpenseModel> entries = [];
+      if (_currentMonth.isEmpty) return entries;
+      if (_currentMonth.containsKey(_dayKey)) {
+        entries = (_currentMonth[_dayKey] as List).cast<ExpenseModel>();
+      }
       return entries;
     } catch (e) {
       throw CacheException();
@@ -71,8 +104,12 @@ class ExpenseLocalDataSource implements IExpenseLocalDataSource {
     }
   }
 
-  String _getKey(String date) {
-    return _dateFormatter.stringToKey(date);
+  String _getDayKey(String date) {
+    return _dayFormatter.stringToKey(date);
+  }
+
+  String _getMonthKey(String date) {
+    return _monthFormatter.stringToKey(date);
   }
 
   bool _has(String key) {

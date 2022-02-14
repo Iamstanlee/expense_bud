@@ -7,7 +7,7 @@ import 'package:expense_bud/features/expenses/data/repositories/expense_reposito
 import 'package:expense_bud/features/expenses/domain/repositories/expense_repository.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/create_entry_usecase.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/erase_entries_usecase.dart';
-import 'package:expense_bud/features/expenses/domain/usecases/get_all_expenses_usecase.dart';
+import 'package:expense_bud/features/expenses/domain/usecases/get_month_expenses_usecase.dart';
 import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_usecase.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
 import 'package:expense_bud/features/settings/data/datasources/user_preference_local_datasource.dart';
@@ -48,10 +48,9 @@ Future<void> initApp() async {
   getIt.registerSingleton<GetExpensesUsecase>(GetExpensesUsecase(getIt()));
   getIt.registerSingleton<CreateExpenseEntryUsecase>(
       CreateExpenseEntryUsecase(getIt()));
-  getIt
-      .registerSingleton<GetAllExpensesUsecase>(GetAllExpensesUsecase(getIt()));
-  getIt
-      .registerSingleton<EraseEntriesUsecase>(EraseEntriesUsecase(getIt()));
+  getIt.registerSingleton<GetMonthExpensesUsecase>(
+      GetMonthExpensesUsecase(getIt()));
+  getIt.registerSingleton<EraseEntriesUsecase>(EraseEntriesUsecase(getIt()));
   getIt.registerSingleton<GetUserPreferenceUsecase>(
       GetUserPreferenceUsecase(getIt()));
   getIt.registerSingleton<UpdateUserPreferenceUsecase>(
@@ -71,7 +70,7 @@ Future<void> initApp() async {
   getIt.registerSingleton<ExpenseProvider>(
     ExpenseProvider(
       getExpensesUsecase: getIt(),
-      getAllExpensesUsecase: getIt(),
+      getMonthExpensesUsecase: getIt(),
       createExpenseEntryUsecase: getIt(),
       eraseEntriesUsecase: getIt(),
     ),

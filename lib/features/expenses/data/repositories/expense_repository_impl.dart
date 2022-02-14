@@ -23,9 +23,9 @@ class ExpenseRepository implements IExpenseRepository {
 
   @override
   Future<Either<Failure, Map<String, List<ExpenseEntity>>>>
-      getAllExpenseEntries() async {
+      getCurrentMonthEntries() async {
     try {
-      final _entries = await _localDataSource.getAllExpenseEntries();
+      final _entries = await _localDataSource.getCurrentMonthEntries();
       return Right(
         _entries.map(
           (key, value) => MapEntry(
@@ -41,9 +41,9 @@ class ExpenseRepository implements IExpenseRepository {
 
   @override
   Future<Either<Failure, List<ExpenseEntity>>>
-      getCurrentDayExpenseEntries() async {
+      getCurrentDayEntries() async {
     try {
-      final _entries = await _localDataSource.getCurrentDayExpenseEntries();
+      final _entries = await _localDataSource.getCurrentDayEntries();
       return Right(_entries.map((e) => e.toEntity()).toList());
     } catch (e) {
       return Left(CacheGetFailure());

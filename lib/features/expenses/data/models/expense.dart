@@ -22,4 +22,9 @@ class ExpenseModel extends HiveObject {
     required this.category,
     required this.amount,
   });
+
+  @override
+  String toString() {
+    return 'ExpenseModel(createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount)';
+  }
 }
