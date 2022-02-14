@@ -74,7 +74,7 @@ class _TodayTabState extends State<TodayTab> {
   void initState() {
     super.initState();
     final expenseProvider = context.read<ExpenseProvider>();
-    expenseProvider.getCurrentDayEntries();
+    expenseProvider.getDayEntries();
   }
 
   @override
@@ -114,7 +114,7 @@ class _MonthTabState extends State<MonthTab> {
   void initState() {
     super.initState();
     final expenseProvider = context.read<ExpenseProvider>();
-    expenseProvider.getAllEntries();
+    expenseProvider.getMonthEntries();
   }
 
   @override
@@ -144,7 +144,7 @@ class _MonthTabState extends State<MonthTab> {
                                       .getReadableDateString(key),
                                   amount: moneyFormatter.stringToMoney(context
                                       .read<ExpenseProvider>()
-                                      .getEntriesTotal(data[key])
+                                      .getDayTotal(data[key])
                                       .toString()),
                                 ),
                                 ExpenseList(data[key]!),

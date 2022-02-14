@@ -7,6 +7,8 @@ import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expenses/presentation/add_entry.dart';
 import 'package:expense_bud/features/expenses/presentation/expense_tab.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/features/settings/domain/entities/user_preference.dart';
+import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -63,8 +65,22 @@ class _FlexibleSpaceBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final expenseProvider = context.watch<ExpenseProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
+
     final moneyFormatter = expenseProvider.moneyFormatter;
-    final currentDayEntriesTotal = expenseProvider.currentDayEntriesTotal;
+
+    final prefs = settingsProvider.preference;
+    double _inboxAmount = 0;
+    switch (prefs.inboxAmount) {
+      case InboxAmount.today:
+        _inboxAmount = expenseProvider.getDayTotal();
+        break;
+      case InboxAmount.month:
+        _inboxAmount = expenseProvider.getMonthTotal();
+        break;
+      default:
+        _inboxAmount = expenseProvider.getWeekTotal();
+    }
 
     return FlexibleSpaceBar(
       title: Column(
@@ -74,7 +90,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
             : CrossAxisAlignment.start,
         children: [
           Text(
-            'Spent this week',
+            settingsProvider.getInboxAmountTitle(prefs.inboxAmount),
             style: context.textTheme.overline!.copyWith(
               color: Colors.white.withOpacity(0.8),
               fontSize: FontSizes.s8,
@@ -82,7 +98,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
           ),
           const Gap(2),
           AutoSizeText(
-            moneyFormatter.stringToMoney(currentDayEntriesTotal.toString()),
+            moneyFormatter.stringToMoney(_inboxAmount.toString()),
             style: context.textTheme.headline4!
                 .copyWith(color: Colors.white, fontSize: FontSizes.s28),
             maxLines: 1,

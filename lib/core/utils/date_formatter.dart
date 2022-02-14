@@ -1,8 +1,8 @@
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:intl/intl.dart';
-// import 'dart:math' as math;
 
-const kStorageDateFormat = "yyyy-MM-dd";
+const kDay = "yyyy-MM-dd";
+const kMonth = "yyyy-MM";
 
 class DateFormatter {
   DateFormatter._(String pattern) : _dateFormatter = DateFormat(pattern);
@@ -23,6 +23,14 @@ class DateFormatter {
   /// map date string to storage key
   String stringToKey(String str) {
     return datetimeToString(str.toDateTime());
+  }
+
+  int getWeekOfMonth(DateTime date) {
+    int firstDayOfMonth = DateTime(date.year, date.month).weekday;
+    int lastDayOfFirstWeek = 1 - firstDayOfMonth;
+    if (lastDayOfFirstWeek <= 0) lastDayOfFirstWeek += 7;
+    final remainingDaysAfterFirstWeek = date.day - lastDayOfFirstWeek;
+    return (remainingDaysAfterFirstWeek / 7).ceil() + 1;
   }
 
   String relativeToNow(String date) {

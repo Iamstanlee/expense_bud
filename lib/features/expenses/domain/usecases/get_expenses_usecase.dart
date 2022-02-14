@@ -11,6 +11,6 @@ class GetExpensesUsecase implements NoArgsUsecase<List<ExpenseEntity>> {
 
   @override
   Future<Either<Failure, List<ExpenseEntity>>> call() {
-    return _expenseRepository.getCurrentDayExpenseEntries();
+    return _expenseRepository.getCurrentDayEntries();
   }
 }

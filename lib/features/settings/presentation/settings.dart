@@ -3,7 +3,7 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
-import 'package:expense_bud/features/settings/domain/entities/user_preference.dart';
+import 'package:expense_bud/features/settings/presentation/inbox_amount_settings.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +17,6 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final settingsProvider = context.watch<SettingsProvider>();
     final prefs = settingsProvider.preference;
-    String inboxAmount = "";
-    switch (prefs.inboxAmount) {
-      case InboxAmount.today:
-        inboxAmount = "spent today";
-        break;
-      case InboxAmount.month:
-        inboxAmount = "spent this month";
-        break;
-      default:
-        inboxAmount = "spent this week";
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -46,8 +35,9 @@ class SettingsPage extends StatelessWidget {
               children: [
                 DefaultSettingItem(
                   'Inbox Amount',
-                  trailing: inboxAmount,
-                  onTap: () {},
+                  trailing:
+                      settingsProvider.getInboxAmountTitle(prefs.inboxAmount),
+                  onTap: () => context.push(const InboxAmountSettingsPage()),
                 ),
                 SwitchSettingItem(
                   'Show Date',
@@ -162,15 +152,6 @@ class DefaultSettingItem extends StatelessWidget {
         ],
       ),
     ).onTap(() => onTap?.call());
-  }
-}
-
-class ChoiceSettingItem extends StatelessWidget {
-  const ChoiceSettingItem({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
 

@@ -3,9 +3,9 @@ import 'package:expense_bud/core/failure/failure.dart';
 import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
 
 abstract class IExpenseRepository {
-  Future<Either<Failure, List<ExpenseEntity>>> getCurrentDayExpenseEntries();
+  Future<Either<Failure, List<ExpenseEntity>>> getCurrentDayEntries();
   Future<Either<Failure, Map<String, List<ExpenseEntity>>>>
-      getAllExpenseEntries();
+      getCurrentMonthEntries();
   Future<Either<Failure, ExpenseEntity>> createExpenseEntry(
     ExpenseEntity expense,
   );

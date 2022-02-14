@@ -36,3 +36,16 @@ class SettingsProvider with ChangeNotifier {
     });
   }
 }
+
+extension SettingsProviderExtension on SettingsProvider {
+  String getInboxAmountTitle(InboxAmount inboxAmount) {
+    switch (inboxAmount) {
+      case InboxAmount.today:
+        return "spent today";
+      case InboxAmount.month:
+        return "spent this month";
+      default:
+        return "spent this week";
+    }
+  }
+}
