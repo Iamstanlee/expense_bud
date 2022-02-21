@@ -19,7 +19,7 @@ class SettingsProvider with ChangeNotifier {
     inboxAmount: InboxAmount.week,
     showEntryDate: false,
     onboardingComplete: false,
-    currency: ngn,
+    currency: usd,
   );
 
   late Money _money;
@@ -36,6 +36,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> updateUserPref(UserPreferenceEntity pref) async {
+    if (preference.currency != pref.currency) {
+      _money = Money(pref.currency);
+    }
     final failureOrSuccess = await _updateUserPreferenceUsecase(pref);
     failureOrSuccess.fold((failure) {}, (_) => __preference = pref);
   }

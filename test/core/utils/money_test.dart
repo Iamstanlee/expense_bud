@@ -13,6 +13,6 @@ void main() {
   test('it should format integral value into readable string', () {
     final money = Money();
     const input = 20025;
-    expect(money.formatValue(input), equals("${money.code}200.25"));
+    expect(money.formatValue(input), equals("\$200.25"));
   });
 }

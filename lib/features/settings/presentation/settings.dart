@@ -3,6 +3,7 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/features/settings/presentation/currency_settings.dart';
 import 'package:expense_bud/features/settings/presentation/inbox_amount_settings.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,6 +39,11 @@ class SettingsPage extends StatelessWidget {
                   trailing:
                       settingsProvider.getInboxAmountTitle(prefs.inboxAmount),
                   onTap: () => context.push(const InboxAmountSettingsPage()),
+                ),
+                DefaultSettingItem(
+                  'Currency',
+                  trailing: prefs.currency.name,
+                  onTap: () => context.push(const CurrencySettingsPage()),
                 ),
                 SwitchSettingItem(
                   'Show Date',
