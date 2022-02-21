@@ -1,16 +1,15 @@
 import 'package:expense_bud/core/utils/device.dart';
-import 'package:expense_bud/features/app/data/preference_repository.dart';
-import 'package:expense_bud/features/app/presentation/providers/preference_provider.dart';
-import 'package:expense_bud/features/expenses/data/datasources/local_datasource.dart';
-import 'package:expense_bud/features/expenses/data/models/expense.dart';
-import 'package:expense_bud/features/expenses/data/repositories/expense_repository_impl.dart';
-import 'package:expense_bud/features/expenses/domain/repositories/expense_repository.dart';
-import 'package:expense_bud/features/expenses/domain/usecases/create_entry_usecase.dart';
-import 'package:expense_bud/features/expenses/domain/usecases/erase_entries_usecase.dart';
-import 'package:expense_bud/features/expenses/domain/usecases/get_month_expenses_usecase.dart';
-import 'package:expense_bud/features/expenses/domain/usecases/get_expenses_usecase.dart';
-import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/features/expense/data/datasources/local_datasource.dart';
+import 'package:expense_bud/features/expense/data/models/expense.dart';
+import 'package:expense_bud/features/expense/data/repositories/expense_repository_impl.dart';
+import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
+import 'package:expense_bud/features/expense/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expense/domain/usecases/erase_entries_usecase.dart';
+import 'package:expense_bud/features/expense/domain/usecases/get_month_expenses_usecase.dart';
+import 'package:expense_bud/features/expense/domain/usecases/get_expenses_usecase.dart';
+import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
 import 'package:expense_bud/features/settings/data/datasources/user_preference_local_datasource.dart';
+import 'package:expense_bud/features/settings/data/models/currency.dart';
 import 'package:expense_bud/features/settings/data/models/user_preference.dart';
 import 'package:expense_bud/features/settings/data/user_preference_repository_impl.dart';
 import 'package:expense_bud/features/settings/domain/repositories/user_preference_repository.dart';
@@ -27,6 +26,7 @@ Future<void> initApp() async {
   Hive.init(storage);
   Hive.registerAdapter<ExpenseModel>(ExpenseModelAdapter());
   Hive.registerAdapter<UserPreferenceModel>(UserPreferenceModelAdapter());
+  Hive.registerAdapter<CurrencyModel>(CurrencyModelAdapter());
 
   final _expenseDb = await Hive.openBox("expenses.db");
   final _preferenceDb = await Hive.openBox("preferences.db");
@@ -38,8 +38,6 @@ Future<void> initApp() async {
       UserPreferenceLocalDataSource(_preferenceDb));
 
   /// repositories
-  getIt.registerSingleton<IPreferenceRepository>(
-      PreferenceRepository(_preferenceDb));
   getIt.registerSingleton<IExpenseRepository>(ExpenseRepository(getIt()));
   getIt.registerSingleton<IUserPreferenceRepository>(
       UserPreferenceRepository(getIt()));
@@ -57,9 +55,6 @@ Future<void> initApp() async {
       UpdateUserPreferenceUsecase(getIt()));
 
   /// providers
-  getIt.registerSingleton<PreferenceProvider>(
-    PreferenceProvider(preferenceRepository: getIt()),
-  );
   getIt.registerSingleton<SettingsProvider>(
     SettingsProvider(
       getUserPreferenceUsecase: getIt(),

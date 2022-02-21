@@ -31,6 +31,6 @@ flutter:
   assets:
     - assets/images/
   fonts:
-    - family: SpaceGrotesk
+    - family: Inter
       fonts:
-        - asset: assets/fonts/SpaceGrotesk-Regular.ttf
+        - asset: assets/fonts/Inter-Regular.ttf

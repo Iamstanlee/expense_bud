@@ -2,8 +2,7 @@ import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/features/app/presentation/app.dart';
 import 'package:expense_bud/features/app/presentation/onboarding.dart';
-import 'package:expense_bud/features/app/presentation/providers/preference_provider.dart';
-import 'package:expense_bud/features/expenses/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:expense_bud/injector.dart';
 import 'package:flutter/material.dart';
@@ -22,19 +21,18 @@ class ExpenseTracker extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<PreferenceProvider>(
-            create: (context) => getIt()),
         ChangeNotifierProvider<ExpenseProvider>(create: (context) => getIt()),
         ChangeNotifierProvider<SettingsProvider>(create: (context) => getIt()),
       ],
       child: Builder(builder: (context) {
-        final onboardingFinished =
-            context.watch<PreferenceProvider>().onboardingFinished;
+        final prefs = context.watch<SettingsProvider>().preference;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.defaultTheme,
           title: AppStrings.kTitle,
-          home: onboardingFinished ? const AppPage() : const OnboardingPage(),
+          home: prefs.onboardingComplete
+              ? const AppPage()
+              : const OnboardingPage(),
         );
       }),
     );

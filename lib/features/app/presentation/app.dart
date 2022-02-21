@@ -1,4 +1,4 @@
-import 'package:expense_bud/features/expenses/presentation/expenses.dart';
+import 'package:expense_bud/features/expense/presentation/expenses.dart';
 import 'package:expense_bud/features/insights/presentation/insights.dart';
 import 'package:expense_bud/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';

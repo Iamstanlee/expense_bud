@@ -3,7 +3,7 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/app/presentation/app.dart';
-import 'package:expense_bud/features/app/presentation/providers/preference_provider.dart';
+import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +19,7 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             const Gap(64),
-            Text(
-              AppStrings.kTitle,
-              style:
-                  context.textTheme.headline4!.copyWith(color: AppColors.kDark),
-            ),
+            Image.asset(AppImages.logo, height: 27),
             const Gap(Insets.lg),
             const Info(
               'Add entries',
@@ -46,10 +42,14 @@ class OnboardingPage extends StatelessWidget {
             Button(
               "GET STARTED",
               onTap: () {
-                context.read<PreferenceProvider>().completeOnboarding();
+                final settings = context.read<SettingsProvider>();
+                final prefs = settings.preference;
+                settings
+                    .updateUserPref(prefs.copyWith(onboardingComplete: true));
                 context.pushOff(const AppPage());
               },
             ),
+            const Gap(Insets.lg),
           ],
         ),
       ),

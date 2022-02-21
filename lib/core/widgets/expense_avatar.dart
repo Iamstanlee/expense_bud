@@ -1,6 +1,6 @@
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
-import 'package:expense_bud/features/expenses/domain/entities/expense.dart';
+import 'package:expense_bud/features/expense/domain/entities/expense.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseAvatar extends StatelessWidget {
@@ -9,9 +9,8 @@ class ExpenseAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconData = kExpenseCategoryItems
-        .singleWhere((e) => e.category == category)
-        .iconData;
+    final iconData =
+        categoryItems().singleWhere((e) => e.category == category).iconData;
     return Container(
       padding: const EdgeInsets.all(Insets.sm),
       decoration:
