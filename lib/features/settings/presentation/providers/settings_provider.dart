@@ -1,3 +1,5 @@
+import 'package:expense_bud/core/utils/currencies.dart';
+import 'package:expense_bud/core/utils/money.dart';
 import 'package:expense_bud/features/settings/domain/entities/user_preference.dart';
 import 'package:expense_bud/features/settings/domain/usecases/get_user_preference_usecase.dart';
 import 'package:expense_bud/features/settings/domain/usecases/update_user_preference_usecase.dart';
@@ -16,7 +18,16 @@ class SettingsProvider with ChangeNotifier {
   UserPreferenceEntity _preference = UserPreferenceEntity(
     inboxAmount: InboxAmount.week,
     showEntryDate: false,
+    onboardingComplete: false,
+    currency: ngn,
   );
+
+  late Money _money;
+  Money get money => _money;
+  set money(Money value) {
+    _money = value;
+    notifyListeners();
+  }
 
   UserPreferenceEntity get preference => _preference;
   set __preference(UserPreferenceEntity pref) {
@@ -34,6 +45,7 @@ class SettingsProvider with ChangeNotifier {
     failureOrSuccess.fold((failure) {}, (pref) {
       if (pref != null) __preference = pref;
     });
+    _money = Money(preference.currency);
   }
 }
 

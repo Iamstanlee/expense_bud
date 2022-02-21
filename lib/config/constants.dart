@@ -7,7 +7,6 @@ class AppStrings {
 class AppIcons {
   static String iconPath(String icon, [String? ext]) =>
       'assets/icons/$icon.${ext ?? "png"}';
-  static String get bell => iconPath('bell');
 }
 
 class AppImages {

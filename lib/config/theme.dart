@@ -39,7 +39,7 @@ class AppTheme {
 }
 
 class Fonts {
-  static const kPrimary = "SpaceGrotesk";
+  static const kPrimary = "Inter";
 }
 
 class Insets {

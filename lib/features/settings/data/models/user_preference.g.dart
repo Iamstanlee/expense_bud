@@ -19,17 +19,23 @@ class UserPreferenceModelAdapter extends TypeAdapter<UserPreferenceModel> {
     return UserPreferenceModel(
       showEntryDate: fields[0] as bool,
       inboxAmount: fields[1] as String,
+      currency: fields[2] as CurrencyModel,
+      onboardingComplete: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserPreferenceModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.showEntryDate)
       ..writeByte(1)
-      ..write(obj.inboxAmount);
+      ..write(obj.inboxAmount)
+      ..writeByte(2)
+      ..write(obj.currency)
+      ..writeByte(3)
+      ..write(obj.onboardingComplete);
   }
 
   @override
