@@ -63,26 +63,15 @@ class _ExpenseTabState extends State<ExpenseTab> {
   }
 }
 
-class TodayTab extends StatefulWidget {
+class TodayTab extends StatelessWidget {
   const TodayTab({Key? key}) : super(key: key);
-
-  @override
-  _TodayTabState createState() => _TodayTabState();
-}
-
-class _TodayTabState extends State<TodayTab> {
-  @override
-  void initState() {
-    super.initState();
-    final expenseProvider = context.read<ExpenseProvider>();
-    expenseProvider.getDayEntries();
-  }
 
   @override
   Widget build(BuildContext context) {
     final expenseProvider = context.watch<ExpenseProvider>();
+    final entries = context.watch<ExpenseProvider>().entries;
     final date = expenseProvider.currentDateString;
-    final entries = expenseProvider.currentDayEntries;
+    final key = expenseProvider.currentDateKey;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
@@ -94,7 +83,7 @@ class _TodayTabState extends State<TodayTab> {
             loading: (msg) => const Center(child: Text("Loading...")),
             done: (entries) => entries.isEmpty
                 ? const NoDataOrError("No entries today")
-                : ExpenseList(entries),
+                : ExpenseList(entries[key]!),
             error: (msg) => NoDataOrError(msg!, variant: Variant.error),
           )
         ],
@@ -103,26 +92,14 @@ class _TodayTabState extends State<TodayTab> {
   }
 }
 
-class MonthTab extends StatefulWidget {
+class MonthTab extends StatelessWidget {
   const MonthTab({Key? key}) : super(key: key);
-
-  @override
-  _MonthTabState createState() => _MonthTabState();
-}
-
-class _MonthTabState extends State<MonthTab> {
-  @override
-  void initState() {
-    super.initState();
-    final expenseProvider = context.read<ExpenseProvider>();
-    expenseProvider.getMonthEntries();
-  }
 
   @override
   Widget build(BuildContext context) {
     final expenseProvider = context.watch<ExpenseProvider>();
     final money = context.watch<SettingsProvider>().money;
-    final entries = expenseProvider.allEntries;
+    final entries = expenseProvider.entries;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
@@ -140,13 +117,10 @@ class _MonthTabState extends State<MonthTab> {
                             (key) => Column(
                               children: [
                                 ExpenseHeader(
-                                  date: context
-                                      .read<ExpenseProvider>()
+                                  date: expenseProvider
                                       .getReadableDateString(key),
                                   amount: money.formatValue(
-                                    context
-                                        .read<ExpenseProvider>()
-                                        .getDayTotal(data[key]),
+                                    expenseProvider.getDailyTotal(data[key]),
                                   ),
                                 ),
                                 ExpenseList(data[key]!),

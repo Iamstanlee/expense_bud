@@ -10,42 +10,32 @@ class ExpenseRepository implements IExpenseRepository {
   ExpenseRepository(this._localDataSource);
 
   @override
-  Future<Either<Failure, ExpenseEntity>> createExpenseEntry(
+  Future<Either<Failure, Unit>> createExpenseEntry(
       ExpenseEntity expense) async {
     try {
-      final _expense =
-          await _localDataSource.createExpenseEntry(expense.toModel());
-      return Right(_expense.toEntity());
+      await _localDataSource.createExpenseEntry(expense.toModel());
+      return const Right(unit);
     } catch (e) {
       return Left(CachePutFailure());
     }
   }
 
   @override
-  Future<Either<Failure, Map<String, List<ExpenseEntity>>>>
-      getMonthlyEntries() async {
+  Stream<Either<Failure, Map<String, List<ExpenseEntity>>>>
+      watchMonthlyEntries() async* {
     try {
-      final _entries = await _localDataSource.getMonthlyEntries();
-      return Right(
-        _entries.map(
-          (key, value) => MapEntry(
-            key,
-            value.map((e) => e.toEntity()).toList(),
-          ),
-        ),
-      );
+      yield* _localDataSource.watchMonthlyEntries().map(
+            (event) => Right(
+              event.map(
+                (key, value) => MapEntry(
+                  key,
+                  value.map((e) => e.toEntity()).toList(),
+                ),
+              ),
+            ),
+          );
     } catch (e) {
-      return Left(CacheGetFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<ExpenseEntity>>> getDailyEntries() async {
-    try {
-      final _entries = await _localDataSource.getDailyEntries();
-      return Right(_entries.map((e) => e.toEntity()).toList());
-    } catch (e) {
-      return Left(CacheGetFailure());
+      yield Left(CacheGetFailure());
     }
   }
 

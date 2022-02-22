@@ -1,6 +1,6 @@
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
+import 'package:expense_bud/core/utils/category_items.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseAvatar extends StatelessWidget {

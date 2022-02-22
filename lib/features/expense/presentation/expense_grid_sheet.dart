@@ -1,7 +1,7 @@
 import 'package:expense_bud/config/config.dart';
+import 'package:expense_bud/core/utils/category_items.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseItemGridSheet extends StatelessWidget {
