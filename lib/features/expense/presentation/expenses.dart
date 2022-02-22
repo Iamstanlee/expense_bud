@@ -23,6 +23,12 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends State<ExpensesPage> {
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => context.read<ExpenseProvider>().getEntries());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
@@ -71,13 +77,13 @@ class _FlexibleSpaceBar extends StatelessWidget {
     int inboxAmount = 0;
     switch (prefs.inboxAmount) {
       case InboxAmount.today:
-        inboxAmount = expenseProvider.getDayTotal();
+        inboxAmount = expenseProvider.getDailyTotal();
         break;
       case InboxAmount.month:
-        inboxAmount = expenseProvider.getMonthTotal();
+        inboxAmount = expenseProvider.getMonthlyTotal();
         break;
       default:
-        inboxAmount = expenseProvider.getWeekTotal();
+        inboxAmount = expenseProvider.getWeeklyTotal();
     }
 
     return FlexibleSpaceBar(

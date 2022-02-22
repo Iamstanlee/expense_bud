@@ -5,13 +5,12 @@ import 'package:expense_bud/core/usecases/usecase.dart';
 import 'package:expense_bud/features/expense/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
 
-class CreateExpenseEntryUsecase
-    implements Usecase<ExpenseEntity, ExpenseEntity> {
+class CreateExpenseEntryUsecase implements UsecaseOfFuture<Unit, ExpenseEntity> {
   final IExpenseRepository _expenseRepository;
   CreateExpenseEntryUsecase(this._expenseRepository);
 
   @override
-  Future<Either<Failure, ExpenseEntity>> call(ExpenseEntity param) {
+  Future<Either<Failure, Unit>> call(ExpenseEntity param) {
     return _expenseRepository.createExpenseEntry(param);
   }
 }

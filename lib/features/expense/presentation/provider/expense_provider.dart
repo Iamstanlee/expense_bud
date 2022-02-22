@@ -5,59 +5,76 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/features/expense/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/domain/usecases/create_entry_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/erase_entries_usecase.dart';
-import 'package:expense_bud/features/expense/domain/usecases/get_month_expenses_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/get_expenses_usecase.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseProvider with ChangeNotifier {
   ExpenseProvider({
-    required GetMonthExpensesUsecase getMonthExpensesUsecase,
     required GetExpensesUsecase getExpensesUsecase,
     required CreateExpenseEntryUsecase createExpenseEntryUsecase,
     required EraseEntriesUsecase eraseEntriesUsecase,
-  })  : _getMonthExpensesUsecase = getMonthExpensesUsecase,
-        _getExpensesUsecase = getExpensesUsecase,
+  })  : _getExpensesUsecase = getExpensesUsecase,
         _createExpenseEntryUsecase = createExpenseEntryUsecase,
         _eraseEntriesUsecase = eraseEntriesUsecase;
 
-  final GetMonthExpensesUsecase _getMonthExpensesUsecase;
   final GetExpensesUsecase _getExpensesUsecase;
   final CreateExpenseEntryUsecase _createExpenseEntryUsecase;
   final EraseEntriesUsecase _eraseEntriesUsecase;
 
-  final DateFormatter _dateFormatter = DateFormatter.instance;
-  AsyncValue<List<ExpenseEntity>> _dayEntries = AsyncValue.loading();
-  AsyncValue<List<ExpenseEntity>> get currentDayEntries => _dayEntries;
-
-  AsyncValue<Map<String, List<ExpenseEntity>?>> _monthEntries =
-      AsyncValue.loading();
-  AsyncValue<Map<String, List<ExpenseEntity>?>> get allEntries => _monthEntries;
+  final DateFormatter dateFmt = DateFormatter.instance;
+  AsyncValue<Map<String, List<ExpenseEntity>>> _entries = AsyncValue.loading();
+  AsyncValue<Map<String, List<ExpenseEntity>>> get entries => _entries;
 
   String get currentDateString =>
-      _dateFormatter.datetimeToString(DateTime.now());
+      DateFormatter.instance.datetimeToString(DateTime.now());
+  String get currentDateKey =>
+      DateFormatter(kDay).stringToKey(DateTime.now().toIso8601String());
 
   String getReadableDateString(String key) =>
-      _dateFormatter.datetimeToString(key.toDateTime());
+      dateFmt.datetimeToString(key.toDateTime());
 
-  int _getTotal(List<ExpenseEntity>? entries) {
-    if (entries != null && entries.isNotEmpty) {
-      return entries.fold(0, (sum, entry) => sum + entry.amount);
+  void getEntries() async {
+    _getExpensesUsecase().listen((failureOrEntries) {
+      failureOrEntries.fold(
+        (failure) => _entries = AsyncValue.error(_handleFailure(failure)),
+        (data) => _entries = AsyncValue.done(data),
+      );
+      notifyListeners();
+    });
+  }
+
+  Future<void> createExpenseEntry(ExpenseEntity entry) async {
+    final failureOrEntry = await _createExpenseEntryUsecase(entry);
+    failureOrEntry.fold((failure) => _handleFailure(failure), (_) {});
+  }
+
+  Future<void> eraseEntries() async {
+    final failureOrSuccess = await _eraseEntriesUsecase();
+    failureOrSuccess.fold((failure) => _handleFailure(failure), (_) {
+      _entries = AsyncValue.done({});
+    });
+    notifyListeners();
+  }
+
+  int getDailyTotal([List<ExpenseEntity>? entries]) {
+    if (entries != null) {
+      return _getTotal(entries);
+    }
+    if (_entries.data != null) {
+      return _getTotal(_entries.data![currentDateKey]);
     }
     return 0;
   }
 
-  int getDayTotal([List<ExpenseEntity>? entries]) =>
-      _getTotal(entries ?? _dayEntries.data);
-
-  int getWeekTotal() {
-    final thisWeek = _dateFormatter.getWeekOfMonth(DateTime.now());
-    return _monthEntries.data?.keys.fold<int>(
+  int getWeeklyTotal() {
+    final thisWeek = dateFmt.getWeekOfMonth(DateTime.now());
+    return _entries.data?.keys.fold<int>(
           0,
           (acc, key) {
             // complete week from previous month if [thisWeek] is the first week of the month?
-            final entryWeek = _dateFormatter.getWeekOfMonth(key.toDateTime());
+            final entryWeek = dateFmt.getWeekOfMonth(key.toDateTime());
             if (thisWeek == entryWeek) {
-              acc += _getTotal(_monthEntries.data![key]);
+              acc += _getTotal(_entries.data![key]);
             }
             return acc;
           },
@@ -65,65 +82,18 @@ class ExpenseProvider with ChangeNotifier {
         0;
   }
 
-  int getMonthTotal() =>
-      _monthEntries.data?.values.fold<int>(
+  int getMonthlyTotal() =>
+      _entries.data?.values.fold<int>(
         0,
         (acc, entries) => acc += _getTotal(entries),
       ) ??
       0;
 
-  void getDayEntries() async {
-    final failureOrEntries = await _getExpensesUsecase();
-    failureOrEntries.fold(
-      (failure) => _dayEntries = AsyncValue.error(_handleFailure(failure)),
-      (data) => _dayEntries = AsyncValue.done(data),
-    );
-    notifyListeners();
-  }
-
-  void getMonthEntries() async {
-    final failureOrEntries = await _getMonthExpensesUsecase();
-    failureOrEntries.fold(
-      (failure) => _monthEntries = AsyncValue.error(_handleFailure(failure)),
-      (data) {
-        _monthEntries = AsyncValue.done(data);
-      },
-    );
-    notifyListeners();
-  }
-
-  Future<void> createExpenseEntry(ExpenseEntity entry) async {
-    final failureOrEntry = await _createExpenseEntryUsecase(entry);
-    failureOrEntry.fold((failure) => _handleFailure(failure), (entry) {
-      _dayEntries = AsyncValue.done([entry, ..._dayEntries.data!]);
-      final _month = _monthEntries.data;
-      if (_month != null) {
-        final _fmt = DateFormatter(kDay);
-        final _key = _fmt.datetimeToString(DateTime.now());
-        if (_month.containsKey(_key)) {
-          final _entries = [entry, ..._month[_key]!];
-          _monthEntries = AsyncValue.done({
-            ..._month,
-            _key: _entries,
-          });
-        } else {
-          _monthEntries = AsyncValue.done({
-            ..._month,
-            _key: [entry],
-          });
-        }
-      }
-    });
-    notifyListeners();
-  }
-
-  Future<void> eraseEntries() async {
-    final failureOrSuccess = await _eraseEntriesUsecase();
-    failureOrSuccess.fold((failure) => _handleFailure(failure), (_) {
-      _dayEntries = AsyncValue.done([]);
-      _monthEntries = AsyncValue.done({});
-    });
-    notifyListeners();
+  int _getTotal(List<ExpenseEntity>? entries) {
+    if (entries != null && entries.isNotEmpty) {
+      return entries.fold(0, (sum, entry) => sum + entry.amount);
+    }
+    return 0;
   }
 
   String _handleFailure(Failure failure) {
