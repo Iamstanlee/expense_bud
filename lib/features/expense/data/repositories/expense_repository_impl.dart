@@ -1,9 +1,9 @@
+import 'package:expense_bud/core/data/mappers/expense.dart';
 import 'package:expense_bud/features/expense/data/datasources/local_datasource.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/core/failure/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
-import 'package:expense_bud/features/expense/data/mappers/expense.dart';
 
 class ExpenseRepository implements IExpenseRepository {
   final IExpenseLocalDataSource _localDataSource;

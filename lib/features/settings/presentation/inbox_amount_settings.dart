@@ -32,7 +32,7 @@ class InboxAmountSettingsPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int i) {
             final inboxAmount = InboxAmount.values[i];
             return ChoiceSettingItem(
-              title: settingsProvider.getInboxAmountTitle(inboxAmount),
+              title: inboxAmount.title,
               selected: inboxAmount == prefs.inboxAmount,
               onChanged: () => settingsProvider
                   .updateUserPref(prefs.copyWith(inboxAmount: inboxAmount)),

@@ -3,6 +3,7 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
+import 'package:expense_bud/features/settings/domain/entities/user_preference.dart';
 import 'package:expense_bud/features/settings/presentation/currency_settings.dart';
 import 'package:expense_bud/features/settings/presentation/inbox_amount_settings.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
@@ -30,14 +31,13 @@ class SettingsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Gap.lg,
+            Gap.md,
             SettingHeader(
               "Expenses And Entries",
               children: [
                 DefaultSettingItem(
                   'Inbox Amount',
-                  trailing:
-                      settingsProvider.getInboxAmountTitle(prefs.inboxAmount),
+                  trailing: prefs.inboxAmount.title,
                   onTap: () => context.push(const InboxAmountSettingsPage()),
                 ),
                 DefaultSettingItem(
@@ -51,28 +51,43 @@ class SettingsPage extends StatelessWidget {
                   onChanged: (value) => settingsProvider.updateUserPref(
                     prefs.copyWith(showEntryDate: value),
                   ),
-                )
+                ),
+                DefaultSettingItem(
+                  'Erase Data',
+                  textColor: AppColors.kError,
+                  onTap: () => showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) => DeleteBottomSheet(onDelete: () async {
+                      context.read<ExpenseProvider>().eraseEntries();
+                      context.pop();
+                    }),
+                  ),
+                ),
               ],
             ),
-            Gap.lg,
-            SettingHeader("App", children: [
-              DefaultSettingItem(
-                'Erase Data',
-                textColor: AppColors.kError,
-                onTap: () => showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) => DeleteBottomSheet(onDelete: () async {
-                    context.read<ExpenseProvider>().eraseEntries();
-                    context.pop();
-                  }),
+            Gap.md,
+            SettingHeader("Insights And Charts", children: [
+              SwitchSettingItem(
+                'Show Charts',
+                value: prefs.showCharts,
+                onChanged: (value) => settingsProvider.updateUserPref(
+                  prefs.copyWith(showCharts: value),
                 ),
               ),
-              const DefaultSettingItem('Version', trailing: "1.0.0-dev"),
-              const DefaultSettingItem(
-                'Built by',
-                trailing: "@Iamstanlee",
+            ]),
+            Gap.md,
+            SettingHeader("App", children: [
+              const DefaultSettingItem('Version', trailing: "1.0.0.beta"),
+              DefaultSettingItem(
+                'Feedback',
+                onTap: () => AppStrings.kFeedbackUrl.launchAsUrl(),
+              ),
+              DefaultSettingItem(
+                'Privacy Policy',
+                onTap: () => AppStrings.kPrivacyPolicyUrl.launchAsUrl(),
               ),
             ]),
+            const Gap(50)
           ],
         ),
       ),

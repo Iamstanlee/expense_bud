@@ -6,16 +6,18 @@ This app was built with clean architecture and MVVM pattern
 
 **motivation**: To have clear seperation of concerns with loosely coupled components and a undirectional flow of data, This means our app is maintainable, scalable and testable.
 
+### Screenshots
+
 <p>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s0.png" width="200px" height="auto"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s1.png" width="200px" height="auto" hspace="10"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s2.png" width="200px" height="auto" />
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s1.png" width="200px" hspace="10"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s2.png" width="200px" hspace="10"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s3.png" width="200px" hspace="10"/>
 </p>
 
 <p>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s3.png" width="200px" height="auto"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s4.png" width="200px" height="auto" hspace="10"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s5.png" width="200px" height="auto"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s4.png" width="200px" hspace="10"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s5.png" width="200px" hspace="10"/>
+    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s6.png" width="200px"hspace="10"/>
 </p>
 
 ### Frameworks/Lib
@@ -25,7 +27,7 @@ This app was built with clean architecture and MVVM pattern
 **get_it:** Dependency injection framework\
 **hive:** Super fast key-value database library
 
-## Run Locally
+### Run Locally
 
 Clone the project
 
@@ -51,7 +53,7 @@ Run the app android or ios simulator
   flutter run
 ```
 
-## Running Tests
+### Running Tests
 
 To run tests, run the following command
 
@@ -59,7 +61,6 @@ To run tests, run the following command
   flutter test
 ```
 
-## Roadmap
+### Roadmap
 
-- Add insights feature
 - Support for more currencies

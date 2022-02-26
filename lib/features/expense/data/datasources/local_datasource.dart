@@ -1,6 +1,6 @@
+import 'package:expense_bud/core/data/datasources/local_datasource.dart';
+import 'package:expense_bud/core/data/models/expense.dart';
 import 'package:expense_bud/core/failure/exceptions.dart';
-import 'package:expense_bud/core/utils/date_formatter.dart';
-import 'package:expense_bud/features/expense/data/models/expense.dart';
 import 'package:hive/hive.dart';
 
 abstract class IExpenseLocalDataSource {
@@ -24,18 +24,17 @@ abstract class IExpenseLocalDataSource {
 ///},
 /// }
 /// ```
-class ExpenseLocalDataSource implements IExpenseLocalDataSource {
+class ExpenseLocalDataSource extends LocalDataSource
+    implements IExpenseLocalDataSource {
   final Box _box;
-  final DateFormatter _dayFormatter = DateFormatter(kDay);
-  final DateFormatter _monthFormatter = DateFormatter(kMonth);
-  ExpenseLocalDataSource(this._box);
+  ExpenseLocalDataSource(this._box) : super(_box);
 
   @override
   Future<ExpenseModel> createExpenseEntry(ExpenseModel expense) async {
     try {
-      final monthKey = _getMonthKey(expense.createdAt);
-      final dayKey = _getDayKey(expense.createdAt);
-      if (_has(monthKey)) {
+      final monthKey = getMonthKey(expense.createdAt);
+      final dayKey = getDayKey(expense.createdAt);
+      if (has(monthKey)) {
         final month = _box.get(monthKey)! as Map;
         if (month.containsKey(dayKey)) {
           final items = month[dayKey];
@@ -78,7 +77,7 @@ class ExpenseLocalDataSource implements IExpenseLocalDataSource {
 
   Map<String, List<ExpenseModel>> _getMonthlyEntries() {
     final today = DateTime.now().toIso8601String();
-    final key = _getMonthKey(today);
+    final key = getMonthKey(today);
     final currentMonth = _box.get(key, defaultValue: {}) as Map;
     Map<String, List<ExpenseModel>> mapEntry = {};
     currentMonth.keys.toList().cast<String>()
@@ -87,17 +86,5 @@ class ExpenseLocalDataSource implements IExpenseLocalDataSource {
         mapEntry[k] = (currentMonth[k] as List).cast<ExpenseModel>();
       });
     return mapEntry;
-  }
-
-  String _getDayKey(String date) {
-    return _dayFormatter.stringToKey(date);
-  }
-
-  String _getMonthKey(String date) {
-    return _monthFormatter.stringToKey(date);
-  }
-
-  bool _has(String key) {
-    return _box.containsKey(key);
   }
 }

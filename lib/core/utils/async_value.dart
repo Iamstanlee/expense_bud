@@ -23,11 +23,7 @@ class AsyncValue<T> {
           return error!(message);
       }
     } catch (e) {
-      throw Exception("@{$status}-$e");
+      throw Exception("{$status}:$e");
     }
   }
-
-  @override
-  String toString() =>
-      'AsyncValue(status: $status, data: $data, message: $message)';
 }
