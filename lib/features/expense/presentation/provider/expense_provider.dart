@@ -2,7 +2,7 @@ import 'package:expense_bud/core/failure/failure.dart';
 import 'package:expense_bud/core/utils/async_value.dart';
 import 'package:expense_bud/core/utils/date_formatter.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/domain/usecases/create_entry_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/erase_entries_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/get_expenses_usecase.dart';
@@ -25,8 +25,7 @@ class ExpenseProvider with ChangeNotifier {
   AsyncValue<Map<String, List<ExpenseEntity>>> _entries = AsyncValue.loading();
   AsyncValue<Map<String, List<ExpenseEntity>>> get entries => _entries;
 
-  String get currentDateString =>
-      DateFormatter.instance.datetimeToString(DateTime.now());
+  String get currentDateString => dateFmt.datetimeToString(DateTime.now());
   String get currentDateKey =>
       DateFormatter(kDay).stringToKey(DateTime.now().toIso8601String());
 

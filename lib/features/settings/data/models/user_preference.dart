@@ -17,10 +17,14 @@ class UserPreferenceModel extends HiveObject {
   @HiveField(3)
   final bool onboardingComplete;
 
+  @HiveField(4, defaultValue: false)
+  final bool showCharts;
+
   UserPreferenceModel({
     required this.showEntryDate,
     required this.inboxAmount,
     required this.currency,
     required this.onboardingComplete,
+    required this.showCharts,
   });
 }

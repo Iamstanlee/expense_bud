@@ -17,6 +17,7 @@ class SettingsProvider with ChangeNotifier {
 
   UserPreferenceEntity _preference = UserPreferenceEntity(
     inboxAmount: InboxAmount.week,
+    showCharts: true,
     showEntryDate: false,
     onboardingComplete: false,
     currency: usd,
@@ -49,18 +50,5 @@ class SettingsProvider with ChangeNotifier {
       if (pref != null) __preference = pref;
     });
     _money = Money(preference.currency);
-  }
-}
-
-extension SettingsProviderExtension on SettingsProvider {
-  String getInboxAmountTitle(InboxAmount inboxAmount) {
-    switch (inboxAmount) {
-      case InboxAmount.today:
-        return "spent today";
-      case InboxAmount.month:
-        return "spent this month";
-      default:
-        return "spent this week";
-    }
   }
 }

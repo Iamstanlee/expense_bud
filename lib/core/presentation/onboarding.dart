@@ -1,8 +1,8 @@
 import 'package:expense_bud/config/config.dart';
+import 'package:expense_bud/core/presentation/app.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
-import 'package:expense_bud/features/app/presentation/app.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -19,7 +19,7 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             const Gap(64),
-            Image.asset(AppImages.logo, height: 27),
+            Image.asset(AppImages.logo, height: 24),
             const Gap(Insets.lg),
             const Info(
               'Add entries',
@@ -35,7 +35,7 @@ class OnboardingPage extends StatelessWidget {
             const Gap(Insets.lg),
             const Info(
               'Make right decisions',
-              'And control your money flow',
+              'Control your money flow and stay on top of your game',
               PhosphorIcons.medal,
             ),
             const Spacer(),

@@ -94,7 +94,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
             : CrossAxisAlignment.start,
         children: [
           Text(
-            settingsProvider.getInboxAmountTitle(prefs.inboxAmount),
+            prefs.inboxAmount.title,
             style: context.textTheme.overline!.copyWith(
               color: Colors.white.withOpacity(0.8),
               fontSize: FontSizes.s8,

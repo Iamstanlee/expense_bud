@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:expense_bud/core/failure/failure.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 
 abstract class IExpenseRepository {
   Stream<Either<Failure, Map<String, List<ExpenseEntity>>>>

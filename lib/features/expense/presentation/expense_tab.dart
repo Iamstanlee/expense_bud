@@ -3,7 +3,7 @@ import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/core/widgets/state.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/presentation/expense_list_item.dart';
 import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
@@ -81,7 +81,7 @@ class TodayTab extends StatelessWidget {
           ExpenseHeader(date: date),
           entries.when(
             loading: (msg) => const Center(child: Text("Loading...")),
-            done: (entries) => entries.isEmpty
+            done: (entries) => entries[key] == null
                 ? const NoDataOrError("No entries today")
                 : ExpenseList(entries[key]!),
             error: (msg) => NoDataOrError(msg!, variant: Variant.error),

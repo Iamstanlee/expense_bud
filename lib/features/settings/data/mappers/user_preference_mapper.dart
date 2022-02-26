@@ -5,6 +5,7 @@ import 'package:expense_bud/features/settings/domain/entities/user_preference.da
 extension UserPreferenceEntityMapper on UserPreferenceEntity {
   UserPreferenceModel toModel() => UserPreferenceModel(
         showEntryDate: showEntryDate,
+        showCharts: showCharts,
         inboxAmount: inboxAmount.name,
         currency: currency.toModel(),
         onboardingComplete: onboardingComplete,
@@ -14,6 +15,7 @@ extension UserPreferenceEntityMapper on UserPreferenceEntity {
 extension UserPreferenceModelMapper on UserPreferenceModel {
   UserPreferenceEntity toEntity() => UserPreferenceEntity(
         showEntryDate: showEntryDate,
+        showCharts: showCharts,
         inboxAmount:
             InboxAmount.values.singleWhere((e) => e.name == inboxAmount),
         currency: currency.toEntity(),

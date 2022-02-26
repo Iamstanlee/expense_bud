@@ -4,7 +4,7 @@ import 'package:expense_bud/core/utils/date_formatter.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/expense_avatar.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
-import 'package:expense_bud/features/expense/domain/entities/expense.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
