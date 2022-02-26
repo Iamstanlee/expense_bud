@@ -37,7 +37,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-          <queries>
+    </application>
+     <queries>
               <intent>
                 <action android:name="android.intent.action.VIEW" />
                 <data android:scheme="https" />
@@ -47,5 +48,4 @@
                 <data android:mimeType="*/*" />
               </intent>
           </queries>
-    </application>
 </manifest>

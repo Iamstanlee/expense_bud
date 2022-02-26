@@ -2,6 +2,10 @@
 
 An app to help you keep track of your expenses and stay on top of your game 🚀
 
+<a href="https://play.google.com/store/apps/details?id=com.app.expense_bud">
+<img width="170px" alt="Playstore Link" src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/playstore.png"/>
+<a/>
+
 This app was built with clean architecture and MVVM pattern
 
 **motivation**: To have clear seperation of concerns with loosely coupled components and a undirectional flow of data, This means our app is maintainable, scalable and testable.
