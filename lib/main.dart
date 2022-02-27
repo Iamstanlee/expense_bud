@@ -27,14 +27,14 @@ class ExpenseTracker extends StatelessWidget {
         ChangeNotifierProvider<SettingsProvider>(create: (context) => getIt()),
       ],
       child: Builder(builder: (context) {
-        final prefs = context.watch<SettingsProvider>().preference;
+        final onboardingComplete = context.select<SettingsProvider, bool>(
+          (settings) => settings.preference.onboardingComplete,
+        );
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.defaultTheme,
           title: AppStrings.kTitle,
-          home: prefs.onboardingComplete
-              ? const AppPage()
-              : const OnboardingPage(),
+          home: onboardingComplete ? const AppPage() : const OnboardingPage(),
         );
       }),
     );
