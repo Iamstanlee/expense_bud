@@ -32,7 +32,7 @@ class ExpenseProvider with ChangeNotifier {
   String getReadableDateString(String key) =>
       dateFmt.datetimeToString(key.toDateTime());
 
-  void getEntries() async {
+  void getEntries() {
     _getExpensesUsecase().listen((failureOrEntries) {
       failureOrEntries.fold(
         (failure) => _entries = AsyncValue.error(_handleFailure(failure)),

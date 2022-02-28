@@ -37,7 +37,10 @@ class NoDataOrError extends StatelessWidget {
             ),
           ),
           Gap.md,
-          Text(msg),
+          Text(
+            msg,
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );

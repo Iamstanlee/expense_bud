@@ -25,8 +25,8 @@ class InsightHeader extends StatelessWidget {
     final color =
         increasedFromLastInsightPeriod ? AppColors.kError : Colors.green;
     final iconData = increasedFromLastInsightPeriod
-        ? PhosphorIcons.arrowUpRight
-        : PhosphorIcons.arrowDownRight;
+        ? PhosphorIcons.arrowUp
+        : PhosphorIcons.arrowDown;
 
     return SizedBox(
       height: 80,
@@ -55,9 +55,7 @@ class InsightHeader extends StatelessWidget {
                     const Gap(2),
                     Text(
                       '$percentageIncOrDec%',
-                      style: context.textTheme.caption!.copyWith(
-                        color: color,
-                      ),
+                      style: context.textTheme.caption!.copyWith(color: color),
                     )
                   ],
                 ),
