@@ -38,7 +38,7 @@ class InsightHeader extends StatelessWidget {
               AutoSizeText(
                 total,
                 style: context.textTheme.headline4!
-                    .copyWith(color: AppColors.kDark, fontSize: FontSizes.s28),
+                    .copyWith(color: color, fontSize: FontSizes.s28),
                 maxLines: 1,
               ),
               Gap.sm,

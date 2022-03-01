@@ -9,7 +9,7 @@ class InsightEntity {
 
   const InsightEntity(this.cur, this.prev);
 
-  bool get isEmpty => cur.isEmpty && prev.isEmpty;
+  bool get isEmpty => cur.isEmpty;
 
   /// total amount of expense for this particular insight period
   int get total => cur.fold(0, (a, c) => a += c.amount);
