@@ -1,4 +1,5 @@
-import 'package:expense_bud/config/config.dart';
+import 'package:expense_bud/config/constants.dart';
+import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/core/utils/currencies.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/features/settings/presentation/choice_settings_item.dart';

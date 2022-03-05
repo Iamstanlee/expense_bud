@@ -77,10 +77,9 @@ extension ContextExtension on BuildContext {
       this, PageRouter.fadeThrough(() => page), (_) => false);
 
   Future<bool> pop<T>([T? result]) => Navigator.maybePop(this, result);
-  // Future<void> showToast(String msg) =>;
 }
 
-extension ClickableExtension on Widget {
+extension WidgetExtension on Widget {
   Widget onTap(VoidCallback action, {bool opaque = true}) {
     return GestureDetector(
       behavior: opaque ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,

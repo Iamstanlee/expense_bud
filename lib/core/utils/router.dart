@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 typedef PageBuilder = Widget Function();
@@ -12,23 +11,22 @@ class PageRouter {
       transitionDuration: Duration(milliseconds: (duration * 1000).round()),
       pageBuilder: (context, animation, secondaryAnimation) => pageBuilder(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeThroughTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
+        return FadeTransition(
+          opacity: animation,
           child: child,
         );
       },
     );
   }
 
-  static Route<T> fadeScale<T>(PageBuilder pageBuilder,
+  static Route<T> scale<T>(PageBuilder pageBuilder,
       [double duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
       transitionDuration: Duration(milliseconds: (duration * 1000).round()),
       pageBuilder: (context, animation, secondaryAnimation) => pageBuilder(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeScaleTransition(
-          animation: animation,
+        return ScaleTransition(
+          scale: animation,
           child: child,
         );
       },

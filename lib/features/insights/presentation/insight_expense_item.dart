@@ -1,4 +1,4 @@
-import 'package:expense_bud/config/config.dart';
+import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/core/utils/category_items.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
