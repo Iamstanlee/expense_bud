@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Settings',
+          'Impostazioni',
           style: context.textTheme.subtitle1,
         ),
         centerTitle: true,
@@ -33,27 +33,27 @@ class SettingsPage extends StatelessWidget {
           children: [
             Gap.md,
             SettingHeader(
-              "Expenses And Entries",
+              "Spese e voci",
               children: [
                 DefaultSettingItem(
-                  'Inbox Amount',
+                  'Totale mostrato',
                   trailing: prefs.inboxAmount.title,
                   onTap: () => context.push(const InboxAmountSettingsPage()),
                 ),
                 DefaultSettingItem(
-                  'Currency',
+                  'Valuta',
                   trailing: prefs.currency.name,
                   onTap: () => context.push(const CurrencySettingsPage()),
                 ),
                 SwitchSettingItem(
-                  'Show Date',
+                  'Mostra data',
                   value: prefs.showEntryDate,
                   onChanged: (value) => settingsProvider.updateUserPref(
                     prefs.copyWith(showEntryDate: value),
                   ),
                 ),
                 DefaultSettingItem(
-                  'Erase Data',
+                  'Cancella i dati',
                   textColor: AppColors.kError,
                   onTap: () => showCupertinoModalPopup(
                     context: context,
@@ -66,9 +66,9 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
             Gap.md,
-            SettingHeader("Insights And Charts", children: [
+            SettingHeader("Intuizioni e grafici", children: [
               SwitchSettingItem(
-                'Show Charts',
+                'Mostra grafici',
                 value: prefs.showCharts,
                 onChanged: (value) => settingsProvider.updateUserPref(
                   prefs.copyWith(showCharts: value),
@@ -76,8 +76,8 @@ class SettingsPage extends StatelessWidget {
               ),
             ]),
             Gap.md,
-            SettingHeader("App", children: [
-              const DefaultSettingItem('Version', trailing: "1.0.0.beta"),
+            SettingHeader("Info app", children: [
+              const DefaultSettingItem('Versione', trailing: "0.2.0.beta"),
               DefaultSettingItem(
                 'Feedback',
                 onTap: () => AppStrings.kFeedbackUrl.launchAsUrl(),
@@ -227,18 +227,18 @@ class DeleteBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "You're about to delete all entries on this app, this cannot be undone",
+              "Stai per eliminare tutte le voci su questa app, questo non può essere annullato",
               textAlign: TextAlign.center,
               style: context.textTheme.caption!,
             ),
             Gap.md,
             Button(
-              "DELETE",
+              "ELIMINA",
               color: AppColors.kError,
               onTap: () => onDelete?.call(),
             ),
             Gap.md,
-            const Text('CANCEL').onTap(() => context.pop()),
+            const Text('ANNULLA').onTap(() => context.pop()),
             Gap.md,
           ],
         ),

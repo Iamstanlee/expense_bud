@@ -80,9 +80,9 @@ class TodayTab extends StatelessWidget {
         children: [
           ExpenseHeader(date: date),
           entries.when(
-            loading: (msg) => const Center(child: Text("Loading...")),
+            loading: (msg) => const Center(child: Text("Caricamento in corso...")),
             done: (entries) => entries[key] == null
-                ? const NoDataOrError("No entries today")
+                ? const NoDataOrError("Nessuna voce oggi")
                 : ExpenseList(entries[key]!),
             error: (msg) => NoDataOrError(msg!, variant: Variant.error),
           )
@@ -107,9 +107,9 @@ class MonthTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           entries.when(
-            loading: (msg) => const Center(child: Text("Loading...")),
+            loading: (msg) => const Center(child: Text("Caricamento in corso...")),
             done: (data) => data.isEmpty
-                ? const NoDataOrError("No entries this month")
+                ? const NoDataOrError("Nessuna voce questo mese")
                 : Column(
                     children: [
                       ...data.keys

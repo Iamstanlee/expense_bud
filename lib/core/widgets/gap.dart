@@ -36,7 +36,7 @@ class RenderGap extends RenderBox {
   void performLayout() {
     final Axis? direction = (parent as RenderFlex?)?.direction;
     assert(direction != null,
-        'gap should not be used outside of a Flex (Row, Column)');
+        'Gap non deve essere usato al di fuori di un flex (riga, colonna)');
     if (direction == null) {
       size = Size(0, gap);
     } else {

@@ -38,33 +38,33 @@ class DateFormatter {
     final diff = thisInstant.difference(date.toDateTime());
 
     if ((diff.inDays / 365).floor() >= 2) {
-      return '${(diff.inDays / 365).floor()} years ago';
+      return '${(diff.inDays / 365).floor()} anni fa';
     } else if ((diff.inDays / 365).floor() >= 1) {
-      return 'Last year';
+      return 'Anno scorso';
     } else if ((diff.inDays / 30).floor() >= 2) {
-      return '${(diff.inDays / 30).floor()} months ago';
+      return '${(diff.inDays / 30).floor()} mesi fa';
     } else if ((diff.inDays / 30).floor() >= 1) {
-      return 'Last month';
+      return 'Lo scorso mese';
     } else if ((diff.inDays / 7).floor() >= 2) {
-      return '${(diff.inDays / 7).floor()} weeks ago';
+      return '${(diff.inDays / 7).floor()} settimane fa';
     } else if ((diff.inDays / 7).floor() >= 1) {
-      return 'Last week';
+      return 'La settimana scorsa';
     } else if (diff.inDays >= 2) {
-      return '${diff.inDays} days ago';
+      return '${diff.inDays} giorni fa';
     } else if (diff.inDays >= 1) {
-      return 'Yesterday';
+      return 'Ieri';
     } else if (diff.inHours >= 2) {
-      return '${diff.inHours} hours ago';
+      return '${diff.inHours} ore fa';
     } else if (diff.inHours >= 1) {
-      return '1 hour ago';
+      return '1 ora fa';
     } else if (diff.inMinutes >= 2) {
-      return '${diff.inMinutes} minutes ago';
+      return '${diff.inMinutes} minuti fa';
     } else if (diff.inMinutes >= 1) {
-      return '1 minute ago';
+      return '1 minuto fa';
     } else if (diff.inSeconds >= 3) {
-      return '${diff.inSeconds} seconds ago';
+      return '${diff.inSeconds} secondi fa';
     } else {
-      return 'Just now';
+      return 'Proprio adesso';
     }
   }
 }

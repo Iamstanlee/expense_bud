@@ -7,7 +7,7 @@ void main() {
     date = DateTime(2022, 2, 22);
   });
 
-  test('it should format date according to pattern', () {
+  test('Dovrebbe formattare la data in base allo schema', () {
     final DateFormatter dateFormatter = DateFormatter("d MMM, yyyy");
     expect(dateFormatter.datetimeToString(date), "22 Feb, 2022");
 
@@ -15,20 +15,20 @@ void main() {
     expect(defaultDateFormatter.datetimeToString(date), "Tue, 22 Feb");
   });
 
-  test('it should parse date string into [Day] key format', () {
+  test('Dovrebbe analizzare la stringa data in formato chiave [giorno]', () {
     final DateFormatter dateFormatter = DateFormatter(kDay);
     final str = date.toIso8601String();
     expect(dateFormatter.stringToKey(str), "2022-02-22");
   });
 
-  test('it should parse date string into [Month] key format', () {
+  test('Dovrebbe analizzare la stringa della data nel formato chiave [mese]', () {
     final DateFormatter dateFormatter = DateFormatter(kMonth);
     final str = date.toIso8601String();
     expect(dateFormatter.stringToKey(str), "2022-02");
   });
 
   group("getWeekOfMonth", () {
-    test("it returns the week of the month of the given date", () {
+    test("Restituisce la settimana del mese della data data", () {
       final fmt = DateFormatter.instance;
       final result1 = fmt.getWeekOfMonth(DateTime(2022, 2, 5));
       final result2 = fmt.getWeekOfMonth(DateTime(2022, 2, 10));
@@ -38,17 +38,17 @@ void main() {
       expect(result3, equals(3));
     });
     group("edge cases", () {
-      test("when given day is the first of the month", () {
+      test("Quando viene dato il giorno è il primo del mese", () {
         final fmt = DateFormatter.instance;
         final result = fmt.getWeekOfMonth(DateTime(2022, 10, 1));
         expect(result, equals(1));
       });
-      test("when given day is the last of the month #1", () {
+      test("Quando viene dato il giorno è l'ultimo del mese #1", () {
         final fmt = DateFormatter.instance;
         final result = fmt.getWeekOfMonth(DateTime(2022, 9, 30));
         expect(result, equals(5));
       });
-      test("when given day is the last of the month #2", () {
+      test("Quando viene dato il giorno è l'ultimo del mese #2", () {
         final fmt = DateFormatter.instance;
         final result = fmt.getWeekOfMonth(DateTime(2022, 10, 31));
         expect(result, equals(6));

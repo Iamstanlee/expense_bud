@@ -22,25 +22,25 @@ class OnboardingPage extends StatelessWidget {
             Image.asset(AppImages.logo, height: 24),
             const Gap(Insets.lg),
             const Info(
-              'Add entries',
-              'Keep track of your income and expenses',
+              'Aggiungi voci',
+              'Tieni traccia dei tuoi redditi e spese',
               PhosphorIcons.tray,
             ),
             const Gap(Insets.lg),
             const Info(
-              'Check insights',
-              'Detailed weekly and monthly charts based on your entries',
+              'Controlla le intuizioni',
+              'Grafici settimanali e mensili dettagliati in base alle voci',
               PhosphorIcons.lightning,
             ),
             const Gap(Insets.lg),
             const Info(
-              'Make right decisions',
-              'Control your money flow and stay on top of your game',
+              'Fare decisioni giuste',
+              'Controlla il tuo flusso di denaro e rimani in cima al tuo gioco',
               PhosphorIcons.medal,
             ),
             const Spacer(),
             Button(
-              "GET STARTED",
+              "INIZIARE",
               onTap: () {
                 final settings = context.read<SettingsProvider>();
                 final prefs = settings.preference;

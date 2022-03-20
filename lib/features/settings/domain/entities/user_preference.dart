@@ -6,11 +6,11 @@ extension InboxAmountExtension on InboxAmount {
   String get title {
     switch (this) {
       case InboxAmount.today:
-        return "spent today";
+        return "Oggi";
       case InboxAmount.month:
-        return "spent this month";
+        return "Questo mese";
       default:
-        return "spent this week";
+        return "Questa settimana";
     }
   }
 }

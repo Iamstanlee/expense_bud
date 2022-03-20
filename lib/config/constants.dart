@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppStrings {
-  static const kTitle = 'Expense Bud';
+  static const kTitle = 'Money';
   static const kPrivacyPolicyUrl =
-      "https://github.com/Iamstanlee/expense_bud/wiki/Privacy-Policy";
+      "https://github.com/";
   static const kFeedbackUrl =
-      "mailto:hey@stanleee.me?subject=Expense%20Bud%20Feedback";
+      "mailto:gianlucadand@gmail.com?subject=Expense%20Bud%20Feedback";
 }
 
 class AppIcons {

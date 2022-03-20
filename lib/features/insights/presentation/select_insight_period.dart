@@ -16,7 +16,7 @@ class SelectInsightPeriod extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Insight Period',
+          'Periodo di intuizione',
           style: context.textTheme.subtitle1,
         ),
         leading: Icon(

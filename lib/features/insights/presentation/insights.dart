@@ -61,7 +61,7 @@ class _InsightsPageState extends State<InsightsPage> {
         centerTitle: true,
       ),
       body: asyncValueOfInsight.when(
-        loading: (_) => const Center(child: Text("Loading...")),
+        loading: (_) => const Center(child: Text("Caricamento in corso...")),
         done: (insight) {
           final map =
               insight.sortedMapOfCategoryToPairOfAmountAndNumOfEntries();
@@ -75,7 +75,7 @@ class _InsightsPageState extends State<InsightsPage> {
               ),
               if (insight.isEmpty)
                 const SliverFillRemaining(
-                  child: NoDataOrError("No data to analyze"),
+                  child: NoDataOrError("Nessun dato da analizzare"),
                 )
               else
                 SliverList(

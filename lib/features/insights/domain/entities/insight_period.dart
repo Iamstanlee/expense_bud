@@ -6,15 +6,15 @@ extension InsightPeriodExtension on InsightPeriod {
   String get title {
     switch (this) {
       case InsightPeriod.last7Days:
-        return "Last 7 Days";
+        return "Ultimi 7 giorni";
       case InsightPeriod.last14Days:
-        return "Last 14 Days";
+        return "Ultimi 14 giorni";
       case InsightPeriod.thisMonth:
-        return "This Month";
+        return "Questo mese";
       case InsightPeriod.lastMonth:
-        return "Last Month";
+        return "Lo scorso mese";
       default:
-        return "Last 3 Days";
+        return "Ultimi 3 giorni";
     }
   }
 

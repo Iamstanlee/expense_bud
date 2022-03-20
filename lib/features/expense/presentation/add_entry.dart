@@ -80,7 +80,7 @@ class _AddEntryPageState extends State<AddEntryPage>
                         ),
                       ),
                       Text(
-                        'Add Transaction',
+                        'Aggiungi transazione',
                         style: context.textTheme.subtitle1,
                       ),
                     ],

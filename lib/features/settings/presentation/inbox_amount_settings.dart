@@ -17,7 +17,7 @@ class InboxAmountSettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Inbox Amount',
+          'Importo totale:',
           style: context.textTheme.subtitle1,
         ),
         leading: Icon(

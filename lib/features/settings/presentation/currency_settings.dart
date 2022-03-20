@@ -18,7 +18,7 @@ class CurrencySettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Currency',
+          'Valuta',
           style: context.textTheme.subtitle1,
         ),
         leading: Icon(
