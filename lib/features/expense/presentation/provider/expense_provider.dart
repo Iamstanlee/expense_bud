@@ -1,4 +1,3 @@
-import 'package:expense_bud/core/failure/failure.dart';
 import 'package:expense_bud/core/utils/async_value.dart';
 import 'package:expense_bud/core/utils/date_formatter.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
@@ -35,7 +34,7 @@ class ExpenseProvider with ChangeNotifier {
   void getEntries() {
     _getExpensesUsecase().listen((failureOrEntries) {
       failureOrEntries.fold(
-        (failure) => _entries = AsyncValue.error(_handleFailure(failure)),
+        (failure) => _entries = AsyncValue.error(failure.msg),
         (data) => _entries = AsyncValue.done(data),
       );
       notifyListeners();
@@ -44,12 +43,12 @@ class ExpenseProvider with ChangeNotifier {
 
   Future<void> createExpenseEntry(ExpenseEntity entry) async {
     final failureOrEntry = await _createExpenseEntryUsecase(entry);
-    failureOrEntry.fold((failure) => _handleFailure(failure), (_) {});
+    failureOrEntry.fold((failure) => {}, (_) {});
   }
 
   Future<void> eraseEntries() async {
     final failureOrSuccess = await _eraseEntriesUsecase();
-    failureOrSuccess.fold((failure) => _handleFailure(failure), (_) {
+    failureOrSuccess.fold((failure) => {}, (_) {
       _entries = AsyncValue.done({});
     });
     notifyListeners();
@@ -93,16 +92,5 @@ class ExpenseProvider with ChangeNotifier {
       return entries.fold(0, (sum, entry) => sum + entry.amount);
     }
     return 0;
-  }
-
-  String _handleFailure(Failure failure) {
-    switch (failure.runtimeType) {
-      case CacheGetFailure:
-        return "Error getting entries from device";
-      case CachePutFailure:
-        return "Error saving entry to device";
-      default:
-        return "An unexpected error occured";
-    }
   }
 }

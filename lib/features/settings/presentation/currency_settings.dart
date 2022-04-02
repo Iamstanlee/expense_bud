@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
-// TODO: apply exchange rate when changing currency
 class CurrencySettingsPage extends StatelessWidget {
   const CurrencySettingsPage({Key? key}) : super(key: key);
   @override

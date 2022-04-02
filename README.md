@@ -64,7 +64,3 @@ To run tests, run the following command
 ```bash
   flutter test
 ```
-
-### Roadmap
-
-- Support for more currencies

@@ -147,7 +147,8 @@ class _InsightsPageState extends State<InsightsPage> {
                                 totalAmount: money.formatValue(map[key]!.left),
                                 numOfEntries: map[key]!.right,
                               ),
-                            )
+                            ),
+                            Gap.lg,
                           ],
                         ),
                       )

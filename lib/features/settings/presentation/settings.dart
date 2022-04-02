@@ -5,16 +5,33 @@ import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
 import 'package:expense_bud/features/settings/domain/entities/user_preference.dart';
-import 'package:expense_bud/features/settings/presentation/currency_settings.dart';
 import 'package:expense_bud/features/settings/presentation/inbox_amount_settings.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  PackageInfo? packageInfo;
+  @override
+  void initState() {
+    getPackageInfo();
+    super.initState();
+  }
+
+  void getPackageInfo() async {
+    packageInfo = await PackageInfo.fromPlatform();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +58,11 @@ class SettingsPage extends StatelessWidget {
                   trailing: prefs.inboxAmount.title,
                   onTap: () => context.push(const InboxAmountSettingsPage()),
                 ),
-                DefaultSettingItem(
-                  'Currency',
-                  trailing: prefs.currency.name,
-                  onTap: () => context.push(const CurrencySettingsPage()),
-                ),
+                // DefaultSettingItem(
+                //   'Currency',
+                //   trailing: prefs.currency.name,
+                //   onTap: () => context.push(const CurrencySettingsPage()),
+                // ),
                 SwitchSettingItem(
                   'Show Date',
                   value: prefs.showEntryDate,
@@ -78,7 +95,7 @@ class SettingsPage extends StatelessWidget {
             ]),
             Gap.md,
             SettingHeader("App", children: [
-              const DefaultSettingItem('Version', trailing: "1.0.0.beta"),
+              DefaultSettingItem('Version', trailing: packageInfo?.version),
               DefaultSettingItem(
                 'Feedback',
                 onTap: () => AppStrings.kFeedbackUrl.launchAsUrl(),

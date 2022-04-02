@@ -1,13 +1,11 @@
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
-import 'package:expense_bud/core/presentation/app.dart';
+import 'package:expense_bud/core/presentation/choose_currency.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/button.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
-import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -42,13 +40,7 @@ class OnboardingPage extends StatelessWidget {
             const Spacer(),
             Button(
               "GET STARTED",
-              onTap: () {
-                final settings = context.read<SettingsProvider>();
-                final prefs = settings.preference;
-                settings
-                    .updateUserPref(prefs.copyWith(onboardingComplete: true));
-                context.pushOff(const AppPage());
-              },
+              onTap: () => context.push(const ChooseCurrencyPage()),
             ),
             const Gap(Insets.lg),
           ],

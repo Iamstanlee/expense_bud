@@ -63,53 +63,8 @@ class InsightHeader extends StatelessWidget {
             ],
           ),
           Gap.md,
-          Expanded(
-            child: FittedBox(
-              child: SizedBox(
-                height: 50,
-                width: 100,
-                child: CustomPaint(
-                  painter: SplineLinePainter(color, splinePoints),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
-}
-
-class SplineLinePainter extends CustomPainter {
-  final Color color;
-  final List<double> splinePoints;
-  SplineLinePainter(this.color, this.splinePoints);
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 1.6;
-    // TODO: try draw line?
-    canvas.drawPoints(
-      PointMode.polygon,
-      [
-        Offset(0, size.height / 2),
-        ...List.generate(
-          splinePoints.length,
-          (i) {
-            final point = splinePoints[i];
-            return Offset(
-              i * size.width / splinePoints.length,
-              point * size.height,
-            );
-          },
-        )
-      ],
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
