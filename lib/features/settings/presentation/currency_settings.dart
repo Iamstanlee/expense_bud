@@ -19,7 +19,7 @@ class CurrencySettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Currency',
-          style: context.textTheme.subtitle1,
+          style: context.textTheme.titleMedium,
         ),
         leading: Icon(
           PhosphorIcons.caretLeft,

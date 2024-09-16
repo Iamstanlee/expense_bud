@@ -10,11 +10,9 @@ class AppTheme {
         fontFamily: Fonts.kPrimary,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            elevation: 0,
+            foregroundColor: Colors.white, elevation: 0, backgroundColor: AppColors.kPrimary,
             shape:
                 const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-            primary: AppColors.kPrimary,
-            onPrimary: Colors.white,
           ),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(

@@ -18,7 +18,7 @@ class SelectInsightPeriod extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Insight Period',
-          style: context.textTheme.subtitle1,
+          style: context.textTheme.titleMedium,
         ),
         leading: Icon(
           PhosphorIcons.x,

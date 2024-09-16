@@ -36,12 +36,12 @@ class ExpenseItem extends StatelessWidget {
                 children: [
                   Text(
                     categoryItem.title,
-                    style: context.textTheme.bodyText1!
+                    style: context.textTheme.bodyLarge!
                         .copyWith(fontSize: FontSizes.s16),
                   ),
                   Text(
                     "$numOfEntries ${'entry'.pluralize(numOfEntries)}",
-                    style: context.textTheme.caption,
+                    style: context.textTheme.bodySmall,
                   ),
                 ],
               )
@@ -50,7 +50,7 @@ class ExpenseItem extends StatelessWidget {
           const Spacer(),
           Text(
             totalAmount,
-            style: context.textTheme.bodyText2!.copyWith(
+            style: context.textTheme.bodyMedium!.copyWith(
               color: const Color(0xFFE58D67),
             ),
           )

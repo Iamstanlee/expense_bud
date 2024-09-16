@@ -35,13 +35,13 @@ class ExpenseListItem extends StatelessWidget {
                 children: [
                   Text(
                     _categoryItem.title,
-                    style: context.textTheme.bodyText1!
+                    style: context.textTheme.bodyLarge!
                         .copyWith(fontSize: FontSizes.s16),
                   ),
                   if (showEntryDate)
                     Text(
                       "Added ${_dateFormatter.relativeToNow(_expense.createdAt)}",
-                      style: context.textTheme.caption,
+                      style: context.textTheme.bodySmall,
                     ),
                 ],
               )
@@ -50,7 +50,7 @@ class ExpenseListItem extends StatelessWidget {
           const Spacer(),
           Text(
             money.formatValue(_expense.amount),
-            style: context.textTheme.bodyText2!.copyWith(
+            style: context.textTheme.bodyMedium!.copyWith(
               color: const Color(0xFFE58D67),
             ),
           )

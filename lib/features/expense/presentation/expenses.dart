@@ -96,7 +96,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
         children: [
           Text(
             prefs.inboxAmount.title,
-            style: context.textTheme.overline!.copyWith(
+            style: context.textTheme.labelSmall!.copyWith(
               color: Colors.white.withOpacity(0.8),
               fontSize: FontSizes.s8,
             ),
@@ -104,7 +104,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
           const Gap(2),
           AutoSizeText(
             money.formatValue(inboxAmount),
-            style: context.textTheme.headline4!
+            style: context.textTheme.headlineMedium!
                 .copyWith(color: Colors.white, fontSize: FontSizes.s28),
             maxLines: 1,
           ),

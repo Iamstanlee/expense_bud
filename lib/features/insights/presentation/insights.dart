@@ -45,7 +45,7 @@ class _InsightsPageState extends State<InsightsPage> {
           children: [
             Text(
               insightPeriod.title,
-              style: context.textTheme.subtitle1,
+              style: context.textTheme.titleMedium,
             ),
             const Gap(4),
             Icon(
@@ -100,7 +100,7 @@ class _InsightsPageState extends State<InsightsPage> {
                             if (settingsProvider.preference.showCharts) ...[
                               Text(
                                 "PERFORMANCE CHART",
-                                style: context.textTheme.caption,
+                                style: context.textTheme.bodySmall,
                               ),
                               Gap.md,
                               SizedBox(
@@ -138,7 +138,7 @@ class _InsightsPageState extends State<InsightsPage> {
                             ],
                             Text(
                               "EXPENSE BREAKDOWN",
-                              style: context.textTheme.caption,
+                              style: context.textTheme.bodySmall,
                             ),
                             Gap.md,
                             ...map.keys.map(

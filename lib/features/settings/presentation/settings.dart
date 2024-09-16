@@ -9,7 +9,6 @@ import 'package:expense_bud/features/settings/presentation/inbox_amount_settings
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -21,18 +20,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  PackageInfo? packageInfo;
-  @override
-  void initState() {
-    getPackageInfo();
-    super.initState();
-  }
-
-  void getPackageInfo() async {
-    packageInfo = await PackageInfo.fromPlatform();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     final settingsProvider = context.watch<SettingsProvider>();
@@ -42,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: Text(
           'Settings',
-          style: context.textTheme.subtitle1,
+          style: context.textTheme.titleMedium,
         ),
         centerTitle: true,
       ),
@@ -95,7 +82,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ]),
             Gap.md,
             SettingHeader("App", children: [
-              DefaultSettingItem('Version', trailing: packageInfo?.version),
               DefaultSettingItem(
                 'Feedback',
                 onTap: () => AppStrings.kFeedbackUrl.launchAsUrl(),
@@ -131,7 +117,7 @@ class SettingHeader extends StatelessWidget {
             child: Text(
               title,
               style:
-                  context.textTheme.bodyText1!.copyWith(color: Colors.black54),
+                  context.textTheme.bodyLarge!.copyWith(color: Colors.black54),
             ),
           ),
           ListView.separated(
@@ -173,14 +159,14 @@ class DefaultSettingItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: context.textTheme.bodyText1!
+            style: context.textTheme.bodyLarge!
                 .copyWith(color: textColor ?? AppColors.kDark),
           ),
           Row(
             children: [
               Text(
                 trailing ?? "",
-                style: context.textTheme.bodyText2!.copyWith(
+                style: context.textTheme.bodyMedium!.copyWith(
                   color: AppColors.kGrey,
                 ),
               ),
@@ -218,7 +204,7 @@ class SwitchSettingItem extends StatelessWidget {
           Text(
             title,
             style:
-                context.textTheme.bodyText1!.copyWith(color: AppColors.kDark),
+                context.textTheme.bodyLarge!.copyWith(color: AppColors.kDark),
           ),
           CupertinoSwitch(
             value: value,
@@ -247,7 +233,7 @@ class DeleteBottomSheet extends StatelessWidget {
             Text(
               "You're about to delete all entries on this app, this cannot be undone",
               textAlign: TextAlign.center,
-              style: context.textTheme.caption!,
+              style: context.textTheme.bodySmall!,
             ),
             Gap.md,
             Button(

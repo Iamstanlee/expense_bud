@@ -28,7 +28,7 @@ class ExpenseItemGridSheet extends StatelessWidget {
             children: [
               Text(
                 'Expenses',
-                style: context.textTheme.subtitle1,
+                style: context.textTheme.titleMedium,
               ),
               Gap.md,
               GridView(
@@ -70,7 +70,7 @@ class _Item extends StatelessWidget {
         Gap.sm,
         Text(
           item.title,
-          style: context.textTheme.bodyText2!.copyWith(color: _color),
+          style: context.textTheme.bodyMedium!.copyWith(color: _color),
         )
       ],
     ).onTap(() => context.pop(item));

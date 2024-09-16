@@ -71,12 +71,12 @@ class Info extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: context.textTheme.subtitle1,
+                style: context.textTheme.titleMedium,
               ),
               Gap.sm,
               Text(
                 subtitle,
-                style: context.textTheme.subtitle1!
+                style: context.textTheme.titleMedium!
                     .copyWith(color: AppColors.kGrey),
               ),
             ],

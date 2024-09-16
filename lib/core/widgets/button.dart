@@ -25,7 +25,7 @@ class Button extends StatelessWidget {
         style: Theme.of(context)
             .elevatedButtonTheme
             .style!
-            .copyWith(backgroundColor: MaterialStateProperty.all(color)),
+            .copyWith(backgroundColor: WidgetStateProperty.all(color)),
       ),
     );
   }

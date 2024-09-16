@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -37,7 +36,7 @@ class InsightHeader extends StatelessWidget {
             children: [
               AutoSizeText(
                 total,
-                style: context.textTheme.headline4!
+                style: context.textTheme.headlineMedium!
                     .copyWith(color: color, fontSize: FontSizes.s28),
                 maxLines: 1,
               ),
@@ -55,7 +54,7 @@ class InsightHeader extends StatelessWidget {
                     const Gap(2),
                     Text(
                       '$percentageIncOrDec%',
-                      style: context.textTheme.caption!.copyWith(color: color),
+                      style: context.textTheme.bodySmall!.copyWith(color: color),
                     )
                   ],
                 ),

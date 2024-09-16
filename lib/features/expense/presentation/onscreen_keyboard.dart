@@ -214,7 +214,7 @@ class Keypad extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: child ?? Text(_key.value, style: context.textTheme.subtitle1),
+          child: child ?? Text(_key.value, style: context.textTheme.titleMedium),
         ),
       ),
     );

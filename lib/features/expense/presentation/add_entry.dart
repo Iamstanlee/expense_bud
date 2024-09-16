@@ -81,7 +81,7 @@ class _AddEntryPageState extends State<AddEntryPage>
                       ),
                       Text(
                         'Add Transaction',
-                        style: context.textTheme.subtitle1,
+                        style: context.textTheme.titleMedium,
                       ),
                     ],
                   ),
@@ -97,7 +97,7 @@ class _AddEntryPageState extends State<AddEntryPage>
                         child: Center(
                           child: Text(
                             money.code,
-                            style: context.textTheme.headline6!.copyWith(
+                            style: context.textTheme.titleLarge!.copyWith(
                               color: Colors.white,
                             ),
                           ),
@@ -109,7 +109,7 @@ class _AddEntryPageState extends State<AddEntryPage>
                           scale: _animation,
                           child: AutoSizeText(
                             money.formatValue(amount),
-                            style: context.textTheme.headline3!
+                            style: context.textTheme.displaySmall!
                                 .copyWith(color: AppColors.kDark),
                             maxLines: 1,
                           ),
@@ -182,7 +182,7 @@ class ExpenseRow extends StatelessWidget {
               Text(
                 item.title,
                 maxLines: 1,
-                style: context.textTheme.subtitle1!
+                style: context.textTheme.titleMedium!
                     .copyWith(fontSize: FontSizes.s18),
               ),
               Divider(

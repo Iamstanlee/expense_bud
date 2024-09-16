@@ -19,7 +19,7 @@ class InboxAmountSettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Inbox Amount',
-          style: context.textTheme.subtitle1,
+          style: context.textTheme.titleMedium,
         ),
         leading: Icon(
           PhosphorIcons.caretLeft,

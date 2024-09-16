@@ -31,7 +31,7 @@ class ChoiceSettingItem extends StatelessWidget {
           Text(
             title,
             style:
-                context.textTheme.bodyText1!.copyWith(color: AppColors.kDark),
+                context.textTheme.bodyLarge!.copyWith(color: AppColors.kDark),
           ),
           if (selected) Icon(PhosphorIcons.check, color: AppColors.kDark)
         ],
