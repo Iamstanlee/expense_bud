@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
+import 'package:expense_bud/core/utils/platform.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/features/expense/presentation/add_entry.dart';
 import 'package:expense_bud/features/expense/presentation/expense_tab.dart';
@@ -69,6 +68,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
 class _FlexibleSpaceBar extends StatelessWidget {
   const _FlexibleSpaceBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final expenseProvider = context.watch<ExpenseProvider>();
@@ -90,7 +90,7 @@ class _FlexibleSpaceBar extends StatelessWidget {
     return FlexibleSpaceBar(
       title: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: Platform.isIOS
+        crossAxisAlignment: PlatformUtils.isIOS
             ? CrossAxisAlignment.center
             : CrossAxisAlignment.start,
         children: [

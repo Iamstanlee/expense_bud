@@ -1,5 +1,4 @@
 import 'package:expense_bud/core/data/models/expense.dart';
-import 'package:expense_bud/core/utils/device.dart';
 import 'package:expense_bud/features/expense/data/datasources/local_datasource.dart';
 import 'package:expense_bud/features/expense/data/repositories/expense_repository_impl.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
@@ -21,13 +20,12 @@ import 'package:expense_bud/features/settings/domain/usecases/get_user_preferenc
 import 'package:expense_bud/features/settings/domain/usecases/update_user_preference_usecase.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 final getIt = GetIt.I;
 
 Future<void> initApp() async {
-  final storage = await getStorageDirectory();
-  Hive.init(storage);
+  Hive.initFlutter();
   Hive.registerAdapter<ExpenseModel>(ExpenseModelAdapter());
   Hive.registerAdapter<UserPreferenceModel>(UserPreferenceModelAdapter());
   Hive.registerAdapter<CurrencyModel>(CurrencyModelAdapter());

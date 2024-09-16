@@ -37,7 +37,7 @@ class AppTheme {
 }
 
 class Fonts {
-  static const kPrimary = "Inter";
+  static const kPrimary = "workSans";
 }
 
 class Insets {

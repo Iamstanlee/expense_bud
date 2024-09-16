@@ -13,7 +13,7 @@ dependencies:
   intl: ^0.17.0
   dartz: ^0.10.1
   get_it: ^7.2.0
-  hive: ^2.0.5
+  hive_flutter: ^1.1.0
   path_provider: ^2.0.8
   auto_size_text: ^3.0.0
   fl_chart: ^0.69.0
@@ -33,6 +33,6 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Inter
+    - family: workSans
       fonts:
-        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/workSans.ttf

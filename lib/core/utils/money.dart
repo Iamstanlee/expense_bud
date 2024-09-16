@@ -11,7 +11,7 @@ class Money {
       : _currency = currency,
         _formatter = NumberFormat.currency(
           name: currency.name,
-          symbol: currency.symbol,
+          // symbol: currency.symbol,
           locale: currency.locale,
           decimalDigits: currency.minorUnits,
         );
