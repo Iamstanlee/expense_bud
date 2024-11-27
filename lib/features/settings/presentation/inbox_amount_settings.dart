@@ -22,7 +22,7 @@ class InboxAmountSettingsPage extends StatelessWidget {
           style: context.textTheme.titleMedium,
         ),
         leading: Icon(
-          PhosphorIcons.caretLeft,
+          PhosphorIconsRegular.caretLeft,
           color: AppColors.kDark,
         ).onTap(() => context.pop()),
         centerTitle: true,

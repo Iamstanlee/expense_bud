@@ -4,9 +4,12 @@ class AsyncValue<T> {
   AsyncValueStatus status;
   String? message;
   T? data;
+
   AsyncValue.loading([this.message = "", this.data])
       : status = AsyncValueStatus.loading;
+
   AsyncValue.done(this.data) : status = AsyncValueStatus.done;
+
   AsyncValue.error(this.message) : status = AsyncValueStatus.error;
 
   R when<R>(
@@ -23,7 +26,7 @@ class AsyncValue<T> {
           return error!(message);
       }
     } catch (e) {
-      throw Exception("{$status}:$e");
+      return error!("(E400) An unexpected error occured");
     }
   }
 }

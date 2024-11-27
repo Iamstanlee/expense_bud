@@ -49,7 +49,7 @@ class _InsightsPageState extends State<InsightsPage> {
             ),
             const Gap(4),
             Icon(
-              PhosphorIcons.caretDown,
+              PhosphorIconsRegular.caretDown,
               color: AppColors.kDark,
             )
           ],
@@ -100,7 +100,7 @@ class _InsightsPageState extends State<InsightsPage> {
                             if (settingsProvider.preference.showCharts) ...[
                               Text(
                                 "PERFORMANCE CHART",
-                                style: context.textTheme.bodySmall,
+                                style: context.textTheme.labelLarge,
                               ),
                               Gap.md,
                               SizedBox(
@@ -138,7 +138,7 @@ class _InsightsPageState extends State<InsightsPage> {
                             ],
                             Text(
                               "EXPENSE BREAKDOWN",
-                              style: context.textTheme.bodySmall,
+                              style: context.textTheme.labelLarge,
                             ),
                             Gap.md,
                             ...map.keys.map(

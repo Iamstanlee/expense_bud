@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class ExpenseItemGridSheet extends StatelessWidget {
   final ExpenseCategoryItem item;
+
   const ExpenseItemGridSheet(this.item, {Key? key}) : super(key: key);
 
   @override
@@ -27,10 +28,13 @@ class ExpenseItemGridSheet extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Expenses',
-                style: context.textTheme.titleMedium,
+                'Select expense category',
+                style: context.textTheme.titleLarge,
               ),
-              Gap.md,
+              Text(
+                '(Scroll down for more...)',
+                style: context.textTheme.labelSmall,
+              ),
               GridView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -55,6 +59,7 @@ class ExpenseItemGridSheet extends StatelessWidget {
 class _Item extends StatelessWidget {
   final ExpenseCategoryItem item;
   final bool isSelected;
+
   const _Item(this.item, {this.isSelected = false, Key? key}) : super(key: key);
 
   @override
@@ -70,7 +75,10 @@ class _Item extends StatelessWidget {
         Gap.sm,
         Text(
           item.title,
-          style: context.textTheme.bodyMedium!.copyWith(color: _color),
+          style: context.textTheme.bodyMedium!.copyWith(
+            color: _color,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
         )
       ],
     ).onTap(() => context.pop(item));

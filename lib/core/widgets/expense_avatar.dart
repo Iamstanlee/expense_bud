@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class ExpenseAvatar extends StatelessWidget {
   final ExpenseCategory category;
+
   const ExpenseAvatar(this.category, {Key? key}) : super(key: key);
 
   @override
@@ -13,8 +14,10 @@ class ExpenseAvatar extends StatelessWidget {
         categoryItems().singleWhere((e) => e.category == category).iconData;
     return Container(
       padding: const EdgeInsets.all(Insets.sm),
-      decoration:
-          BoxDecoration(color: AppColors.kPrimary, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+        color: AppColors.kPrimary,
+        borderRadius: Corners.mdBorder,
+      ),
       child: Icon(
         iconData,
         color: Colors.white,

@@ -31,8 +31,8 @@ class NoDataOrError extends StatelessWidget {
             ),
             child: Icon(
               variant == Variant.noData
-                  ? PhosphorIcons.rocketFill
-                  : PhosphorIcons.finnTheHumanFill,
+                  ? PhosphorIconsFill.rocket
+                  : PhosphorIconsFill.finnTheHuman,
               color: color,
               size: IconSizes.lg,
             ),

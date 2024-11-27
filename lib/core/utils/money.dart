@@ -10,7 +10,7 @@ class Money {
   Money._(CurrencyEntity currency)
       : _currency = currency,
         _formatter = NumberFormat.currency(
-          name: currency.name,
+          name: '${currency.name} ',
           // symbol: currency.symbol,
           locale: currency.locale,
           decimalDigits: currency.minorUnits,
@@ -19,6 +19,7 @@ class Money {
   factory Money([CurrencyEntity? currency]) {
     return Money._(currency ?? usd);
   }
+
   Money formatWithEmptyString() => Money(_currency.copyWith(symbol: ""));
 
   String get code => _currency.name;

@@ -25,6 +25,6 @@ class AppColors {
   static Color get kPrimary500 => const Color(0xFF059E53);
   static Color get kDark => const Color(0xFF111418);
   static Color get kError => const Color(0xFFFE1B02);
-  static Color get kGrey => const Color(0xFFB7C7CD);
+  static Color get kGrey => const Color(0xff777E90);
   static Color get kGrey200 => const Color(0xFFE2E7EF);
 }

@@ -25,7 +25,6 @@ class AddEntryPage extends StatefulWidget {
 class _AddEntryPageState extends State<AddEntryPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
   ExpenseCategoryItem _categoryItem = categoryItems()[0];
 
   int amount = 0;
@@ -37,17 +36,6 @@ class _AddEntryPageState extends State<AddEntryPage>
         duration: const Duration(
           microseconds: 2000,
         ));
-    _animation = Tween<double>(begin: 1, end: 1.08).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.bounceIn,
-      ),
-    );
-    _animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse();
-      }
-    });
     super.initState();
   }
 
@@ -75,12 +63,12 @@ class _AddEntryPageState extends State<AddEntryPage>
                       IconButton(
                         onPressed: () => context.pop(),
                         icon: const Icon(
-                          PhosphorIcons.x,
+                          PhosphorIconsRegular.x,
                           color: Colors.black,
                         ),
                       ),
                       Text(
-                        'Add Transaction',
+                        'Add Expense',
                         style: context.textTheme.titleMedium,
                       ),
                     ],
@@ -88,31 +76,12 @@ class _AddEntryPageState extends State<AddEntryPage>
                   Gap.md,
                   Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.kPrimary,
-                          borderRadius: Corners.lgBorder,
-                        ),
-                        padding: const EdgeInsets.all(Insets.md),
-                        child: Center(
-                          child: Text(
-                            money.code,
-                            style: context.textTheme.titleLarge!.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Gap.md,
                       Expanded(
-                        child: ScaleTransition(
-                          scale: _animation,
-                          child: AutoSizeText(
-                            money.formatValue(amount),
-                            style: context.textTheme.displaySmall!
-                                .copyWith(color: AppColors.kDark),
-                            maxLines: 1,
-                          ),
+                        child: AutoSizeText(
+                          money.formatValue(amount),
+                          style: context.textTheme.displaySmall!
+                              .copyWith(color: AppColors.kDark),
+                          maxLines: 1,
                         ),
                       ),
                     ],
@@ -130,7 +99,7 @@ class _AddEntryPageState extends State<AddEntryPage>
                         setState(() => _categoryItem = value);
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -172,7 +141,10 @@ class ExpenseRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        ExpenseAvatar(item.category),
+        Padding(
+          padding: const EdgeInsets.only(bottom: Insets.xs),
+          child: ExpenseAvatar(item.category),
+        ),
         Gap.md,
         Expanded(
           child: Column(
@@ -195,7 +167,7 @@ class ExpenseRow extends StatelessWidget {
         Gap.md,
         Padding(
           padding: const EdgeInsets.only(bottom: Insets.sm),
-          child: Icon(PhosphorIcons.caretRight, color: AppColors.kDark),
+          child: Icon(PhosphorIconsRegular.caretRight, color: AppColors.kDark),
         )
       ],
     ).onTap(

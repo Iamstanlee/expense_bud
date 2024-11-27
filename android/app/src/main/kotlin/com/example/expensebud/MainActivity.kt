@@ -1,4 +1,4 @@
-package com.app.expense_bud
+package app.expensebud
 
 import io.flutter.embedding.android.FlutterActivity
 

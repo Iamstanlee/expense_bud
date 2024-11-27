@@ -47,7 +47,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
                   );
                 },
                 icon: const Icon(
-                  PhosphorIcons.plusFill,
+                  PhosphorIconsFill.plusCircle,
                   color: Colors.white,
                 ),
               )
@@ -96,16 +96,19 @@ class _FlexibleSpaceBar extends StatelessWidget {
         children: [
           Text(
             prefs.inboxAmount.title,
-            style: context.textTheme.labelSmall!.copyWith(
-              color: Colors.white.withOpacity(0.8),
+            style: context.textTheme.labelLarge!.copyWith(
+              color: Colors.white,
               fontSize: FontSizes.s8,
             ),
           ),
           const Gap(2),
           AutoSizeText(
             money.formatValue(inboxAmount),
-            style: context.textTheme.headlineMedium!
-                .copyWith(color: Colors.white, fontSize: FontSizes.s28),
+            style: context.textTheme.titleLarge!.copyWith(
+              color: Colors.white,
+              fontSize: FontSizes.s24,
+              fontWeight: FontWeight.bold,
+            ),
             maxLines: 1,
           ),
         ],

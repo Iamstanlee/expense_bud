@@ -24,7 +24,7 @@ class AppTheme {
           showUnselectedLabels: false,
         ),
         iconTheme: IconThemeData(
-          color: AppColors.kGrey,
+          color: AppColors.kDark,
         ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
@@ -37,7 +37,7 @@ class AppTheme {
 }
 
 class Fonts {
-  static const kPrimary = "workSans";
+  static const kPrimary = "Chillax";
 }
 
 class Insets {

@@ -21,7 +21,7 @@ class SelectInsightPeriod extends StatelessWidget {
           style: context.textTheme.titleMedium,
         ),
         leading: Icon(
-          PhosphorIcons.x,
+          PhosphorIconsRegular.x,
           color: AppColors.kDark,
         ).onTap(() => context.pop()),
         centerTitle: true,

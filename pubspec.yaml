@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  phosphor_flutter: ^1.4.0
+  phosphor_flutter: ^2.1.0
   provider: ^6.0.2
   intl: ^0.17.0
   dartz: ^0.10.1
@@ -33,6 +33,11 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: workSans
+    - family: Chillax
       fonts:
-        - asset: assets/fonts/workSans.ttf
+        - asset: assets/fonts/Chillax-Medium.ttf
+          weight: 700
+        - asset: assets/fonts/Chillax-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Chillax-Light.ttf
+          weight: 300

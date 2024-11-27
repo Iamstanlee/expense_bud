@@ -27,7 +27,7 @@ class _ChooseCurrencyPageState extends State<ChooseCurrencyPage> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(
-          PhosphorIcons.caretLeft,
+          PhosphorIconsRegular.caretLeft,
           color: AppColors.kDark,
         ).onTap(() => context.pop()),
         centerTitle: true,
@@ -39,10 +39,11 @@ class _ChooseCurrencyPageState extends State<ChooseCurrencyPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Insets.md),
               child: Text(
-                'Chooose Your Preferred Currency',
+                'Choose Your Preferred Currency',
                 style: context.textTheme.headlineMedium!.copyWith(
                   fontSize: FontSizes.s24,
                   color: AppColors.kDark,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -91,6 +92,7 @@ class CurrencyListItem extends StatelessWidget {
   final String title;
   final bool selected;
   final Function onChanged;
+
   const CurrencyListItem(
       {required this.title,
       required this.onChanged,
@@ -117,6 +119,7 @@ class CurrencyListItem extends StatelessWidget {
         title,
         style: context.textTheme.bodyLarge!.copyWith(
           color: selected ? Colors.white : AppColors.kDark,
+          fontWeight: FontWeight.bold,
         ),
       ),
     ).onTap(() => onChanged());

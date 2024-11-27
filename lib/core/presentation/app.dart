@@ -23,6 +23,7 @@ class _AppPageState extends State<AppPage> {
   ];
 
   int _currentIndex = 0;
+
   void selectTab(int index) => setState(() => _currentIndex = index);
 
   @override
@@ -68,23 +69,24 @@ class _AppPageState extends State<AppPage> {
 const _bottomNavigationBarItems = <_Item>[
   _Item(
     'Home',
-    icon: PhosphorIcons.houseSimple,
-    activeIcon: PhosphorIcons.houseSimpleFill,
+    icon: PhosphorIconsRegular.houseSimple,
+    activeIcon: PhosphorIconsFill.houseSimple,
   ),
   _Item(
     'Insights',
-    icon: PhosphorIcons.trendUp,
-    activeIcon: PhosphorIcons.trendUpFill,
+    icon: PhosphorIconsRegular.chartPieSlice,
+    activeIcon: PhosphorIconsFill.chartPieSlice,
   ),
   _Item(
     'Settings',
-    icon: PhosphorIcons.nut,
-    activeIcon: PhosphorIcons.nutFill,
+    icon: PhosphorIconsRegular.nut,
+    activeIcon: PhosphorIconsFill.nut,
   ),
 ];
 
 class _Item {
   final String label;
   final IconData icon, activeIcon;
+
   const _Item(this.label, {required this.icon, required this.activeIcon});
 }

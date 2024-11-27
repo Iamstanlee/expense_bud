@@ -164,7 +164,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                           onTap: () => _onChange(_Key("delete")),
                           color: AppColors.kGrey200,
                           child: const Icon(
-                            PhosphorIcons.backspace,
+                            PhosphorIconsRegular.backspace,
                             color: Colors.black45,
                           ),
                         ),
@@ -175,7 +175,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                           onTap: () => _onEnter(),
                           color: AppColors.kPrimary,
                           child: const Icon(
-                            PhosphorIcons.arrowElbowDownLeftThin,
+                            PhosphorIconsRegular.arrowElbowDownLeft,
                             size: IconSizes.lg,
                             color: Colors.white,
                           ),

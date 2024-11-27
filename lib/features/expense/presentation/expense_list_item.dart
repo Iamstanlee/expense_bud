@@ -1,10 +1,10 @@
 import 'package:expense_bud/config/theme.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/core/utils/category_items.dart';
 import 'package:expense_bud/core/utils/date_formatter.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/expense_avatar.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
-import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,13 +35,14 @@ class ExpenseListItem extends StatelessWidget {
                 children: [
                   Text(
                     _categoryItem.title,
-                    style: context.textTheme.bodyLarge!
-                        .copyWith(fontSize: FontSizes.s16),
+                    style: context.textTheme.labelMedium!.copyWith(
+                      fontSize: FontSizes.s16,
+                    ),
                   ),
                   if (showEntryDate)
                     Text(
-                      "Added ${_dateFormatter.relativeToNow(_expense.createdAt)}",
-                      style: context.textTheme.bodySmall,
+                      _dateFormatter.relativeToNow(_expense.createdAt),
+                      style: context.textTheme.labelSmall,
                     ),
                 ],
               )
@@ -50,7 +51,7 @@ class ExpenseListItem extends StatelessWidget {
           const Spacer(),
           Text(
             money.formatValue(_expense.amount),
-            style: context.textTheme.bodyMedium!.copyWith(
+            style: context.textTheme.titleSmall!.copyWith(
               color: const Color(0xFFE58D67),
             ),
           )

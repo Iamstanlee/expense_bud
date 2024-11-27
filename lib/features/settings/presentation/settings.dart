@@ -38,18 +38,13 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             Gap.md,
             SettingHeader(
-              "Expenses And Entries",
+              "Expenses",
               children: [
                 DefaultSettingItem(
                   'Inbox Amount',
                   trailing: prefs.inboxAmount.title,
                   onTap: () => context.push(const InboxAmountSettingsPage()),
                 ),
-                // DefaultSettingItem(
-                //   'Currency',
-                //   trailing: prefs.currency.name,
-                //   onTap: () => context.push(const CurrencySettingsPage()),
-                // ),
                 SwitchSettingItem(
                   'Show Date',
                   value: prefs.showEntryDate,
@@ -71,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             Gap.md,
-            SettingHeader("Insights And Charts", children: [
+            SettingHeader("Insights And Chart", children: [
               SwitchSettingItem(
                 'Show Charts',
                 value: prefs.showCharts,
@@ -102,6 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
 class SettingHeader extends StatelessWidget {
   final String title;
   final List<Widget> children;
+
   const SettingHeader(this.title, {required this.children, Key? key})
       : super(key: key);
 
@@ -117,7 +113,7 @@ class SettingHeader extends StatelessWidget {
             child: Text(
               title,
               style:
-                  context.textTheme.bodyLarge!.copyWith(color: Colors.black54),
+                  context.textTheme.labelLarge!.copyWith(color: Colors.black54),
             ),
           ),
           ListView.separated(
@@ -140,6 +136,7 @@ class DefaultSettingItem extends StatelessWidget {
   final String? trailing;
   final Function? onTap;
   final Color? textColor;
+
   const DefaultSettingItem(this.title,
       {this.onTap, this.textColor, this.trailing, Key? key})
       : super(key: key);
@@ -147,11 +144,10 @@ class DefaultSettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: Insets.md,
-        vertical: Insets.sm,
+        vertical: Insets.md,
       ),
       color: Colors.white,
       child: Row(
@@ -159,19 +155,19 @@ class DefaultSettingItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: context.textTheme.bodyLarge!
+            style: context.textTheme.bodyMedium!
                 .copyWith(color: textColor ?? AppColors.kDark),
           ),
           Row(
             children: [
               Text(
                 trailing ?? "",
-                style: context.textTheme.bodyMedium!.copyWith(
+                style: context.textTheme.labelMedium!.copyWith(
                   color: AppColors.kGrey,
                 ),
               ),
               Gap.sm,
-              if (onTap != null) const Icon(PhosphorIcons.caretRight)
+              if (onTap != null) const Icon(PhosphorIconsRegular.caretRight)
             ],
           )
         ],
@@ -184,6 +180,7 @@ class SwitchSettingItem extends StatelessWidget {
   final String title;
   final bool value;
   final ValueChanged<bool> onChanged;
+
   const SwitchSettingItem(this.title,
       {required this.value, required this.onChanged, Key? key})
       : super(key: key);
@@ -191,11 +188,10 @@ class SwitchSettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: Insets.md,
-        vertical: Insets.sm,
+        vertical: Insets.md,
       ),
       color: Colors.white,
       child: Row(
@@ -204,7 +200,7 @@ class SwitchSettingItem extends StatelessWidget {
           Text(
             title,
             style:
-                context.textTheme.bodyLarge!.copyWith(color: AppColors.kDark),
+                context.textTheme.bodyMedium!.copyWith(color: AppColors.kDark),
           ),
           CupertinoSwitch(
             value: value,
@@ -219,6 +215,7 @@ class SwitchSettingItem extends StatelessWidget {
 
 class DeleteBottomSheet extends StatelessWidget {
   final VoidCallback? onDelete;
+
   const DeleteBottomSheet({this.onDelete, Key? key}) : super(key: key);
 
   @override

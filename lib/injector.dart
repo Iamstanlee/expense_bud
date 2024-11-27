@@ -25,7 +25,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 final getIt = GetIt.I;
 
 Future<void> initApp() async {
-  Hive.initFlutter();
+  await Hive.initFlutter();
   Hive.registerAdapter<ExpenseModel>(ExpenseModelAdapter());
   Hive.registerAdapter<UserPreferenceModel>(UserPreferenceModelAdapter());
   Hive.registerAdapter<CurrencyModel>(CurrencyModelAdapter());

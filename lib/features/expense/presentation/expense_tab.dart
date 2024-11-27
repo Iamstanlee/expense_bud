@@ -166,10 +166,10 @@ class ExpenseHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(date, style: context.textTheme.bodyLarge!),
+        Text(date, style: context.textTheme.titleSmall!),
         Text(
           amount ?? "",
-          style: context.textTheme.bodyMedium!.copyWith(
+          style: context.textTheme.titleSmall!.copyWith(
             color: const Color(0xFFE58D67),
             fontSize: FontSizes.s16,
           ),
@@ -205,7 +205,7 @@ class TabItem extends StatelessWidget {
       child: Center(
         child: Text(
           title,
-          style: context.textTheme.bodyLarge!.copyWith(
+          style: context.textTheme.titleSmall!.copyWith(
             color: isSelected ? Colors.white : AppColors.kDark,
           ),
         ),

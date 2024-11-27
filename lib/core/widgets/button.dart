@@ -10,6 +10,7 @@ class Button extends StatelessWidget {
 
   /// if child is not null, we want to use it instead of the label
   final Widget? child;
+
   const Button(this.label,
       {this.onTap, this.color, this.child, this.width, this.height, Key? key})
       : super(key: key);
@@ -21,11 +22,20 @@ class Button extends StatelessWidget {
       height: height ?? 49,
       child: ElevatedButton(
         onPressed: onTap,
-        child: child ?? Text(label!),
-        style: Theme.of(context)
-            .elevatedButtonTheme
-            .style!
-            .copyWith(backgroundColor: WidgetStateProperty.all(color)),
+        child: child ??
+            Text(
+              label!,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+        style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+            backgroundColor: WidgetStateProperty.all(color),
+            shape: const WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+            )),
       ),
     );
   }

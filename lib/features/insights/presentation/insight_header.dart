@@ -1,6 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ class InsightHeader extends StatelessWidget {
   final double percentageIncOrDec;
   final bool increasedFromLastInsightPeriod;
   final List<double> splinePoints;
+
   const InsightHeader({
     required this.total,
     required this.percentageIncOrDec,
@@ -24,8 +25,8 @@ class InsightHeader extends StatelessWidget {
     final color =
         increasedFromLastInsightPeriod ? AppColors.kError : Colors.green;
     final iconData = increasedFromLastInsightPeriod
-        ? PhosphorIcons.arrowUp
-        : PhosphorIcons.arrowDown;
+        ? PhosphorIconsRegular.arrowUpRight
+        : PhosphorIconsRegular.arrowDownRight;
 
     return SizedBox(
       height: 80,
@@ -36,26 +37,33 @@ class InsightHeader extends StatelessWidget {
             children: [
               AutoSizeText(
                 total,
-                style: context.textTheme.headlineMedium!
-                    .copyWith(color: color, fontSize: FontSizes.s28),
+                style: context.textTheme.headlineMedium!.copyWith(
+                  color: color,
+                  fontSize: FontSizes.s24,
+                  fontWeight: FontWeight.bold,
+                ),
                 maxLines: 1,
               ),
               Gap.sm,
               Container(
                 padding: const EdgeInsets.all(2),
-                color: color.withOpacity(0.1),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.08),
+                  borderRadius: Corners.mdBorder,
+                ),
                 child: Row(
                   children: [
                     Icon(
                       iconData,
-                      size: 14,
+                      size: 12,
                       color: color,
                     ),
                     const Gap(2),
                     Text(
                       '$percentageIncOrDec%',
-                      style: context.textTheme.bodySmall!.copyWith(color: color),
-                    )
+                      style:
+                          context.textTheme.labelSmall!.copyWith(color: color),
+                    ),
                   ],
                 ),
               )

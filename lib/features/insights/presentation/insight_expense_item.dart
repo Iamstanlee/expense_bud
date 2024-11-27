@@ -8,6 +8,7 @@ class ExpenseItem extends StatelessWidget {
   final ExpenseCategoryItem categoryItem;
   final String totalAmount;
   final int numOfEntries;
+
   const ExpenseItem(
       {required this.categoryItem,
       required this.totalAmount,
@@ -34,14 +35,10 @@ class ExpenseItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    categoryItem.title,
-                    style: context.textTheme.bodyLarge!
-                        .copyWith(fontSize: FontSizes.s16),
-                  ),
+                  Text(categoryItem.title, style: context.textTheme.labelLarge),
                   Text(
                     "$numOfEntries ${'entry'.pluralize(numOfEntries)}",
-                    style: context.textTheme.bodySmall,
+                    style: context.textTheme.labelMedium,
                   ),
                 ],
               )
@@ -50,7 +47,7 @@ class ExpenseItem extends StatelessWidget {
           const Spacer(),
           Text(
             totalAmount,
-            style: context.textTheme.bodyMedium!.copyWith(
+            style: context.textTheme.titleSmall!.copyWith(
               color: const Color(0xFFE58D67),
             ),
           )

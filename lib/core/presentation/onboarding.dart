@@ -18,24 +18,31 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             const Gap(64),
-            Image.asset(AppImages.logo, height: 24),
-            const Gap(Insets.lg),
+            const Text(
+              'Expense Bud',
+              style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              'No.1 expense tracker app',
+              style: TextStyle(fontSize: 14),
+            ),
+            const Gap(64),
             const Info(
-              'Add entries',
-              'Keep track of your income and expenses',
-              PhosphorIcons.tray,
+              'Record expenses and spendings',
+              'Keep track of your income, expenses & spendings',
+              PhosphorIconsRegular.mastodonLogo,
             ),
             const Gap(Insets.lg),
             const Info(
               'Check insights',
-              'Detailed weekly and monthly charts based on your entries',
-              PhosphorIcons.lightning,
+              'Get detailed insights into your spending habits and control your money flow!',
+              PhosphorIconsRegular.chartPieSlice,
             ),
             const Gap(Insets.lg),
             const Info(
               'Make right decisions',
-              'Control your money flow and stay on top of your game',
-              PhosphorIcons.medal,
+              'Stay on top of your game',
+              PhosphorIconsRegular.medalMilitary,
             ),
             const Spacer(),
             Button(
@@ -53,6 +60,7 @@ class OnboardingPage extends StatelessWidget {
 class Info extends StatelessWidget {
   final IconData icon;
   final String title, subtitle;
+
   const Info(this.title, this.subtitle, this.icon, {Key? key})
       : super(key: key);
 
@@ -63,6 +71,7 @@ class Info extends StatelessWidget {
         Icon(
           icon,
           size: IconSizes.lg,
+          color: AppColors.kPrimary,
         ),
         Gap.md,
         Expanded(
@@ -71,12 +80,14 @@ class Info extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: context.textTheme.titleMedium,
+                style: context.textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Gap.sm,
               Text(
                 subtitle,
-                style: context.textTheme.titleMedium!
+                style: context.textTheme.titleSmall!
                     .copyWith(color: AppColors.kGrey),
               ),
             ],
