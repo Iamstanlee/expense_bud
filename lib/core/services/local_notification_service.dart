@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:expense_bud/config/constants.dart';
+import 'package:expense_bud/core/utils/safe_print.dart';
 import 'package:expense_bud/features/expense/presentation/add_entry.dart';
 import 'package:expense_bud/injector.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,7 +58,7 @@ class LocalNotificationService implements ILocalNotificationService {
     );
 
     if (isNotificationAllowed) {
-      scheduleNotificationsForSpecificTimes(30);
+      scheduleNotificationsForSpecificTimes(14);
     }
   }
 
@@ -65,6 +66,7 @@ class LocalNotificationService implements ILocalNotificationService {
   @override
   Future<void> scheduleNotificationsForSpecificTimes(int daysToSchedule) async {
     if (!(await _needsRescheduling(daysToSchedule))) {
+      safePrint('No notification rescheduling needed');
       return; // Exit if no rescheduling is needed
     }
 
@@ -81,14 +83,14 @@ class LocalNotificationService implements ILocalNotificationService {
       for (final time in notificationTimes) {
         final message =
             notificationMessages[Random().nextInt(notificationMessages.length)];
-        final notificationId = Random().nextInt(100000);
+        final notificationId = Random().nextInt(10000);
 
         final scheduledDateTime = DateTime.now()
             .add(Duration(days: dayOffset))
             .toLocal()
             .copyWith(hour: time.hour, minute: time.minute, second: 0);
 
-        await notification.createNotification(
+        final scheduled = await notification.createNotification(
           content: NotificationContent(
             id: notificationId,
             channelKey: 'default_channel',
@@ -105,10 +107,13 @@ class LocalNotificationService implements ILocalNotificationService {
             day: scheduledDateTime.day,
             hour: scheduledDateTime.hour,
             minute: scheduledDateTime.minute,
-            second: 0,
             timeZone: localTimezone,
           ),
         );
+
+        if (!scheduled) {
+          safePrint('Failed to schedule notification');
+        }
       }
     }
 
@@ -116,12 +121,10 @@ class LocalNotificationService implements ILocalNotificationService {
     await _setNotificationsScheduled(DateTime.now());
   }
 
-  static const _scheduledKey = 'notificationsScheduled';
   static const _lastScheduledDateKey = 'lastScheduledDate';
 
   /// Marks notifications as scheduled
   Future<void> _setNotificationsScheduled(DateTime lastScheduledDate) async {
-    await box.put(_scheduledKey, true);
     await box.put(_lastScheduledDateKey, lastScheduledDate.toIso8601String());
   }
 
@@ -134,7 +137,6 @@ class LocalNotificationService implements ILocalNotificationService {
 
   /// Clears scheduling status
   Future<void> resetNotifications() async {
-    await box.delete(_scheduledKey);
     await box.delete(_lastScheduledDateKey);
   }
 

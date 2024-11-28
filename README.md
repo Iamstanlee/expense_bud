@@ -3,7 +3,7 @@
 An app to help you keep track of your expenses and stay on top of your game 🚀
 
 <a href="https://play.google.com/store/apps/details?id=app.expensebud">
-<img width="170px" alt="Playstore Link" src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/playstore.png"/>
+<img width="170px" alt="Playstore Link" src="screenshots/appstore.png"/>
 <a/>
 
 This app was built with clean architecture and MVVM pattern
@@ -13,15 +13,7 @@ This app was built with clean architecture and MVVM pattern
 ### Screenshots
 
 <p>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s1.png" width="200px" hspace="10"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s2.png" width="200px" hspace="10"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s3.png" width="200px" hspace="10"/>
-</p>
-
-<p>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s4.png" width="200px" hspace="10"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s5.png" width="200px" hspace="10"/>
-    <img src="https://raw.githubusercontent.com/Iamstanlee/expense_bud/main/screenshots/s6.png" width="200px"hspace="10"/>
+    <img src="screenshots/preview.png"/>
 </p>
 
 ### Frameworks/Lib
