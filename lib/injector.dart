@@ -1,4 +1,6 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:expense_bud/core/data/models/expense.dart';
+import 'package:expense_bud/core/services/local_notification_service.dart';
 import 'package:expense_bud/features/expense/data/datasources/local_datasource.dart';
 import 'package:expense_bud/features/expense/data/repositories/expense_repository_impl.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
@@ -19,10 +21,14 @@ import 'package:expense_bud/features/settings/domain/repositories/user_preferenc
 import 'package:expense_bud/features/settings/domain/usecases/get_user_preference_usecase.dart';
 import 'package:expense_bud/features/settings/domain/usecases/update_user_preference_usecase.dart';
 import 'package:expense_bud/features/settings/presentation/providers/settings_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 final getIt = GetIt.I;
+
+final GlobalKey<NavigatorState> globalRoutingContextKey =
+    GlobalKey<NavigatorState>();
 
 Future<void> initApp() async {
   await Hive.initFlutter();
@@ -32,6 +38,12 @@ Future<void> initApp() async {
 
   final _expenseDb = await Hive.openBox("expenses.db");
   final _preferenceDb = await Hive.openBox("preferences.db");
+
+  final _notification = AwesomeNotifications();
+
+  getIt.registerSingleton<ILocalNotificationService>(
+    LocalNotificationService(_notification, _preferenceDb)..init(),
+  );
 
   /// datasources
   getIt.registerSingleton<IExpenseLocalDataSource>(

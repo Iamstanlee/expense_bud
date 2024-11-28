@@ -45,11 +45,10 @@ class InsightEntity {
     final map = mapOfCategoryToPairOfAmountAndNumOfEntries();
     final mapEntry = <ExpenseCategoryItem, Pair<int, int>>{};
     // sort map by total amount
-    map.values.toList()
-      ..sort((a, b) => b.left.compareTo(a.left))
-      ..forEach((value) {
-        final k = map.keys.singleWhere((key) => map[key] == value);
-        mapEntry[k] = value;
+    map.keys.toList()
+      ..sort((a, b) => map[b]!.left.compareTo(map[a]!.left))
+      ..forEach((key) {
+        mapEntry.putIfAbsent(key, () => map[key]!);
       });
     return mapEntry;
   }

@@ -5,7 +5,7 @@ class AppStrings {
   static const kPrivacyPolicyUrl =
       "https://github.com/Iamstanlee/expense_bud/wiki/Privacy-Policy";
   static const kFeedbackUrl =
-      "mailto:hey@stanleee.me?subject=Expense%20Bud%20Feedback";
+      "mailto:work@beanslabs.com?subject=Expense%20Bud%20Feedback";
 }
 
 class AppIcons {

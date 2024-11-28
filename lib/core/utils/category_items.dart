@@ -26,6 +26,7 @@ class ExpenseCategoryItem {
   final ExpenseCategory category;
   final IconData iconData;
   final Color color;
+
   const ExpenseCategoryItem({
     required this.title,
     required this.category,
@@ -39,12 +40,11 @@ class ExpenseCategoryItem {
 
     return other is ExpenseCategoryItem &&
         other.title == title &&
-        other.category == category &&
-        other.iconData == iconData;
+        other.category == category;
   }
 
   @override
-  int get hashCode => title.hashCode ^ category.hashCode ^ iconData.hashCode;
+  int get hashCode => title.hashCode ^ category.hashCode;
 }
 
 List<ExpenseCategoryItem> categoryItems() => const [

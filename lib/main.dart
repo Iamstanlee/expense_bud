@@ -31,6 +31,7 @@ class ExpenseTracker extends StatelessWidget {
           (settings) => settings.preference.onboardingComplete,
         );
         return MaterialApp(
+          navigatorKey: globalRoutingContextKey,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.defaultTheme,
           title: AppStrings.kTitle,
