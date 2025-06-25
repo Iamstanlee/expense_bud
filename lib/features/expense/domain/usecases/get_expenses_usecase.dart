@@ -6,12 +6,12 @@ import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
 
 class GetExpensesUsecase
-    implements NoArgsUsecaseOfStream<Map<String, List<ExpenseEntity>>> {
+    implements NoArgsUsecaseOfStream<Map<String, List<TransactionEntity>>> {
   final IExpenseRepository _expenseRepository;
   GetExpensesUsecase(this._expenseRepository);
 
   @override
-  Stream<Either<Failure, Map<String, List<ExpenseEntity>>>> call() {
+  Stream<Either<Failure, Map<String, List<TransactionEntity>>>> call() {
     return _expenseRepository.watchMonthlyEntries();
   }
 }

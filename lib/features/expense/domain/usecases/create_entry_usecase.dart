@@ -6,12 +6,13 @@ import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
 
 class CreateExpenseEntryUsecase
-    implements UsecaseOfFuture<Unit, ExpenseEntity> {
-  final IExpenseRepository _expenseRepository;
-  CreateExpenseEntryUsecase(this._expenseRepository);
+    implements UsecaseOfFuture<Unit, TransactionEntity> {
+  final IExpenseRepository _repository;
+
+  CreateExpenseEntryUsecase(this._repository);
 
   @override
-  Future<Either<Failure, Unit>> call(ExpenseEntity param) {
-    return _expenseRepository.createExpenseEntry(param);
+  Future<Either<Failure, Unit>> call(TransactionEntity params) {
+    return _repository.createExpenseEntry(params);
   }
 }

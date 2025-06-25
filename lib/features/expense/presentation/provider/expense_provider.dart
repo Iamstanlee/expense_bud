@@ -21,8 +21,9 @@ class ExpenseProvider with ChangeNotifier {
   final EraseEntriesUsecase _eraseEntriesUsecase;
 
   final DateFormatter dateFmt = DateFormatter.instance;
-  AsyncValue<Map<String, List<ExpenseEntity>>> _entries = AsyncValue.loading();
-  AsyncValue<Map<String, List<ExpenseEntity>>> get entries => _entries;
+  AsyncValue<Map<String, List<TransactionEntity>>> _entries =
+      AsyncValue.loading();
+  AsyncValue<Map<String, List<TransactionEntity>>> get entries => _entries;
 
   String get currentDateString => dateFmt.datetimeToString(DateTime.now());
   String get currentDateKey =>
@@ -41,7 +42,7 @@ class ExpenseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> createExpenseEntry(ExpenseEntity entry) async {
+  Future<void> createExpenseEntry(TransactionEntity entry) async {
     final failureOrEntry = await _createExpenseEntryUsecase(entry);
     failureOrEntry.fold((failure) => {}, (_) {});
   }
@@ -54,12 +55,12 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int getDailyTotal([List<ExpenseEntity>? entries]) {
+  int getDailyTotal([List<TransactionEntity>? entries]) {
     if (entries != null) {
-      return _getTotal(entries);
+      return _getBalance(entries);
     }
     if (_entries.data != null) {
-      return _getTotal(_entries.data![currentDateKey]);
+      return _getBalance(_entries.data![currentDateKey]);
     }
     return 0;
   }
@@ -72,7 +73,7 @@ class ExpenseProvider with ChangeNotifier {
             // complete week from previous month if [thisWeek] is the first week of the month?
             final entryWeek = dateFmt.getWeekOfMonth(key.toDateTime());
             if (thisWeek == entryWeek) {
-              acc += _getTotal(_entries.data![key]);
+              acc += _getBalance(_entries.data![key]);
             }
             return acc;
           },
@@ -83,11 +84,60 @@ class ExpenseProvider with ChangeNotifier {
   int getMonthlyTotal() =>
       _entries.data?.values.fold<int>(
         0,
-        (acc, entries) => acc += _getTotal(entries),
+        (acc, entries) => acc += _getBalance(entries),
       ) ??
       0;
 
-  int _getTotal(List<ExpenseEntity>? entries) {
+  int getDailyExpenses([List<TransactionEntity>? entries]) {
+    if (entries != null) {
+      return _getTotal(entries
+          .where((e) => e.transactionType == TransactionType.expense)
+          .toList());
+    }
+    if (_entries.data != null) {
+      final dayEntries = _entries.data![currentDateKey];
+      if (dayEntries != null) {
+        return _getTotal(dayEntries
+            .where((e) => e.transactionType == TransactionType.expense)
+            .toList());
+      }
+    }
+    return 0;
+  }
+
+  int getDailyIncome([List<TransactionEntity>? entries]) {
+    if (entries != null) {
+      return _getTotal(entries
+          .where((e) => e.transactionType == TransactionType.income)
+          .toList());
+    }
+    if (_entries.data != null) {
+      final dayEntries = _entries.data![currentDateKey];
+      if (dayEntries != null) {
+        return _getTotal(dayEntries
+            .where((e) => e.transactionType == TransactionType.income)
+            .toList());
+      }
+    }
+    return 0;
+  }
+
+  // Get the sum of all entries (income is positive, expense is negative)
+  int _getBalance(List<TransactionEntity>? entries) {
+    if (entries != null && entries.isNotEmpty) {
+      return entries.fold(
+          0,
+          (sum, entry) =>
+              sum +
+              (entry.transactionType == TransactionType.expense
+                  ? -entry.amount
+                  : entry.amount));
+    }
+    return 0;
+  }
+
+  // Get the sum of absolute values
+  int _getTotal(List<TransactionEntity>? entries) {
     if (entries != null && entries.isNotEmpty) {
       return entries.fold(0, (sum, entry) => sum + entry.amount);
     }

@@ -1,9 +1,10 @@
 import 'package:hive/hive.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 
 part 'expense.g.dart';
 
 @HiveType(typeId: 0)
-class ExpenseModel extends HiveObject {
+class TransactionModel extends HiveObject {
   @HiveField(0)
   final String createdAt;
 
@@ -16,15 +17,19 @@ class ExpenseModel extends HiveObject {
   @HiveField(3)
   final int amount;
 
-  ExpenseModel({
+  @HiveField(4)
+  final String transactionType;
+
+  TransactionModel({
     required this.createdAt,
     required this.updatedAt,
     required this.category,
     required this.amount,
+    required this.transactionType,
   });
 
   @override
   String toString() {
-    return 'ExpenseModel(createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount)';
+    return 'TransactionModel(createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount, transactionType: $transactionType)';
   }
 }

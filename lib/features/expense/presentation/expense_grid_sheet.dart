@@ -1,5 +1,6 @@
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
+import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/core/utils/category_items.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
@@ -7,11 +8,17 @@ import 'package:flutter/material.dart';
 
 class ExpenseItemGridSheet extends StatelessWidget {
   final ExpenseCategoryItem item;
+  final TransactionType transactionType;
 
-  const ExpenseItemGridSheet(this.item, {Key? key}) : super(key: key);
+  const ExpenseItemGridSheet(this.item, this.transactionType, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final String title = transactionType == TransactionType.expense
+        ? 'Select expense category'
+        : 'Select income category';
+
     return Container(
       height: context.getHeight(0.5),
       width: double.infinity,
@@ -28,7 +35,7 @@ class ExpenseItemGridSheet extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Select expense category',
+                title,
                 style: context.textTheme.titleLarge,
               ),
               Text(
@@ -41,7 +48,7 @@ class ExpenseItemGridSheet extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
-                children: categoryItems()
+                children: categoryItemsByType(transactionType)
                     .map((e) => _Item(
                           e,
                           isSelected: item == e,

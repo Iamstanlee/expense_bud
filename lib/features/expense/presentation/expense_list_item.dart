@@ -10,17 +10,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseListItem extends StatelessWidget {
-  ExpenseListItem(this._expense, {Key? key}) : super(key: key);
-  final ExpenseEntity _expense;
+  ExpenseListItem(this._transaction, {Key? key}) : super(key: key);
+  final TransactionEntity _transaction;
   final DateFormatter _dateFormatter = DateFormatter.instance;
 
   @override
   Widget build(BuildContext context) {
     final _categoryItem =
-        categoryItems().singleWhere((e) => e.category == _expense.category);
+        categoryItems().singleWhere((e) => e.category == _transaction.category);
     final money = context.watch<SettingsProvider>().money;
     final showEntryDate =
         context.watch<SettingsProvider>().preference.showEntryDate;
+
+    final bool isExpense =
+        _transaction.transactionType == TransactionType.expense;
+    final Color amountColor =
+        isExpense ? const Color(0xFFE58D67) : const Color(0xFF4CAF50);
+    final String amountPrefix = isExpense ? '-' : '+';
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -41,7 +47,7 @@ class ExpenseListItem extends StatelessWidget {
                   ),
                   if (showEntryDate)
                     Text(
-                      _dateFormatter.relativeToNow(_expense.createdAt),
+                      _dateFormatter.relativeToNow(_transaction.createdAt),
                       style: context.textTheme.labelSmall,
                     ),
                 ],
@@ -50,9 +56,9 @@ class ExpenseListItem extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            money.formatValue(_expense.amount),
+            amountPrefix + money.formatValue(_transaction.amount),
             style: context.textTheme.titleSmall!.copyWith(
-              color: const Color(0xFFE58D67),
+              color: amountColor,
             ),
           )
         ],

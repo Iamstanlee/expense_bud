@@ -4,8 +4,8 @@ import 'package:expense_bud/core/failure/exceptions.dart';
 import 'package:hive/hive.dart';
 
 abstract class IExpenseLocalDataSource {
-  Stream<Map<String, List<ExpenseModel>>> watchMonthlyEntries();
-  Future<ExpenseModel> createExpenseEntry(ExpenseModel expense);
+  Stream<Map<String, List<TransactionModel>>> watchMonthlyEntries();
+  Future<TransactionModel> createExpenseEntry(TransactionModel transaction);
   Future<void> eraseEntries();
 }
 
@@ -13,14 +13,14 @@ abstract class IExpenseLocalDataSource {
 ///```dart
 /// {
 /// "2022-02": {
-/// "2022-02-01" : [ExpenseModel],
-/// "2022-02-02" : [ExpenseModel, ExpenseModel],
-/// "2022-02-03" : [ExpenseModel],
+/// "2022-02-01" : [TransactionModel],
+/// "2022-02-02" : [TransactionModel, TransactionModel],
+/// "2022-02-03" : [TransactionModel],
 ///},
 /// "2022-03": {
-/// "2022-02-01" : [ExpenseModel, ExpenseModel],
-/// "2022-02-02" : [ExpenseModel],
-/// "2022-02-03" : [ExpenseModel, ExpenseModel],
+/// "2022-02-01" : [TransactionModel, TransactionModel],
+/// "2022-02-02" : [TransactionModel],
+/// "2022-02-03" : [TransactionModel, TransactionModel],
 ///},
 /// }
 /// ```
@@ -30,61 +30,54 @@ class ExpenseLocalDataSource extends LocalDataSource
   ExpenseLocalDataSource(this._box) : super(_box);
 
   @override
-  Future<ExpenseModel> createExpenseEntry(ExpenseModel expense) async {
+  Future<TransactionModel> createExpenseEntry(
+      TransactionModel transaction) async {
     try {
-      final monthKey = getMonthKey(expense.createdAt);
-      final dayKey = getDayKey(expense.createdAt);
+      final monthKey = getMonthKey(transaction.createdAt);
+      final dayKey = getDayKey(transaction.createdAt);
       if (has(monthKey)) {
         final month = _box.get(monthKey)! as Map;
         if (month.containsKey(dayKey)) {
           final items = month[dayKey];
-          final updatedItems = [expense, ...items];
+          final updatedItems = [transaction, ...items];
           await _box.put(monthKey, {...month, dayKey: updatedItems});
         } else {
           await _box.put(monthKey, {
             ...month,
-            dayKey: [expense]
+            dayKey: [transaction]
           });
         }
       } else {
         await _box.put(monthKey, {
-          dayKey: [expense]
+          dayKey: [transaction]
         });
       }
-      return expense;
+      return transaction;
     } catch (e) {
       throw CacheException();
     }
   }
 
   @override
-  Stream<Map<String, List<ExpenseModel>>> watchMonthlyEntries() async* {
-    yield _getMonthlyEntries();
-    yield* _box
-        .watch()
-        .map((_) => _getMonthlyEntries())
-        .handleError((e, s) => throw CacheException());
+  Stream<Map<String, List<TransactionModel>>> watchMonthlyEntries() {
+    return _box.watch().map((event) {
+      final Map<String, List<TransactionModel>> result = {};
+      final keys = _box.keys;
+      for (final key in keys) {
+        final String monthKey = key.toString();
+        final Map month = _box.get(monthKey)!;
+        for (final dayKey in month.keys) {
+          final String day = dayKey.toString();
+          final List items = month[day];
+          result[day] = List<TransactionModel>.from(items);
+        }
+      }
+      return result;
+    });
   }
 
   @override
   Future<void> eraseEntries() async {
-    try {
-      await _box.clear();
-    } catch (e) {
-      throw CacheException();
-    }
-  }
-
-  Map<String, List<ExpenseModel>> _getMonthlyEntries() {
-    final today = DateTime.now().toIso8601String();
-    final key = getMonthKey(today);
-    final currentMonth = _box.get(key, defaultValue: {}) as Map;
-    Map<String, List<ExpenseModel>> mapEntry = {};
-    currentMonth.keys.toList().cast<String>()
-      ..sort((a, b) => b.compareTo(a))
-      ..forEach((k) {
-        mapEntry[k] = (currentMonth[k] as List).cast<ExpenseModel>();
-      });
-    return mapEntry;
+    await _box.clear();
   }
 }

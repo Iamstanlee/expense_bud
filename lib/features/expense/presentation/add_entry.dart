@@ -25,7 +25,9 @@ class AddEntryPage extends StatefulWidget {
 class _AddEntryPageState extends State<AddEntryPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  ExpenseCategoryItem _categoryItem = categoryItems()[0];
+  TransactionType _transactionType = TransactionType.expense;
+  ExpenseCategoryItem _categoryItem =
+      categoryItemsByType(TransactionType.expense)[0];
 
   int amount = 0;
 
@@ -37,6 +39,13 @@ class _AddEntryPageState extends State<AddEntryPage>
           microseconds: 2000,
         ));
     super.initState();
+  }
+
+  void _updateTransactionType(TransactionType type) {
+    setState(() {
+      _transactionType = type;
+      _categoryItem = categoryItemsByType(type)[0];
+    });
   }
 
   @override
@@ -68,8 +77,28 @@ class _AddEntryPageState extends State<AddEntryPage>
                         ),
                       ),
                       Text(
-                        'Add Expense',
+                        'Add Transaction',
                         style: context.textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                  Gap.md,
+                  // Transaction type selection
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildTransactionTypeButton(
+                        context,
+                        'Expense',
+                        TransactionType.expense,
+                        Colors.redAccent,
+                      ),
+                      const SizedBox(width: 16),
+                      _buildTransactionTypeButton(
+                        context,
+                        'Income',
+                        TransactionType.income,
+                        Colors.green,
                       ),
                     ],
                   ),
@@ -79,8 +108,11 @@ class _AddEntryPageState extends State<AddEntryPage>
                       Expanded(
                         child: AutoSizeText(
                           money.formatValue(amount),
-                          style: context.textTheme.displaySmall!
-                              .copyWith(color: AppColors.kDark),
+                          style: context.textTheme.displaySmall!.copyWith(
+                            color: _transactionType == TransactionType.expense
+                                ? Colors.redAccent
+                                : Colors.green,
+                          ),
                           maxLines: 1,
                         ),
                       ),
@@ -92,8 +124,8 @@ class _AddEntryPageState extends State<AddEntryPage>
                     onChanged: (value) async {
                       final value = await showCupertinoModalPopup(
                         context: context,
-                        builder: (context) =>
-                            ExpenseItemGridSheet(_categoryItem),
+                        builder: (context) => ExpenseItemGridSheet(
+                            _categoryItem, _transactionType),
                       );
                       if (value != null) {
                         setState(() => _categoryItem = value);
@@ -113,16 +145,47 @@ class _AddEntryPageState extends State<AddEntryPage>
               },
               onEnter: () async {
                 final thisInstant = DateTime.now().toIso8601String();
-                await expenseProvider.createExpenseEntry(ExpenseEntity(
+                await expenseProvider.createExpenseEntry(TransactionEntity(
                   createdAt: thisInstant,
                   updatedAt: thisInstant,
                   category: _categoryItem.category,
                   amount: amount,
+                  transactionType: _transactionType,
                 ));
                 context.pop();
               },
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTransactionTypeButton(
+    BuildContext context,
+    String title,
+    TransactionType type,
+    Color activeColor,
+  ) {
+    final isActive = _transactionType == type;
+    return GestureDetector(
+      onTap: () => _updateTransactionType(type),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        decoration: BoxDecoration(
+          color: isActive ? activeColor.withOpacity(0.2) : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isActive ? activeColor : Colors.grey.shade300,
+            width: 1,
+          ),
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: isActive ? activeColor : Colors.grey,
+            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );
