@@ -1,6 +1,5 @@
 import 'package:expense_bud/config/constants.dart';
 import 'package:expense_bud/config/theme.dart';
-import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/widgets/gap.dart';
 import 'package:expense_bud/core/widgets/state.dart';
@@ -65,8 +64,8 @@ class _InsightsPageState extends State<InsightsPage> {
       body: asyncValueOfInsight.when(
         loading: (_) => const Center(child: Text("Loading...")),
         done: (insight) {
-          final map = insight.sortedMapOfCategoryToPairOfAmountAndNumOfEntries(
-              type: TransactionType.expense);
+          final map =
+              insight.sortedMapOfCategoryToPairOfAmountAndNumOfEntries();
           return CustomScrollView(
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
@@ -91,10 +90,10 @@ class _InsightsPageState extends State<InsightsPage> {
                           children: [
                             InsightHeader(
                               percentageIncOrDec:
-                                  insight.expensesPercentageChange,
+                                  insight.percentageIncreaseOrDec,
                               increasedFromLastInsightPeriod:
-                                  insight.increasedExpensesFromLastPeriod,
-                              total: money.formatValue(insight.totalExpenses),
+                                  insight.increasedFromLastInsightPeriod,
+                              total: money.formatValue(insight.total),
                               splinePoints: insight.splinePoints(),
                             ),
                             Gap.md,
@@ -111,10 +110,9 @@ class _InsightsPageState extends State<InsightsPage> {
                                     sections: map.keys.map(
                                       (key) {
                                         final pair = map[key]!;
-                                        final value = ((pair.left /
-                                                    insight.totalExpenses) *
-                                                100)
-                                            .floorToDouble();
+                                        final value =
+                                            ((pair.left / insight.total) * 100)
+                                                .floorToDouble();
                                         return PieChartSectionData(
                                           value: value,
                                           color: key.color,

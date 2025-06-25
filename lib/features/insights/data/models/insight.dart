@@ -4,10 +4,11 @@ import 'package:expense_bud/features/insights/domain/entities/insight.dart';
 
 class InsightModel extends InsightEntity {
   InsightModel(
-    List<TransactionModel> cur,
-    List<TransactionModel> prev,
+    List<ExpenseModel> cur,
+    List<ExpenseModel> prev,
   ) : super(
           cur.map((e) => e.toEntity()).toList(),
           prev.map((e) => e.toEntity()).toList(),
         );
+
 }

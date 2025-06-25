@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:expense_bud/core/domain/entities/expense.dart';
 
 enum ExpenseCategory {
-  // Expense categories
   foodAndDrinks,
   groceries,
   tech,
@@ -21,16 +19,6 @@ enum ExpenseCategory {
   business,
   pet,
   miscellaneous,
-
-  // Income categories
-  salary,
-  freelance,
-  investment,
-  bonus,
-  refund,
-  gift,
-  rental,
-  other,
 }
 
 class ExpenseCategoryItem {
@@ -38,14 +26,12 @@ class ExpenseCategoryItem {
   final ExpenseCategory category;
   final IconData iconData;
   final Color color;
-  final TransactionType transactionType;
 
   const ExpenseCategoryItem({
     required this.title,
     required this.category,
     required this.iconData,
     this.color = Colors.grey,
-    this.transactionType = TransactionType.expense,
   });
 
   @override
@@ -61,18 +47,7 @@ class ExpenseCategoryItem {
   int get hashCode => title.hashCode ^ category.hashCode;
 }
 
-List<ExpenseCategoryItem> categoryItems() => [
-      ...expenseCategoryItems(),
-      ...incomeCategoryItems(),
-    ];
-
-List<ExpenseCategoryItem> categoryItemsByType(TransactionType type) {
-  return type == TransactionType.expense
-      ? expenseCategoryItems()
-      : incomeCategoryItems();
-}
-
-List<ExpenseCategoryItem> expenseCategoryItems() => const [
+List<ExpenseCategoryItem> categoryItems() => const [
       ExpenseCategoryItem(
         title: 'Groceries',
         category: ExpenseCategory.groceries,
@@ -168,64 +143,5 @@ List<ExpenseCategoryItem> expenseCategoryItems() => const [
         category: ExpenseCategory.miscellaneous,
         iconData: PhosphorIconsFill.asterisk,
         color: Color(0xFF9A36DD),
-      ),
-    ];
-
-List<ExpenseCategoryItem> incomeCategoryItems() => const [
-      ExpenseCategoryItem(
-        title: 'Salary',
-        category: ExpenseCategory.salary,
-        iconData: PhosphorIconsFill.currencyCircleDollar,
-        color: Color(0xFF4CAF50),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Freelance',
-        category: ExpenseCategory.freelance,
-        iconData: PhosphorIconsFill.laptop,
-        color: Color(0xFF8BC34A),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Investment',
-        category: ExpenseCategory.investment,
-        iconData: PhosphorIconsFill.chartLine,
-        color: Color(0xFF009688),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Bonus',
-        category: ExpenseCategory.bonus,
-        iconData: PhosphorIconsFill.star,
-        color: Color(0xFFFFEB3B),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Refund',
-        category: ExpenseCategory.refund,
-        iconData: PhosphorIconsFill.arrowCounterClockwise,
-        color: Color(0xFFFFC107),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Gift',
-        category: ExpenseCategory.gift,
-        iconData: PhosphorIconsFill.gift,
-        color: Color(0xFFFF9800),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Rental',
-        category: ExpenseCategory.rental,
-        iconData: PhosphorIconsFill.houseLine,
-        color: Color(0xFFFF5722),
-        transactionType: TransactionType.income,
-      ),
-      ExpenseCategoryItem(
-        title: 'Other',
-        category: ExpenseCategory.other,
-        iconData: PhosphorIconsFill.plus,
-        color: Color(0xFF2196F3),
-        transactionType: TransactionType.income,
       ),
     ];

@@ -32,7 +32,7 @@ final GlobalKey<NavigatorState> globalRoutingContextKey =
 
 Future<void> initApp() async {
   await Hive.initFlutter();
-  Hive.registerAdapter<TransactionModel>(TransactionModelAdapter());
+  Hive.registerAdapter<ExpenseModel>(ExpenseModelAdapter());
   Hive.registerAdapter<UserPreferenceModel>(UserPreferenceModelAdapter());
   Hive.registerAdapter<CurrencyModel>(CurrencyModelAdapter());
 

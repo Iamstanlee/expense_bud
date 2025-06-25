@@ -4,100 +4,36 @@ import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/utils/pair.dart';
 
 class InsightEntity {
-  final List<TransactionEntity> cur;
-  final List<TransactionEntity> prev;
+  final List<ExpenseEntity> cur;
+  final List<ExpenseEntity> prev;
 
   const InsightEntity(this.cur, this.prev);
 
   bool get isEmpty => cur.isEmpty;
 
-  /// Filter transactions based on type
-  List<TransactionEntity> _filterByType(
-      List<TransactionEntity> transactions, TransactionType type) {
-    return transactions.where((t) => t.transactionType == type).toList();
-  }
-
-  /// Get current expenses
-  List<TransactionEntity> get expenses =>
-      _filterByType(cur, TransactionType.expense);
-
-  /// Get current income
-  List<TransactionEntity> get income =>
-      _filterByType(cur, TransactionType.income);
-
-  /// Get previous expenses
-  List<TransactionEntity> get prevExpenses =>
-      _filterByType(prev, TransactionType.expense);
-
-  /// Get previous income
-  List<TransactionEntity> get prevIncome =>
-      _filterByType(prev, TransactionType.income);
-
-  /// total amount of expenses for this particular insight period
-  int get totalExpenses => expenses.fold(0, (a, c) => a += c.amount);
-
-  /// total amount of income for this particular insight period
-  int get totalIncome => income.fold(0, (a, c) => a += c.amount);
-
-  /// total net balance (income - expenses)
-  int get netBalance => totalIncome - totalExpenses;
+  /// total amount of expense for this particular insight period
+  int get total => cur.fold(0, (a, c) => a += c.amount);
 
   /// total amount of expense for the previous insight of this particular insight period
   /// used to estimate percentage inc or dec.
-  int get previousTotalExpenses =>
-      prevExpenses.fold(0, (a, c) => a += c.amount);
+  int get previousTotal => prev.fold(0, (a, c) => a += c.amount);
 
-  /// total amount of income for the previous insight period
-  int get previousTotalIncome => prevIncome.fold(0, (a, c) => a += c.amount);
-
-  /// previous net balance
-  int get previousNetBalance => previousTotalIncome - previousTotalExpenses;
-
-  /// interpolate percentage change into the range of 0 - 100 for expenses
-  double get expensesPercentageChange => (totalExpenses - previousTotalExpenses)
-      .normalize(
-          0,
-          increasedExpensesFromLastPeriod
-              ? totalExpenses
-              : previousTotalExpenses)
+  /// interpolate percentage change into the range of 0 - 100
+  double get percentageIncreaseOrDec => (total - previousTotal)
+      .normalize(0, increasedFromLastInsightPeriod ? total : previousTotal)
       .floorToDouble()
       .abs();
 
-  /// interpolate percentage change into the range of 0 - 100 for income
-  double get incomePercentageChange => (totalIncome - previousTotalIncome)
-      .normalize(
-          0, increasedIncomeFromLastPeriod ? totalIncome : previousTotalIncome)
-      .floorToDouble()
-      .abs();
-
-  /// interpolate percentage change for net balance
-  double get netBalancePercentageChange => (netBalance - previousNetBalance)
-      .normalize(
-          0,
-          improvedNetBalanceFromLastPeriod
-              ? netBalance.abs()
-              : previousNetBalance.abs())
-      .floorToDouble()
-      .abs();
-
-  bool get increasedExpensesFromLastPeriod =>
-      totalExpenses > previousTotalExpenses;
-  bool get increasedIncomeFromLastPeriod => totalIncome > previousTotalIncome;
-  bool get improvedNetBalanceFromLastPeriod => netBalance > previousNetBalance;
+  bool get increasedFromLastInsightPeriod => total > previousTotal;
 
   List<double> splinePoints() {
     final list = cur.toList()
       ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
-    final listOfAmount = list.map((e) =>
-        e.transactionType == TransactionType.expense ? -e.amount : e.amount);
+    final lisfOfAmount = list.map((e) => e.amount);
     List<double> points = [];
-    int max = listOfAmount.isEmpty
-        ? 0
-        : listOfAmount.fold(0, (max, e) => e > max ? e : max);
-    int min = listOfAmount.isEmpty
-        ? 0
-        : listOfAmount.fold(0, (min, e) => e < min ? e : min);
-    for (final amount in listOfAmount) {
+    int max = lisfOfAmount.isEmpty ? 0 : lisfOfAmount.getMax();
+    int min = lisfOfAmount.isEmpty ? 0 : lisfOfAmount.getMin();
+    for (final amount in lisfOfAmount) {
       double point = amount.normalize(min, max, upperBound: 1);
       points.add(point);
     }
@@ -105,9 +41,8 @@ class InsightEntity {
   }
 
   Map<ExpenseCategoryItem, Pair<int, int>>
-      sortedMapOfCategoryToPairOfAmountAndNumOfEntries(
-          {TransactionType? type}) {
-    final map = mapOfCategoryToPairOfAmountAndNumOfEntries(type: type);
+      sortedMapOfCategoryToPairOfAmountAndNumOfEntries() {
+    final map = mapOfCategoryToPairOfAmountAndNumOfEntries();
     final mapEntry = <ExpenseCategoryItem, Pair<int, int>>{};
     // sort map by total amount
     map.keys.toList()
@@ -122,13 +57,11 @@ class InsightEntity {
   /// [left] of Pair holds totalAmount
   /// [right] of Pair holds numOfEntries
   Map<ExpenseCategoryItem, Pair<int, int>>
-      mapOfCategoryToPairOfAmountAndNumOfEntries({TransactionType? type}) {
-    final filteredCur = type != null ? _filterByType(cur, type) : cur;
-
-    return filteredCur.fold({}, (map, transaction) {
-      final item = categoryItems()
-          .singleWhere((c) => c.category == transaction.category);
-      final amount = transaction.amount;
+      mapOfCategoryToPairOfAmountAndNumOfEntries() {
+    return cur.fold({}, (map, expense) {
+      final item =
+          categoryItems().singleWhere((c) => c.category == expense.category);
+      final amount = expense.amount;
       if (map.containsKey(item)) {
         map.update(item, (value) => Pair(value.left + amount, value.right + 1));
       } else {

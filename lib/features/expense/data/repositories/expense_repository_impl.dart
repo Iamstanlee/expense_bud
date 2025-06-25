@@ -11,9 +11,9 @@ class ExpenseRepository implements IExpenseRepository {
 
   @override
   Future<Either<Failure, Unit>> createExpenseEntry(
-      TransactionEntity transaction) async {
+      ExpenseEntity expense) async {
     try {
-      await _localDataSource.createExpenseEntry(transaction.toModel());
+      await _localDataSource.createExpenseEntry(expense.toModel());
       return const Right(unit);
     } catch (e) {
       return Left(CachePutFailure());
@@ -21,7 +21,7 @@ class ExpenseRepository implements IExpenseRepository {
   }
 
   @override
-  Stream<Either<Failure, Map<String, List<TransactionEntity>>>>
+  Stream<Either<Failure, Map<String, List<ExpenseEntity>>>>
       watchMonthlyEntries() async* {
     try {
       yield* _localDataSource.watchMonthlyEntries().map(

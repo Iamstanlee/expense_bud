@@ -49,13 +49,13 @@ class InsightLocalDataSource extends LocalDataSource
         initial.subtract(Duration(days: lastNumOfDays + i)).toIso8601String(),
       );
     }
-    List<TransactionModel> lastNDays = _pickEntries(lastNDaysKeys);
-    List<TransactionModel> prevLastN3Days = _pickEntries(prevLastNDaysKeys);
+    List<ExpenseModel> lastNDays = _pickEntries(lastNDaysKeys);
+    List<ExpenseModel> prevLastN3Days = _pickEntries(prevLastNDaysKeys);
     return InsightModel(lastNDays, prevLastN3Days);
   }
 
-  List<TransactionModel> _pickEntries(List<String> keys) {
-    List<TransactionModel> entries = [];
+  List<ExpenseModel> _pickEntries(List<String> keys) {
+    List<ExpenseModel> entries = [];
     for (var key in keys) {
       final monthKey = getMonthKey(key);
       final dayKey = getDayKey(key);
@@ -63,7 +63,7 @@ class InsightLocalDataSource extends LocalDataSource
         final month = _box.get(monthKey)! as Map;
         if (month.containsKey(dayKey)) {
           entries.addAll(((_box.get(monthKey) as Map)[dayKey] as List)
-              .cast<TransactionModel>());
+              .cast<ExpenseModel>());
         }
       }
     }
@@ -79,14 +79,14 @@ class InsightLocalDataSource extends LocalDataSource
     final cur = _box.get(currentkey, defaultValue: {}) as Map;
     final prev = _box.get(previouskey, defaultValue: {}) as Map;
 
-    final List<TransactionModel> currentMonth = cur.isNotEmpty
+    final List<ExpenseModel> currentMonth = cur.isNotEmpty
         ? cur.values
-            .map((value) => (value as List).cast<TransactionModel>())
+            .map((value) => (value as List).cast<ExpenseModel>())
             .fold([], (acc, entry) => acc..addAll(entry))
         : [];
-    final List<TransactionModel> previousMonth = prev.isNotEmpty
+    final List<ExpenseModel> previousMonth = prev.isNotEmpty
         ? prev.values
-            .map((value) => (value as List).cast<TransactionModel>())
+            .map((value) => (value as List).cast<ExpenseModel>())
             .fold([], (acc, entry) => acc..addAll(entry))
         : [];
 

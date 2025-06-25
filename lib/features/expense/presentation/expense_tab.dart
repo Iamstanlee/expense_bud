@@ -140,7 +140,7 @@ class MonthTab extends StatelessWidget {
 }
 
 class ExpenseList extends StatelessWidget {
-  final List<TransactionEntity> entries;
+  final List<ExpenseEntity> entries;
   const ExpenseList(this.entries, {Key? key}) : super(key: key);
 
   @override
