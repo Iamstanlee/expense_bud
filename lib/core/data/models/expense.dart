@@ -16,7 +16,11 @@ class ExpenseModel extends HiveObject {
   @HiveField(3)
   final int amount;
 
+  @HiveField(4)
+  final String id;
+
   ExpenseModel({
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
     required this.category,
@@ -25,6 +29,6 @@ class ExpenseModel extends HiveObject {
 
   @override
   String toString() {
-    return 'ExpenseModel(createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount)';
+    return 'ExpenseModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount)';
   }
 }

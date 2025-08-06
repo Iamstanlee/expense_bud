@@ -17,6 +17,7 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExpenseModel(
+      id: fields[4] as String,
       createdAt: fields[0] as String,
       updatedAt: fields[1] as String,
       category: fields[2] as String,
@@ -27,7 +28,7 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
   @override
   void write(BinaryWriter writer, ExpenseModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.createdAt)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
       ..writeByte(2)
       ..write(obj.category)
       ..writeByte(3)
-      ..write(obj.amount);
+      ..write(obj.amount)
+      ..writeByte(4)
+      ..write(obj.id);
   }
 
   @override

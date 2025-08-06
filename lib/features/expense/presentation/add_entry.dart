@@ -114,6 +114,7 @@ class _AddEntryPageState extends State<AddEntryPage>
               onEnter: () async {
                 final thisInstant = DateTime.now().toIso8601String();
                 await expenseProvider.createExpenseEntry(ExpenseEntity(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
                   createdAt: thisInstant,
                   updatedAt: thisInstant,
                   category: _categoryItem.category,

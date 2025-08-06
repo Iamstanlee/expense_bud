@@ -1,10 +1,11 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:expense_bud/core/data/models/expense.dart';
-import 'package:expense_bud/core/services/local_notification_service.dart';
+// import 'package:expense_bud/core/services/local_notification_service.dart';
 import 'package:expense_bud/features/expense/data/datasources/local_datasource.dart';
 import 'package:expense_bud/features/expense/data/repositories/expense_repository_impl.dart';
 import 'package:expense_bud/features/expense/domain/repositories/expense_repository.dart';
 import 'package:expense_bud/features/expense/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expense/domain/usecases/delete_expense_entry_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/erase_entries_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/get_expenses_usecase.dart';
 import 'package:expense_bud/features/expense/presentation/provider/expense_provider.dart';
@@ -39,11 +40,11 @@ Future<void> initApp() async {
   final _expenseDb = await Hive.openBox("expenses.db");
   final _preferenceDb = await Hive.openBox("preferences.db");
 
-  final _notification = AwesomeNotifications();
+  // final _notification = AwesomeNotifications();
 
-  getIt.registerSingleton<ILocalNotificationService>(
-    LocalNotificationService(_notification, _preferenceDb)..init(),
-  );
+  // getIt.registerSingleton<ILocalNotificationService>(
+  //   LocalNotificationService(_notification, _preferenceDb)..init(),
+  // );
 
   /// datasources
   getIt.registerSingleton<IExpenseLocalDataSource>(
@@ -63,6 +64,8 @@ Future<void> initApp() async {
   getIt.registerSingleton<GetExpensesUsecase>(GetExpensesUsecase(getIt()));
   getIt.registerSingleton<CreateExpenseEntryUsecase>(
       CreateExpenseEntryUsecase(getIt()));
+  getIt.registerSingleton<DeleteExpenseEntryUsecase>(
+      DeleteExpenseEntryUsecase(getIt()));
   getIt.registerSingleton<EraseEntriesUsecase>(EraseEntriesUsecase(getIt()));
   getIt.registerSingleton<GetUserPreferenceUsecase>(
       GetUserPreferenceUsecase(getIt()));
@@ -82,6 +85,7 @@ Future<void> initApp() async {
     ExpenseProvider(
       getExpensesUsecase: getIt(),
       createExpenseEntryUsecase: getIt(),
+      deleteExpenseEntryUsecase: getIt(),
       eraseEntriesUsecase: getIt(),
     ),
   );
