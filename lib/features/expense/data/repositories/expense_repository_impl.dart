@@ -40,6 +40,16 @@ class ExpenseRepository implements IExpenseRepository {
   }
 
   @override
+  Future<Either<Failure, Unit>> deleteExpenseEntry(String id) async {
+    try {
+      await _localDataSource.deleteExpenseEntry(id);
+      return const Right(unit);
+    } catch (e) {
+      return Left(CacheDeleteFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, Unit>> eraseEntries() async {
     try {
       await _localDataSource.eraseEntries();

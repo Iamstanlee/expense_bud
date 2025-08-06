@@ -19,8 +19,8 @@ dependencies:
   fl_chart: ^0.69.0
   url_launcher: ^6.0.20
   dio: ^4.0.4
-  awesome_notifications_core: ^0.10.0
-  awesome_notifications: ^0.10.0
+  # awesome_notifications_core: ^0.10.0
+  # awesome_notifications: ^0.10.0
   shared_preferences: ^2.3.3
 
 dev_dependencies:

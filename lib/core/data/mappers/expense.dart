@@ -4,6 +4,7 @@ import 'package:expense_bud/core/domain/entities/expense.dart';
 
 extension ExpenseModelExtension on ExpenseModel {
   ExpenseEntity toEntity() => ExpenseEntity(
+        id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         amount: amount,
@@ -13,6 +14,7 @@ extension ExpenseModelExtension on ExpenseModel {
 
 extension ExpenseEntityExtension on ExpenseEntity {
   ExpenseModel toModel() => ExpenseModel(
+        id: id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         amount: amount,

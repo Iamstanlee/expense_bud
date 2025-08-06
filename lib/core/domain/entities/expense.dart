@@ -1,6 +1,7 @@
 import 'package:expense_bud/core/utils/category_items.dart';
 
 class ExpenseEntity {
+  final String id;
   final String createdAt;
   final String updatedAt;
   final ExpenseCategory category;
@@ -8,6 +9,7 @@ class ExpenseEntity {
   final String? note;
 
   ExpenseEntity({
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
     required this.category,
@@ -17,6 +19,6 @@ class ExpenseEntity {
 
   @override
   String toString() {
-    return 'ExpenseEntity(createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount, note: $note)';
+    return 'ExpenseEntity(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, category: $category, amount: $amount, note: $note)';
   }
 }

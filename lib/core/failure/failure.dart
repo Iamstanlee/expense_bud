@@ -27,3 +27,8 @@ class CachePutFailure extends Failure {
   @override
   String get msg => "Error saving entry to device";
 }
+
+class CacheDeleteFailure extends Failure {
+  @override
+  String get msg => "Error deleting entry from device";
+}

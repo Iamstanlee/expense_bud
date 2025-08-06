@@ -30,6 +30,15 @@ class _InsightsPageState extends State<InsightsPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Refresh insights when page becomes visible
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<InsightsProvider>().getInsights();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final insightsProvider = context.watch<InsightsProvider>();
     final asyncValueOfInsight = insightsProvider.asyncValueOfInsight;

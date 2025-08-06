@@ -3,21 +3,27 @@ import 'package:expense_bud/core/utils/date_formatter.dart';
 import 'package:expense_bud/core/utils/extensions.dart';
 import 'package:expense_bud/core/domain/entities/expense.dart';
 import 'package:expense_bud/features/expense/domain/usecases/create_entry_usecase.dart';
+import 'package:expense_bud/features/expense/domain/usecases/delete_expense_entry_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/erase_entries_usecase.dart';
 import 'package:expense_bud/features/expense/domain/usecases/get_expenses_usecase.dart';
+import 'package:expense_bud/features/insights/presentation/provider/insights_provider.dart';
+import 'package:expense_bud/injector.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseProvider with ChangeNotifier {
   ExpenseProvider({
     required GetExpensesUsecase getExpensesUsecase,
     required CreateExpenseEntryUsecase createExpenseEntryUsecase,
+    required DeleteExpenseEntryUsecase deleteExpenseEntryUsecase,
     required EraseEntriesUsecase eraseEntriesUsecase,
   })  : _getExpensesUsecase = getExpensesUsecase,
         _createExpenseEntryUsecase = createExpenseEntryUsecase,
+        _deleteExpenseEntryUsecase = deleteExpenseEntryUsecase,
         _eraseEntriesUsecase = eraseEntriesUsecase;
 
   final GetExpensesUsecase _getExpensesUsecase;
   final CreateExpenseEntryUsecase _createExpenseEntryUsecase;
+  final DeleteExpenseEntryUsecase _deleteExpenseEntryUsecase;
   final EraseEntriesUsecase _eraseEntriesUsecase;
 
   final DateFormatter dateFmt = DateFormatter.instance;
@@ -43,13 +49,38 @@ class ExpenseProvider with ChangeNotifier {
 
   Future<void> createExpenseEntry(ExpenseEntity entry) async {
     final failureOrEntry = await _createExpenseEntryUsecase(entry);
-    failureOrEntry.fold((failure) => {}, (_) {});
+    failureOrEntry.fold((failure) => {}, (_) {
+      // Refresh insights when expense is created
+      try {
+        getIt<InsightsProvider>().getInsights();
+      } catch (e) {
+        // Ignore if insights provider is not available
+      }
+    });
+  }
+
+  Future<void> deleteExpenseEntry(String id) async {
+    final failureOrSuccess = await _deleteExpenseEntryUsecase(id);
+    failureOrSuccess.fold((failure) => {}, (_) {
+      // Refresh insights when expense is deleted
+      try {
+        getIt<InsightsProvider>().getInsights();
+      } catch (e) {
+        // Ignore if insights provider is not available
+      }
+    });
   }
 
   Future<void> eraseEntries() async {
     final failureOrSuccess = await _eraseEntriesUsecase();
     failureOrSuccess.fold((failure) => {}, (_) {
       _entries = AsyncValue.done({});
+      // Refresh insights when all entries are erased
+      try {
+        getIt<InsightsProvider>().getInsights();
+      } catch (e) {
+        // Ignore if insights provider is not available
+      }
     });
     notifyListeners();
   }
